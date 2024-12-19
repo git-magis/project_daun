@@ -58,6 +58,7 @@
                     <h5 class="text-white mt-3 mb-4" data-aos="fade-right">Lihat persebaran pohon di lokasi hutan kota dan Pindai Kode QR informasi pohon.</h5>
                     <div data-aos="fade-up" data-aos-delay="50">
                         <a href="#" class="btn btn-brand me-2">Pindai QR Pohon</a>
+                        <a href="#" class="btn btn-brand me-2">Mamas Natsir</a>
                         <a href="#services" class="btn btn-light ms-2">Fitur</a>
                     </div>
                 </div>
