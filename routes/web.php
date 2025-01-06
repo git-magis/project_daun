@@ -1,26 +1,105 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PohonController;
+use App\Http\Controllers\JenisPohonController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\BungaController;
+use App\Http\Controllers\JenisBungaController;
+
+use App\Http\Controllers\TamanController;
+
+// For displaying the list of Pohon
+Route::get('/manage-pohon', [PohonController::class, 'index'])->name('manage-pohon');
+
+// // For storing new Pohon data
+Route::post('/pohon/store', [PohonController::class, 'store'])->name('pohon.store');
+Route::put('/pohon/{id}', [PohonController::class, 'update'])->name('pohon.update');
+Route::delete('/pohon/{id}', [PohonController::class, 'destroy'])->name('pohon.destroy');
+
+
+
+// For displaying the list of Pohon
+Route::get('/manage-jenis-pohon', [JenisPohonController::class, 'index'])->name('manage-jenis-pohon');
+
+// // For showing the create form for Pohon
+Route::get('/jenis_pohon/create', [JenisPohonController::class, 'create'])->name('jenis_pohon.create');
+
+// // For storing new Pohon data
+Route::post('/jenis_pohon/store', [JenisPohonController::class, 'store'])->name('jenis_pohon.store');
+Route::put('/jenis_pohon/{id}', [JenisPohonController::class, 'update'])->name('jenis_pohon.update');
+Route::delete('/jenis_pohon/{id}', [JenisPohonController::class, 'destroy'])->name('jenis_pohon.destroy');
+
+
+// For displaying the list of Pohon
+Route::get('/manage-bunga', [BungaController::class, 'index'])->name('manage-bunga');
+
+// // For storing new bunga data
+Route::post('/bunga/store', [BungaController::class, 'store'])->name('bunga.store');
+Route::put('/bunga/{id}', [BungaController::class, 'update'])->name('bunga.update');
+Route::delete('/bunga/{id}', [BungaController::class, 'destroy'])->name('bunga.destroy');
+
+
+
+// For displaying the list of bunga
+Route::get('/manage-jenis-bunga', [JenisBungaController::class, 'index'])->name('manage-jenis-bunga');
+
+// // For showing the create form for bunga
+Route::get('/jenis_bunga/create', [JenisBungaController::class, 'create'])->name('jenis_bunga.create');
+
+// // For storing new bunga data
+Route::post('/jenis_bunga/store', [JenisBungaController::class, 'store'])->name('jenis_bunga.store');
+Route::put('/jenis_bunga/{id}', [JenisBungaController::class, 'update'])->name('jenis_bunga.update');
+Route::delete('/jenis_bunga/{id}', [JenisBungaController::class, 'destroy'])->name('jenis_bunga.destroy');
+
+
+// For displaying the list of Pohon
+Route::get('/manage-taman', [TamanController::class, 'index'])->name('manage-taman');
+
+// // For storing new bunga data
+Route::post('/taman/store', [TamanController::class, 'store'])->name('taman.store');
+Route::put('/taman/{id}', [TamanController::class, 'update'])->name('taman.update');
+Route::delete('/taman/{id}', [TamanController::class, 'destroy'])->name('taman.destroy');
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
 Route::get('/varian-pohon', function () {
-    return view('varian_pohon'); // Assuming your view file is named `varian_pohon.blade.php`
+    return view('varian_pohon');
 })->name('varian-pohon');
 
 Route::get('/detail-pohon', function () {
-    return view('detail_pohon'); // Assuming your view file is named `varian_pohon.blade.php`
+    return view('detail_pohon');
 })->name('detail-pohon');
+
+Route::get('/admin-index', function () {
+    return view('admin.admin_index');
+})->name('admin-index');
+
+// Route::get('/manage-jenis-pohon', function () {
+//     return view('admin.manage_jenis_pohon');
+// })->name('manage-jenis-pohon');
+
+// Route::get('/manage-bunga', function () {
+//     return view('admin.manage_bunga');
+// })->name('manage-bunga');
+
+// Route::get('/manage-jenis-bunga', function () {
+//     return view('admin.manage_jenis_bunga');
+// })->name('manage-jenis-bunga');
+
+Route::get('/manage-kelas', function () {
+    return view('admin.manage_kelas');
+})->name('manage-kelas');
+
+// Route::get('/manage-taman', function () {
+//     return view('admin.manage_taman');
+// })->name('manage-taman');
+
+Route::get('/manage-user', function () {
+    return view('admin.manage_user');
+})->name('manage-user');
