@@ -14,7 +14,8 @@ class JenisPohonController extends Controller
         $data = JenisPohon::all();
 
         // Pass data to the view
-        return view('admin.manage_jenis_pohon', ['data' => $data]);  // Ensure 'data' is passed correctly
+        // return view('admin.manage_jenis_pohon', ['data' => $data]);
+        return view('admin.manage_jenis_pohon', compact('data'));
     }
 
     public function store(Request $request)

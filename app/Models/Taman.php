@@ -9,12 +9,33 @@ class Taman extends Model
 {
     use HasFactory;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'tamans';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'nama',
         'latitude',
         'longitude',
         'kode',
+        'lokasib_id'
     ];
+
+    public function pohons()
+    {
+        return $this->hasMany(Pohon::class);
+    }
+
+    public function bungas()
+    {
+        return $this->hasMany(Bunga::class);
+    }
 }

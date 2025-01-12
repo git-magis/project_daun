@@ -26,4 +26,9 @@ class JenisPohon extends Model
         'jumlah',
         'gambar_pohon',
     ];
+
+    public function pohons()
+    {
+        return $this->hasMany(Pohon::class, 'jenis_id');
+    }
 }

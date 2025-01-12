@@ -26,4 +26,9 @@ class JenisBunga extends Model
         'jumlah',
         'gambar_bunga',
     ];
+
+    public function bungas()
+    {
+        return $this->hasMany(Bunga::class, 'jenisb_id');
+    }
 }

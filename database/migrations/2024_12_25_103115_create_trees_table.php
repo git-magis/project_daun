@@ -14,9 +14,19 @@ return new class extends Migration
         Schema::create('pohons', function (Blueprint $table) {
             $table->id();
             $table->string('nama_pohon');
-            $table->string('jenis_pohon');
-            $table->string('lokasi_pohon');
+
+            // Foreign key to the 'jenispohons' table
+            $table->unsignedBigInteger('jenis_id');
+            $table->foreign('jenis_id')->references('id')->on('jenispohons')->onDelete('cascade');
+
+            // Foreign key to the 'tamans' table
+            $table->unsignedBigInteger('lokasi_id');
+            $table->foreign('lokasi_id')->references('id')->on('tamans')->onDelete('cascade');
+
+            // Optional image for the tree
             $table->string('gambar_pohon')->nullable();
+
+            // Timestamps for created_at and updated_at
             $table->timestamps();
         });
     }

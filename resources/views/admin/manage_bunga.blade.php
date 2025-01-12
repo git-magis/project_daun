@@ -45,7 +45,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -76,7 +76,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-solid fa-leaf"></i>
@@ -283,14 +283,14 @@
                                         @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $item->nama_bunga }}</td> 
-                                            <td>{{ $item->jenis_bunga }}</td> 
-                                            <td>{{ $item->lokasi_bunga }}</td>
+                                            <td>{{ $item->jenisBunga->nama_jenis_bunga ?? 'naha euweuh'}}</td> 
+                                            <td>{{ $item->taman->nama ?? 'teuh' }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
                                                         data-nama="{{ $item->nama_bunga }}" 
-                                                        data-jenis="{{ $item->jenis_bunga }}" 
-                                                        data-lokasi="{{ $item->lokasi_bunga }}" 
+                                                        data-jenis="{{ $item->jenisb_id }}" 
+                                                        data-lokasi="{{ $item->lokasib_id }}" 
                                                         data-gambar="{{ $item->gambar_bunga }}">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-pen"></i>
@@ -391,20 +391,24 @@
                         </div>
                         <div class="form-group">
                             <label for="jenisBunga">Jenis</label>
-                            <select name="jenis_bunga" id="jenisBunga" class="form-control" required>
+                            <select name="jenisb_id" id="jenisBunga" class="form-control" required>
                                 <option value="" disabled selected>Choose...</option>
-                                <option value="Mawar">Mawar</option>
-                                <option value="Lili">Lili</option>
-                                <option value="Anggrek">Anggrek</option>
+                                @isset($jenis_bunga)
+                                    @foreach($jenis_bunga as $jenis)
+                                        <option value="{{ $jenis->id }}">{{ $jenis->nama_jenis_bunga }}</option>
+                                    @endforeach
+                                @endisset
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="lokasiBunga">Lokasi</label>
-                            <select name="lokasi_bunga" id="lokasiBunga" class="form-control" required>
+                            <select name="lokasib_id" id="lokasiBunga" class="form-control" required>
                                 <option value="" disabled selected>Choose...</option>
-                                <option value="Blok A">Blok A</option>
-                                <option value="Blok B">Blok B</option>
-                                <option value="Blok C">Blok C</option>
+                                @isset($taman_lokasi)
+                                    @foreach($taman_lokasi as $lokasi)
+                                        <option value="{{ $lokasi->id }}">{{ $lokasi->nama }}</option>
+                                    @endforeach
+                                @endisset
                             </select>
                         </div>
                         <div class="form-group">
@@ -443,17 +447,21 @@
                         <div class="form-group">
                             <label for="editJenis">Jenis</label>
                             <select id="editJenis" name="jenis_bunga" class="form-control" required>
-                                <option value="Mawar">Mawar</option>
-                                <option value="Lili">Lili</option>
-                                <option value="Anggrek">Anggrek</option>
+                                @isset($jenis_bunga)
+                                    @foreach($jenis_bunga as $jenis)
+                                        <option value="{{ $jenis->id }}">{{ $jenis->nama_jenis_bunga }}</option>
+                                    @endforeach
+                                @endisset
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="editLokasi">Lokasi</label>
                             <select id="editLokasi" name="lokasi_bunga" class="form-control" required>
-                                <option value="Blok A">Blok A</option>
-                                <option value="Blok B">Blok B</option>
-                                <option value="Blok C">Blok C</option>
+                                @isset($taman_lokasi)
+                                    @foreach($taman_lokasi as $lokasi)
+                                        <option value="{{ $lokasi->id }}">{{ $lokasi->nama }}</option>
+                                    @endforeach
+                                @endisset
                             </select>
                         </div>
                         <div class="form-group">

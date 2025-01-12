@@ -16,8 +16,14 @@ class Bunga extends Model
      */
     protected $fillable = [
         'nama_bunga',
-        'jenis_bunga',
-        'lokasi_bunga',
+        'jenisb_id',
+        'lokasib_id',
         'gambar_bunga',
     ];
+
+    public function jenisBunga()
+    {
+        return $this->belongsTo(JenisBunga::class, 'jenisb_id', 'id');
+    }
+
 }

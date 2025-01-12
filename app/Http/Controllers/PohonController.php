@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pohon;
+use App\Models\JenisPohon;
+use App\Models\Taman;
 
 class PohonController extends Controller
 {
@@ -11,19 +13,34 @@ class PohonController extends Controller
     public function index()
     {
         // Fetch all data from the pohon table
-        $data = Pohon::all();
+        $data = Pohon::with(['jenisPohon','taman'])->get();
+        $jenis_pohon = JenisPohon::all();
+        $taman_lokasi = Taman::all();
+        
 
         // Pass data to the view
-        return view('admin.manage_pohon', ['data' => $data]);  // Ensure 'data' is passed correctly
+        // return view('admin.manage_pohon', ['data' => $data]);  // Ensure 'data' is passed correctly
+        return view('admin.manage_pohon', compact('data', 'jenis_pohon', 'taman_lokasi'));
     }
+
+    public function create()
+    {
+        // Fetch related data for dropdowns
+        $jenis_pohon = JenisPohon::all();
+        $taman_lokasi = Taman::all();
+    
+        // Return the create view with the required data
+        return view('pohon.create', compact('jenis_pohon', 'taman_lokasi'));
+    }
+
 
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nama_pohon' => 'required|string|max:255',
-            'jenis_pohon' => 'required|string',
-            'lokasi_pohon' => 'required|string',
+            'jenis_id' => 'required|exists:jenispohons,id',
+            'lokasi_id' => 'required|exists:tamans,id',
             'gambar_pohon' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -36,20 +53,33 @@ class PohonController extends Controller
         // Save the data to the database
         Pohon::create([
             'nama_pohon' => $validated['nama_pohon'],
-            'jenis_pohon' => $validated['jenis_pohon'],
-            'lokasi_pohon' => $validated['lokasi_pohon'],
+            'jenis_id' => $validated['jenis_id'],
+            'lokasi_id' => $validated['lokasi_id'],
             'gambar_pohon' => $imageName ?? null,
         ]);
 
         return redirect()->route('manage-pohon')->with('success', 'Data saved successfully.');
     }
 
+    public function edit($id)
+    {
+        // Fetch the existing tree record
+        $pohon = Pohon::findOrFail($id);
+    
+        // Fetch related data for dropdowns
+        $jenis_pohon = JenisPohon::all();
+        $taman_lokasi = Taman::all();
+    
+        // Return the edit view with the required data
+        return view('pohon.edit', compact('pohon', 'jenis_pohon', 'taman_lokasi'));
+    }
+
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'nama_pohon' => 'required|string|max:255',
-            'jenis_pohon' => 'required|string',
-            'lokasi_pohon' => 'required|string',
+            'jenis_id' => 'required|exists:jenispohons,id',
+            'lokasi_id' => 'required|exists:tamans,id',
             'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
@@ -65,8 +95,8 @@ class PohonController extends Controller
         // Update other fields
         $data->update([
             'nama_pohon' => $validated['nama_pohon'],
-            'jenis_pohon' => $validated['jenis_pohon'],
-            'lokasi_pohon' => $validated['lokasi_pohon'],
+            'jenis_id' => $validated['jenis_id'],
+            'lokasi_id' => $validated['lokasi_id'],
             'gambar_pohon' => $data->gambar_pohon ?? null, // Keep the existing image if not updated
         ]);
     

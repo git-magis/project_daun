@@ -45,7 +45,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -60,7 +60,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="Componentstrue" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-solid fa-tree"></i>
@@ -262,7 +262,7 @@
                                     <thead>
                                         <tr>
                                             <th>Gambar</th>
-                                            <th>Nama Jenis Pohon</th>
+                                            <th>Nama Jenis</th>
                                             <th>Jumlah</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
@@ -271,7 +271,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Gambar</th>
-                                            <th>Nama Jenis Pohon</th>
+                                            <th>Nama Jenis</th>
                                             <th>Jumlah</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
@@ -282,7 +282,7 @@
                                         <tr>
                                             <td>
                                                 @if ($item->gambar_pohon)
-                                                <img src="{{ asset('images/' . $item->gambar_pohon) }}" alt="{{ $item->nama_jenis_pohon }}" style="width: 50px; height: auto;">
+                                                <img src="{{ asset('images/' . $item->gambar_pohon) }}" alt="{{ $item->nama_jenis_pohon }}" style="width: 100px; height: auto;">
                                                 @else
                                                 <i class="fas fa-camera"></i>
                                                 @endif
@@ -428,8 +428,8 @@
                             <label for="editGambar">Gambar</label>
                             <input type="file" class="form-control-file" id="editGambar" name="gambar_pohon">
                         </div>
-                        <div id="currentImagePreview"></div> <!-- Placeholder for current image -->
-
+                        <!-- Placeholder for current image -->
+                        <div id="currentImagePreview"></div> 
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                             <button class="btn btn-primary" type="submit">Simpan</button>

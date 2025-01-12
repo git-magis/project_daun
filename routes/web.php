@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PohonController;
 use App\Http\Controllers\JenisPohonController;
 
@@ -8,13 +9,23 @@ use App\Http\Controllers\BungaController;
 use App\Http\Controllers\JenisBungaController;
 
 use App\Http\Controllers\TamanController;
+use App\Http\Controllers\VarianPohonController;
+
+// For displaying the total of trees planted, etc
+Route::get('/admin-index', [DashboardController::class, 'index'])->name('admin-index');
+// Route::get('/charts', [DashboardController::class, 'getChartData'])->name('charts');
+
 
 // For displaying the list of Pohon
 Route::get('/manage-pohon', [PohonController::class, 'index'])->name('manage-pohon');
 
 // // For storing new Pohon data
+Route::get('/admin/pohon/create', [PohonController::class, 'create'])->name('pohon.create');
 Route::post('/pohon/store', [PohonController::class, 'store'])->name('pohon.store');
+
+Route::get('/pohon/{id}/edit', [PohonController::class, 'edit'])->name('pohon.edit');
 Route::put('/pohon/{id}', [PohonController::class, 'update'])->name('pohon.update');
+
 Route::delete('/pohon/{id}', [PohonController::class, 'destroy'])->name('pohon.destroy');
 
 
@@ -61,24 +72,26 @@ Route::post('/taman/store', [TamanController::class, 'store'])->name('taman.stor
 Route::put('/taman/{id}', [TamanController::class, 'update'])->name('taman.update');
 Route::delete('/taman/{id}', [TamanController::class, 'destroy'])->name('taman.destroy');
 
-
+// For displaying data in the varian-pohon
+Route::get('/varian-pohon', [VarianPohonController::class, 'index'])->name('varian-pohon');
+// Route::get('/detail-pohon/{id}', [VarianPohonController::class, 'show'])->name('detail-pohon');
 
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/varian-pohon', function () {
-    return view('varian_pohon');
-})->name('varian-pohon');
+// Route::get('/varian-pohon', function () {
+//     return view('varian_pohon');
+// })->name('varian-pohon');
 
 Route::get('/detail-pohon', function () {
     return view('detail_pohon');
 })->name('detail-pohon');
 
-Route::get('/admin-index', function () {
-    return view('admin.admin_index');
-})->name('admin-index');
+// Route::get('/admin-index', function () {
+//     return view('admin.admin_index');
+// })->name('admin-index');
 
 // Route::get('/manage-jenis-pohon', function () {
 //     return view('admin.manage_jenis_pohon');

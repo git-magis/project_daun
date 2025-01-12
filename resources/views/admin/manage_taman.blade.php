@@ -45,7 +45,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -97,7 +97,7 @@
                         <i class="fas fa-fw fa-shapes"></i>
                         <span>Kelas</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="{{route('manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
                         <span>Tabel Taman</span></a>
@@ -267,7 +267,6 @@
                                             <th>Kode</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
-                                            <th>QR</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -278,7 +277,6 @@
                                             <th>Kode</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
-                                            <th>QR</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -307,14 +305,6 @@
                                                         <i class="fas fa-trash"></i>
                                                     </span>
                                                     <span class="text">Hapus</span>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary btn-icon-split">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-camera-retro"></i>
-                                                    </span>
-                                                    <span class="text">Tampil</span>
                                                 </a>
                                             </td>
                                         </tr>

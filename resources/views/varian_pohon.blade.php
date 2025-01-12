@@ -119,18 +119,20 @@
                 </div>
             </div>
             <div class="row g-4 text-center">
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                    <a href="{{ route('detail-pohon') }}">
-                        <div class="feature-card" style="background-image: url({{ asset('images/flamboyan.jpg') }});">
-                            <h3 class="feature-title mb-0 text-white">Flamboyan</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
+            @foreach ($varianpohon as $jenis)
+            <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
+                <a href="{{ route('detail-pohon', ['id' => $jenis->id]) }}">
+                    <div class="feature-card" style="background-image: url({{ asset('images/' . $jenis->gambar_pohon) }});">
+                        <h3 class="feature-title mb-0 text-white">{{ $jenis->nama_jenis_pohon }}</h3>
+                    </div>
+                </a>
+            </div>
+            @endforeach
+                <!-- <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
                     <div class="feature-card" style="background-image: url({{ asset('images/mahoni.jpeg') }});">
                         <h3 class="feature-title mb-0 text-white">Mahoni</h3>
                     </div>
-                </div>
+                </div> -->
                 <!-- Repeat for other cards -->
             </div>
         </div>

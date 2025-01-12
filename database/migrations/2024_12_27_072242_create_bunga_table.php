@@ -14,8 +14,15 @@ return new class extends Migration
         Schema::create('bungas', function (Blueprint $table) {
             $table->id();
             $table->string('nama_bunga');
-            $table->string('jenis_bunga');
-            $table->string('lokasi_bunga');
+            
+            // Foreign key to the 'jenisbungas' table
+            $table->unsignedBigInteger('jenisb_id');
+            $table->foreign('jenisb_id')->references('id')->on('jenisbungas')->onDelete('cascade');
+
+            // Foreign key to the 'tamans' table
+            $table->unsignedBigInteger('lokasib_id');
+            $table->foreign('lokasib_id')->references('id')->on('tamans')->onDelete('cascade');
+
             $table->string('gambar_bunga')->nullable();
             $table->timestamps();
         });

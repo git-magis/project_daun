@@ -76,7 +76,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-solid fa-leaf"></i>
@@ -262,7 +262,7 @@
                                     <thead>
                                         <tr>
                                             <th>Gambar</th>
-                                            <th>Nama Jenis Bunga</th>
+                                            <th>Nama Jenis</th>
                                             <th>Jumlah</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
@@ -271,7 +271,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Gambar</th>
-                                            <th>Nama Jenis Bunga</th>
+                                            <th>Nama Jenis</th>
                                             <th>Jumlah</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
@@ -282,7 +282,7 @@
                                         <tr>
                                             <td>
                                                 @if ($item->gambar_bunga) 
-                                                <img src="{{ asset('images/' . $item->gambar_bunga) }}" alt="{{ $item->nama_jenis_bunga }}" style="width: 50px; height: auto;">
+                                                <img src="{{ asset('images/' . $item->gambar_bunga) }}" alt="{{ $item->nama_jenis_bunga }}" style="width: 100px; height: auto;">
                                                 @else
                                                 <i class="fas fa-camera"></i>
                                                 @endif

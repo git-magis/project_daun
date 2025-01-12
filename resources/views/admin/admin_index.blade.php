@@ -252,7 +252,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Pohon Tertanam</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">292</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPohon ?? 'haha'}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-leaf fa-2x text-gray-300"></i>
@@ -270,7 +270,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Jenis Pohon</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">23</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalJenisPohon ?? 'beak' }}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-tree fa-2x text-gray-300"></i>
@@ -290,7 +290,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">12</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $totalJenisBunga ?? 'beak' }}</div>
                                                 </div>
                                                 <!-- <div class="col">
                                                     <div class="progress progress-sm mr-2">
@@ -335,7 +335,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 Jumlah Taman</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalTaman ?? 'beak' }}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-location-arrow fa-2x text-gray-300"></i>
@@ -381,6 +381,7 @@
                                     </div>
                                     <div class="chart-pie pt-4 pb-2">
                                         <canvas id="myPieChart"></canvas>
+                                        <div id="charts-container"></div>
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
@@ -697,6 +698,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
