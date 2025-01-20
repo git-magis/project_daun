@@ -38,4 +38,15 @@ class Taman extends Model
     {
         return $this->hasMany(Bunga::class);
     }
+
+    public function jenisPohon()
+    {
+        return $this->hasManyThrough(JenisPohon::class, Pohon::class, 'lokasi_id', 'id', 'id', 'jenis_id');
+    }
+
+    public function jenisBunga()
+    {
+        return $this->hasManyThrough(JenisBunga::class, Bunga::class, 'lokasib_id', 'id', 'id', 'jenisb_id');
+    }
+
 }

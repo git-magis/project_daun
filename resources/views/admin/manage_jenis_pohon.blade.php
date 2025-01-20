@@ -288,12 +288,12 @@
                                                 @endif
                                             </td>
                                             <td>{{ $item->nama_jenis_pohon }}</td>
-                                            <td>{{ $item->jumlah }}</td>
+                                            <td>{{ $item->total }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
                                                         data-nama="{{ $item->nama_jenis_pohon }}"
-                                                        data-jumlah="{{ $item->jumlah }}"
+                                                        data-jumlah="{{ $item->total }}"
                                                         data-gambar="{{ $item->gambar_pohon }}">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-solid fa-pen"></i>

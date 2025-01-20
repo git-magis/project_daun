@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\JenisPohon;
 
 class JenisPohonController extends Controller
@@ -11,10 +12,18 @@ class JenisPohonController extends Controller
     public function index()
     {
         // Fetch all data from the pohon table
-        $data = JenisPohon::all();
+        // $data = JenisPohon::all();
 
-        // Pass data to the view
-        // return view('admin.manage_jenis_pohon', ['data' => $data]);
+        $data = JenisPohon::query()
+            ->leftJoin('pohons', 'jenispohons.id', '=', 'pohons.jenis_id')
+            ->select('jenispohons.*', DB::raw('COUNT(pohons.id) as total'))
+            ->groupBy('jenispohons.id')
+            ->get();
+
+            foreach ($data as $jenisPohon) {
+                DB::table('jenispohons')->where('id', $jenisPohon->id)->update(['jumlah' => $jenisPohon->total]);
+            }
+        
         return view('admin.manage_jenis_pohon', compact('data'));
     }
 

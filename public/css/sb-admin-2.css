@@ -89,6 +89,12 @@ p {
   margin-bottom: 1rem;
 }
 
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+
 abbr[title],
 abbr[data-original-title] {
   text-decoration: underline;

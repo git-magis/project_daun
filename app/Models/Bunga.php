@@ -26,4 +26,9 @@ class Bunga extends Model
         return $this->belongsTo(JenisBunga::class, 'jenisb_id', 'id');
     }
 
+    public function taman()
+    {
+        return $this->belongsTo(Taman::class, 'lokasib_id', 'id');
+    }
+
 }

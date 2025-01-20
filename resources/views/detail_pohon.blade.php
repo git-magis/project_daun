@@ -12,7 +12,51 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
-<body>
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <!-- <img src="./assets/images/logo-dark.svg" alt=""> -->
+                <h1>* E-Daun</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#detailpohon">Detail Pohon</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#deskripsi">Deskripsi Pohon</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#galeri">Galeri Dokumentasi</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Login</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#reviews">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blog">Blog</a>
+                    </li> -->
+                </ul>
+                <a href="#" class="btn btn-brand ms-lg-3">Login</a>
+            </div>
+        </div>
+    </nav>
+
     <section id="detailpohon" class="section-padding">
         <div class="container">
             <div class="row">
@@ -20,8 +64,8 @@
                     <div class="section-title">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Beranda</a></li>
-                                <li class="breadcrumb-item"><a href="varianpohon.html">Varian Pohon</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Beranda</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('varian-pohon') }}">Varian Pohon</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Flamboyan</li>
                             </ol>
                         </nav>
@@ -154,7 +198,7 @@
         </div>
     </section>
 
-    <section id="deskripsi" class="section-padding pt-0">
+    <section id="galeri" class="section-padding pt-0">
         <div class="container">
             <div class="row">
                 <div class="col-12">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\JenisBunga;
 
@@ -11,10 +12,18 @@ class JenisBungaController extends Controller
     public function index()
     {
         // Fetch all data from the bunga table
-        $data = JenisBunga::all();
+        $data = JenisBunga::query()
+            ->leftJoin('bungas', 'jenisbungas.id', '=', 'bungas.jenisb_id')
+            ->select('jenisbungas.*', DB::raw('COUNT(bungas.id) as total'))
+            ->groupBy('jenisbungas.id')
+            ->get();
 
-        // Pass data to the view
-        return view('admin.manage_jenis_bunga', ['data' => $data]);  // Ensure 'data' is passed correctly
+        
+        foreach ($data as $jenisBunga) {
+                DB::table('jenisbungas')->where('id', $jenisBunga->id)->update(['jumlah' => $jenisBunga->total]);
+        }
+
+        return view('admin.manage_jenis_bunga', compact('data'));
     }
 
     public function store(Request $request)

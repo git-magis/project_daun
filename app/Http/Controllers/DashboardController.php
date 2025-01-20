@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Pohon;
 use App\Models\JenisPohon;
 use App\Models\Bunga;
@@ -25,76 +26,102 @@ class DashboardController extends Controller
         $totalTaman = Taman::count();
 
         // Fetch all Tamans
-        $tamans = Taman::all();
+        $tamans = Taman::with(['jenisPohon', 'jenisBunga'])->get();
+        
 
-        // Controller for the ChartJS
-        // $chartsData = [];
-        // foreach ($tamans as $taman) {
-        //     // Fetch tree data for the current taman
-        //     $treeKinds = JenisPohon::join('pohons', 'pohons.jenis_id', '=', 'jenispohons.id')
-        //         ->where('pohons.lokasi_id', $taman->id)
-        //         ->select('jenispohons.nama_jenis_pohon as name', JenisPohon::raw('COUNT(*) as count'))
-        //         ->groupBy('jenispohons.id', 'jenispohons.nama_jenis_pohon')
-        //         ->get();
+        // GOOGLE PIE CHART
+        $chartsData = $tamans->map(function ($taman) {
+            $treeData = collect($taman->jenisPohon)->unique('id')->map(function ($jenisPohon) use ($taman) {
+                
+                $count = Pohon::where('jenis_id', $jenisPohon->id)
+                    ->where('lokasi_id', $taman->id)
+                    ->count();
+                    
+                    logger("Tree: {$jenisPohon->nama_jenis_pohon}, Count: {$count}");
+                        
+                    return [
+                        'name' => $jenisPohon->nama_jenis_pohon,
+                        'count' => $count,
+                    ];
+                });
 
-        //     // Fetch flower data for the current taman
-        //     $flowerKinds = JenisBunga::join('bungas', 'bungas.jenisb_id', '=', 'jenisbungas.id')
-        //         ->where('bungas.lokasib_id', $taman->id)
-        //         ->select('jenisbungas.nama_jenis_bunga as name', JenisBunga::raw('COUNT(*) as count'))
-        //         ->groupBy('jenisbungas.id', 'jenisbungas.nama_jenis_bunga')
-        //         ->get();
+            $flowerData = collect($taman->jenisBunga)->unique('id')->map(function ($jenisBunga) use ($taman) {
 
-        //     // Combine data into one structure for the chart
-        //     $chartsData[] = [
-        //         'taman' => $taman->nama,
-        //         'trees' => $treeKinds,
-        //         'flowers' => $flowerKinds,
-        //     ];
-        // }
+                $count = Bunga::where('jenisb_id', $jenisBunga->id)
+                    ->where('lokasib_id', $taman->id)
+                    ->count();
 
-        // $chartsData = $tamans->map(function ($taman) {
-        //     return [
-        //         'title' => "Composition of Plants in {$taman->nama}", // Replace 'name' with the column for Taman's name
-        //         'labels' => array_merge(
-        //             $taman->jenisPohon->pluck('nama_jenis_pohon')->toArray(),
-        //             $taman->jenisBunga->pluck('nama_jenis_bunga')->toArray()
-        //         ),
-        //         'data' => array_merge(
-        //             $taman->jenisPohon->pluck('jumlah')->toArray(),
-        //             $taman->jenisBunga->pluck('jumlah')->toArray()
-        //         ),
-        //         'colors' => array_merge(
-        //             array_fill(0, $taman->jenisPohon->count(), '#FF5733'),
-        //             array_fill(0, $taman->jenisBunga->count(), '#33FF57')
-        //         ),
-        //     ];
-        // });
+                    // logger("Flower: {$jenisBunga->nama_jenis_bunga}, Count: {$count}");
 
-        return view('admin.admin_index', compact('totalPohon', 'totalJenisPohon', 'totalJenisBunga', 'totalTaman'));
+                    return [
+                        'name' => $jenisBunga->nama_jenis_bunga,
+                        'count' => $count,
+                    ];
+            });
+
+            // Combine and group tree and flower data
+            $combinedData = $treeData->merge($flowerData);
+
+            // Group by name to avoid duplicate names and sum the counts
+            $groupedData = $combinedData->groupBy('name')->map(function ($items, $name) {
+                $totalCount = $items->sum('count');
+
+                // logger("Grouped Name: {$name}, Total Count: {$totalCount}");
+                    
+                return [
+                        'name' => $name,
+                        'count' => $totalCount,
+                ];
+            });
+
+            $labels = $groupedData->pluck('name')->toArray();
+            $data = $groupedData->pluck('count')->toArray();
+
+            $total = array_sum($data);
+
+            // logger("Taman: {$taman->nama}, Total: {$total}, Labels: " . json_encode($labels) . ", Data: " . json_encode($data));
+
+            return [
+                'taman' => $taman->nama,
+                'labels' => $labels,
+                'data' => $data,
+                'total' => $total,
+            ];
+                
+                
+        });
+
+        // GOOGLE BAR CHART
+        $totalData = collect();
+        $tamans->each(function ($taman) use (&$totalData) {
+            Pohon::where('lokasi_id', $taman->id)
+                ->join('jenispohons', 'jenispohons.id', '=', 'pohons.jenis_id')
+                ->select('jenispohons.nama_jenis_pohon as name', DB::raw('COUNT(DISTINCT pohons.id) as count'))
+                ->groupBy('jenispohons.nama_jenis_pohon')
+                ->get()
+                ->each(function ($row) use (&$totalData) {
+                    $totalData->put($row->name, $totalData->get($row->name, 0) + $row->count);
+                });
+
+            // Aggregate bungas
+            Bunga::where('lokasib_id', $taman->id)
+                ->join('jenisbungas', 'jenisbungas.id', '=', 'bungas.jenisb_id')
+                ->select('jenisbungas.nama_jenis_bunga as name', DB::raw('COUNT(DISTINCT bungas.id) as count'))
+                ->groupBy('jenisbungas.nama_jenis_bunga')
+                ->get()
+                ->each(function ($row) use (&$totalData) {
+                    $totalData->put($row->name, $totalData->get($row->name, 0) + $row->count);
+                });
+
+        });
+
+        $overallData = $totalData->map(function ($count, $name) {
+            return ['label' => $name, 'count' => $count];
+        })->values()->all();
+
+
+
+        return view('admin.admin_index', compact('chartsData','overallData','totalPohon', 'totalJenisPohon', 'totalJenisBunga', 'totalTaman'));
     }
 
-    // public function getChartData()
-    // {
-    //     $tamans = Taman::with(['jenisPohon', 'jenisBunga'])->get();
-
-    //     $chartsData = $tamans->map(function ($taman) {
-    //         return [
-    //             'title' => "Composition of Plants in {$taman->nama}", // Replace 'name' with the column for Taman's name
-    //             'labels' => array_merge(
-    //                 $taman->jenisPohon->pluck('nama_jenis_pohon')->toArray(),
-    //                 $taman->jenisBunga->pluck('nama_jenis_bunga')->toArray()
-    //             ),
-    //             'data' => array_merge(
-    //                 $taman->jenisPohon->pluck('jumlah')->toArray(),
-    //                 $taman->jenisBunga->pluck('jumlah')->toArray()
-    //             ),
-    //             'colors' => array_merge(
-    //                 array_fill(0, $taman->jenisPohon->count(), '#FF5733'),
-    //                 array_fill(0, $taman->jenisBunga->count(), '#33FF57')
-    //             ),
-    //         ];
-    //     });
-
-    //     return view('admin.admin_index', compact('chartsData'));
-    // }
 }

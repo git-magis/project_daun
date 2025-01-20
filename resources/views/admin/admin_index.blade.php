@@ -251,7 +251,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Pohon Tertanam</div>
+                                                Jumlah Tanaman</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPohon ?? 'haha'}}</div>
                                         </div>
                                         <div class="col-auto">
@@ -346,20 +346,17 @@
                         </div>
                     </div>
 
-                    
-
                     <!-- Content Row -->
 
                     <div class="row">
-
                         <!-- Pie Chart -->
+                        @foreach ($chartsData as $taman)
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Komposisi Pohon Blok A</h6>
-                                    <div class="dropdown no-arrow">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Komposisi Tanaman pada: {{ $taman['taman'] }}</h6>
+                                    <!-- <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -372,266 +369,21 @@
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">Something else here</a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="mt-4 text-center">
-                                        <h5>Jumlah Pohon: 80</h5>
+                                <div class="card-body mb-4">
+                                    <div class="mt-2 text-center">
+                                        <p>Total Tanaman: {{ $taman['total'] }}</p>
                                     </div>
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                        <div id="charts-container"></div>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #4e73df;"></i> Flamboyan
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #1cc88a;"></i> Mahoni
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #36b9cc;"></i> Akasia
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C9883D;"></i> Biola Cantik
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #A7D037;"></i> Angsana
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #30B9CE;"></i> Bungur
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #7571E2;"></i> Pinus
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C246BC;"></i> Suren
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #CC6B7F;"></i> Bambu Tali
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #89C3CC;"></i> Bambu Haur Koneng
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #3B3128;"></i> Bambu Payung
-                                        </span>
+                                    <div class="chart-pie pb-2">
+                                        <div id="chart-{{ $taman['taman'] }}"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Komposisi Pohon Blok B</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="mt-4 text-center">
-                                        <h5>Jumlah Pohon: 58</h5>
-                                    </div>
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart2"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #4e73df;"></i> Flamboyan
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #1cc88a;"></i> Mahoni
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #36b9cc;"></i> Kamboja
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C9883D;"></i> Biola Cantik
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #A7D037;"></i> Angsana
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #30B9CE;"></i> Trembesi
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #7571E2;"></i> Bintaro
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C246BC;"></i> Suren
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #CC6B7F;"></i> Kupu-kupu
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #89C3CC;"></i> Tanjung
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #3B3128;"></i> Glodogan Tiang
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Komposisi Pohon Blok B</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="mt-4 text-center">
-                                        <h5>Jumlah Pohon: 58</h5>
-                                    </div>
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart2"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #4e73df;"></i> Flamboyan
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #1cc88a;"></i> Mahoni
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #36b9cc;"></i> Kamboja
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C9883D;"></i> Biola Cantik
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #A7D037;"></i> Angsana
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #30B9CE;"></i> Trembesi
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #7571E2;"></i> Bintaro
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C246BC;"></i> Suren
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #CC6B7F;"></i> Kupu-kupu
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #89C3CC;"></i> Tanjung
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #3B3128;"></i> Glodogan Tiang
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Komposisi Pohon Blok B</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="mt-4 text-center">
-                                        <h5>Jumlah Pohon: 58</h5>
-                                    </div>
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart2"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #4e73df;"></i> Flamboyan
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #1cc88a;"></i> Mahoni
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #36b9cc;"></i> Kamboja
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C9883D;"></i> Biola Cantik
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #A7D037;"></i> Angsana
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #30B9CE;"></i> Trembesi
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #7571E2;"></i> Bintaro
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #C246BC;"></i> Suren
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #CC6B7F;"></i> Kupu-kupu
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #89C3CC;"></i> Tanjung
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color: #3B3128;"></i> Glodogan Tiang
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
-
-                    
 
                     <div class="row">
                         <!-- Area Chart -->
@@ -639,17 +391,14 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Komposisi Seluruh Pohon</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Komposisi Seluruh Tanaman</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-body">
+                                <div class="card shadow">
+                                    <div class="card-body mb-5">
                                         <div class="chart-bar">
-                                            <canvas id="myBarChart2"></canvas>
+                                            <div id="column-chart"></div>
                                         </div>
-                                        <hr>
-                                        Styling for the bar chart can be found in the
-                                        <code>/js/demo/chart-bar-demo.js</code> file.
                                     </div>
                                 </div>
                             </div>
@@ -698,6 +447,94 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+        const chartsData = @json($chartsData);
+
+        chartsData.forEach((taman) => {
+            if (!taman.labels || !taman.data || taman.labels.length !== taman.data.length) {
+            console.error(`Data mismatch or missing for taman: ${taman.taman}`, taman);
+            return; // Skip this taman if data is invalid
+        }
+
+
+        console.log("Original Data:", taman.labels, taman.data);
+
+        // Group the labels and sum the data
+        const groupedData = {};
+        taman.labels.forEach((label, index) => {
+            if (!groupedData[label]) {
+                groupedData[label] = taman.data[index];
+            } else {
+                groupedData[label] += taman.data[index];
+            }
+        });
+
+        console.log("Grouped Data:", groupedData);
+
+        const chartData = Object.entries(groupedData).map(([label, value]) => [label, value]);
+
+        const total = taman.data.reduce((sum, value) => sum + value, 0); // Calculate total dynamically if not provided
+            
+        // var data = google.visualization.arrayToDataTable([
+        //     ['Jenis', 'Jumlah'],
+        //     ...taman.labels.map((label, index) => [label, taman.data[index]])
+        // ]);
+
+        const data = google.visualization.arrayToDataTable([
+            ['Jenis', 'Jumlah'],
+            ...chartData,
+        ]);
+
+        const options = {
+            // title:' (Total Tanaman: ' + taman.total + ')',
+            width: 500,
+            height: 280,
+            pieHole: 0.3,
+            legend: { position: 'right' },
+            chartArea: { width: '80%', height: '70%' },
+        };
+
+        const chart = new google.visualization.PieChart(document.getElementById(`chart-${taman.taman}`));
+        chart.draw(data, options);
+        });
+    }
+
+    </script>
+    
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawColumnChart);
+
+        function drawColumnChart() {
+            const overallData = @json($overallData);
+
+            const data = google.visualization.arrayToDataTable([
+                ['Jenis', 'Jumlah'],
+                ...overallData.map(item => [item.label, item.count]),
+            ]);
+
+            const options = {
+                // title: 'Overall Composition of Tanaman',
+                width: '100%',
+                height: 350,
+                legend: { position: 'none' },
+                chartArea: { width: '80%', height: '70%' },
+                hAxis: { title: 'Jenis', slantedText: true },
+                vAxis: { title: 'Jumlah', minValue: 0 },
+            };
+
+            const chart = new google.visualization.ColumnChart(document.getElementById('column-chart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
 
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

@@ -45,7 +45,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -288,12 +288,12 @@
                                                 @endif
                                             </td>
                                             <td>{{ $item->nama_jenis_bunga }}</td> 
-                                            <td>{{ $item->jumlah }}</td>
+                                            <td>{{ $item->total }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
                                                         data-nama="{{ $item->nama_jenis_bunga }}" 
-                                                        data-jumlah="{{ $item->jumlah }}"
+                                                        data-jumlah="{{ $item->total }}"
                                                         data-gambar="{{ $item->gambar_bunga }}"> 
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-solid fa-pen"></i>
