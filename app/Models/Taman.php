@@ -26,7 +26,6 @@ class Taman extends Model
         'latitude',
         'longitude',
         'kode',
-        'lokasib_id'
     ];
 
     public function pohons()

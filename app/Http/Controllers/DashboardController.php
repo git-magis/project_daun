@@ -37,7 +37,7 @@ class DashboardController extends Controller
                     ->where('lokasi_id', $taman->id)
                     ->count();
                     
-                    logger("Tree: {$jenisPohon->nama_jenis_pohon}, Count: {$count}");
+                    // logger("Tree: {$jenisPohon->nama_jenis_pohon}, Count: {$count}");
                         
                     return [
                         'name' => $jenisPohon->nama_jenis_pohon,

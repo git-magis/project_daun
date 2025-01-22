@@ -28,6 +28,8 @@ return new class extends Migration
 
             // Timestamps for created_at and updated_at
             $table->timestamps();
+
+            $table->string('kode_unik')->nullable();
         });
     }
 

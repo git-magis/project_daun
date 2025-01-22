@@ -25,6 +25,8 @@ return new class extends Migration
 
             $table->string('gambar_bunga')->nullable();
             $table->timestamps();
+            
+            $table->string('kode_unik')->nullable();
         });
     }
 

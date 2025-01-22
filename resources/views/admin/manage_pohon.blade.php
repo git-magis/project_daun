@@ -261,6 +261,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Kode</th>
                                             <th>Nama</th>
                                             <th>Jenis</th>
                                             <th>Lokasi</th>
@@ -271,6 +272,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Kode</th>
                                             <th>Nama</th>
                                             <th>Jenis</th>
                                             <th>Lokasi</th>
@@ -282,6 +284,7 @@
                                     <tbody>
                                         @foreach ($data as $item)
                                         <tr>
+                                            <td>{{ $item->kode_unik }}</td>
                                             <td>{{ $item->nama_pohon }}</td>
                                             <td>{{ $item->jenisPohon->nama_jenis_pohon ?? 'No Kind Assigned' }}</td>
                                             <td>{{ $item->taman->nama ?? 'No Location Assigned' }}</td>

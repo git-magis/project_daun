@@ -261,6 +261,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Kode</th>
                                             <th>Nama</th>
                                             <th>Jenis</th>
                                             <th>Lokasi</th>
@@ -271,6 +272,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Kode</th>
                                             <th>Nama</th>
                                             <th>Jenis</th>
                                             <th>Lokasi</th>
@@ -282,6 +284,7 @@
                                     <tbody>
                                         @foreach ($data as $item)
                                         <tr>
+                                            <td>{{ $item->kode_unik }}</td>
                                             <td>{{ $item->nama_bunga }}</td> 
                                             <td>{{ $item->jenisBunga->nama_jenis_bunga ?? 'naha euweuh'}}</td> 
                                             <td>{{ $item->taman->nama ?? 'teuh' }}</td>
@@ -446,7 +449,7 @@
                         </div>
                         <div class="form-group">
                             <label for="editJenis">Jenis</label>
-                            <select id="editJenis" name="jenis_bunga" class="form-control" required>
+                            <select id="editJenis" name="jenisb_id" class="form-control" required>
                                 @isset($jenis_bunga)
                                     @foreach($jenis_bunga as $jenis)
                                         <option value="{{ $jenis->id }}">{{ $jenis->nama_jenis_bunga }}</option>
@@ -456,7 +459,7 @@
                         </div>
                         <div class="form-group">
                             <label for="editLokasi">Lokasi</label>
-                            <select id="editLokasi" name="lokasi_bunga" class="form-control" required>
+                            <select id="editLokasi" name="lokasib_id" class="form-control" required>
                                 @isset($taman_lokasi)
                                     @foreach($taman_lokasi as $lokasi)
                                         <option value="{{ $lokasi->id }}">{{ $lokasi->nama }}</option>
@@ -481,8 +484,8 @@
     </div>
 
     @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 my-2" role="alert">
+            <p>{{ session('success') }}</p>
         </div>
     @endif
 

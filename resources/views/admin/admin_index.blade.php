@@ -394,11 +394,9 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Komposisi Seluruh Tanaman</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card shadow">
-                                    <div class="card-body mb-5">
-                                        <div class="chart-bar">
-                                            <div id="column-chart"></div>
-                                        </div>
+                                <div class="card-body mb-5">
+                                    <div class="chart-bar">
+                                        <div id="column-chart"></div>
                                     </div>
                                 </div>
                             </div>

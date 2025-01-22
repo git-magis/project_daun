@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+
 use App\Models\Pohon;
 use App\Models\JenisPohon;
 use App\Models\Taman;
@@ -76,31 +79,74 @@ class PohonController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'nama_pohon' => 'required|string|max:255',
-            'jenis_id' => 'required|exists:jenispohons,id',
-            'lokasi_id' => 'required|exists:tamans,id',
-            'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        // $validated = $request->validate([
+        //     'nama_pohon' => 'required|string|max:255',
+        //     'jenis_id' => 'required|exists:jenispohons,id',
+        //     'lokasi_id' => 'required|exists:tamans,id',
+        //     'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ]);
     
-        $data = Pohon::findOrFail($id); // Find the Pohon record by ID
+        // $data = Pohon::findOrFail($id);
     
-        // Handle the file upload
-        if ($request->hasFile('gambar_pohon')) {
-            $imageName = time() . '.' . $request->gambar_pohon->extension();
-            $request->gambar_pohon->move(public_path('images'), $imageName);
-            $data->gambar_pohon = $imageName; // Update the image field
+        // if ($request->hasFile('gambar_pohon')) {
+        //     $imageName = time() . '.' . $request->gambar_pohon->extension();
+        //     $request->gambar_pohon->move(public_path('images'), $imageName);
+        //     $data->gambar_pohon = $imageName; // Update the image field
+        // }
+    
+        // // Update other fields
+        // $data->update([
+        //     'nama_pohon' => $validated['nama_pohon'],
+        //     'jenis_id' => $validated['jenis_id'],
+        //     'lokasi_id' => $validated['lokasi_id'],
+        //     'gambar_pohon' => $data->gambar_pohon ?? null,
+        // ]);
+    
+        // return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');
+
+        try {
+            // Log incoming request data
+            Log::info('Update request received:', $request->all());
+
+            $validated = $request->validate([
+                'nama_pohon' => 'required|string|max:255',
+                'jenis_id' => 'required|exists:jenispohons,id',
+                'lokasi_id' => 'required|exists:tamans,id',
+                'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            // Fetch the Bunga instance
+            $data = Pohon::findOrFail($id);
+            Log::info('Model state before update:', $data->toArray());
+
+            // Update the model with new data
+            $data->update($request->all());
+            Log::info('Model state after update:', $data->toArray());
+
+            $data = Pohon::findOrFail($id); // Find the bunga record by ID
+    
+            // Handle the file upload
+            if ($request->hasFile('gambar_pohon')) {
+                $imageName = time() . '.' . $request->gambar_pohon->extension();
+                $request->gambar_pohon->move(public_path('images'), $imageName);
+                $data->gambar_pohon = $imageName; // Update the image field
+            }
+        
+            // Update other fields
+            $data->update([
+                'nama_pohon' => $validated['nama_pohon'],
+                'jenis_id' => $validated['jenis_id'],
+                'lokasi_id' => $validated['lokasi_id'],
+                'gambar_pohon' => $data->gambar_pohon ?? null, // Keep the existing image if not updated
+            ]);
+        
+            return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');
+
+        } catch (\Exception $e) {
+            // Log any exceptions
+            Log::error('Error during update:', ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return response()->json(['error' => 'Failed to update Pohon'], 500);
         }
-    
-        // Update other fields
-        $data->update([
-            'nama_pohon' => $validated['nama_pohon'],
-            'jenis_id' => $validated['jenis_id'],
-            'lokasi_id' => $validated['lokasi_id'],
-            'gambar_pohon' => $data->gambar_pohon ?? null, // Keep the existing image if not updated
-        ]);
-    
-        return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');
     }
 
     public function destroy($id)
