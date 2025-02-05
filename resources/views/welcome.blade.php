@@ -44,7 +44,7 @@
                         <a class="nav-link" href="#">Feedback</a>
                     </li>
                 </ul>
-                <a href="#" class="btn btn-brand ms-lg-3">Login</a>
+                <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Login</a>
             </div>
         </div>
     </nav>

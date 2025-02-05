@@ -43,7 +43,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('admin-index')}}">
+                <a class="nav-link" href="{{route('staff-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -89,16 +89,16 @@
                         <a class="collapse-item" href="utilities-other.html">Other</a> -->
                     </div>
                 </div>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{{route('manage-kelas')}}">
                         <i class="fas fa-fw fa-shapes"></i>
                         <span>Kelas</span></a>
-                </li>
-                <!-- <li class="nav-item">
+                </li> -->
+                <li class="nav-item">
                     <a class="nav-link" href="{{route('manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
                         <span>Tabel Taman</span></a>
-                </li> -->
+                </li>
             </li>
 
             <!-- Divider -->
@@ -131,11 +131,11 @@
             </li> -->
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{route('manage-user')}}">
                     <i class="fas fa-fw fa-solid fa-user"></i>
                     <span>Tabel Admin</span></a>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Tables -->
             <!-- <li class="nav-item">

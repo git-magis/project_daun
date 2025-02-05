@@ -256,32 +256,47 @@
                                     </a>
                                 </div>
                             </div> -->
-                        <div class="card-body">
+                            <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Nama</th>
-                                            <th>NIP</th>
-                                            <th>Terakhir aktif</th>
+                                            <th>Email</th>
+                                            <th>Level</th>
+                                            <th>Edit</th>
                                             <th>Hapus</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Nama</th>
-                                            <th>NIP</th>
-                                            <th>Terakhir aktif</th>
+                                            <th>Email</th>
+                                            <th>Level</th>
+                                            <th>Edit</th>
                                             <th>Hapus</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @foreach ($users as $user)
                                         <tr>
-                                            <td>Admin Ganteng</td>
-                                            <td>77632323321</td>
-                                            <td>4 jam yang lalu</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->level }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-danger btn-icon-split">
+                                                <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
+                                                        data-id="{{ $user->id }}"
+                                                        data-name="{{ $user->name }}"
+                                                        data-email="{{ $user->email }}"
+                                                        data-level="{{ $user->level }}">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-pen"></i>
+                                                    </span>
+                                                    <span class="text">Edit</span>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target="#hapusModal" data-id="{{ $user->id }}">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-trash"></i>
                                                     </span>
@@ -289,34 +304,9 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>77632323321</td>
-                                            <td>4 jam yang lalu</td>
-                                            <td>
-                                                <a href="#" class="btn btn-danger btn-icon-split">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-trash"></i>
-                                                    </span>
-                                                    <span class="text">Hapus</span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>77632323321</td>
-                                            <td>4 jam yang lalu</td>
-                                            <td>
-                                                <a href="#" class="btn btn-danger btn-icon-split">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-trash"></i>
-                                                    </span>
-                                                    <span class="text">Hapus</span>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
-                                </table>
+                                </table>                                
                             </div>
                         </div>
                     </div>

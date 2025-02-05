@@ -13,7 +13,10 @@ class RedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \illuminate\Http\Request $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param string/null ...$guards
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
@@ -21,7 +24,18 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = Auth::user();
+                switch ($user->level) {
+                    case 'admin':
+                        return redirect()->route('admin-index');
+
+                    case 'staff':
+                        return redirect()->route('staff-index');
+
+
+                    default:
+                        return redirect(RouteServiceProvider::HOME);
+                }
             }
         }
 

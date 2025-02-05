@@ -30,7 +30,7 @@ class JenisBungaController extends Controller
     {
         $validated = $request->validate([
             'nama_jenis_bunga' => 'required|string|max:255',
-            'jumlah' => 'required|string',
+            // 'jumlah' => 'required|string',
             'gambar_bunga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -43,7 +43,7 @@ class JenisBungaController extends Controller
         // Save the data to the database
         JenisBunga::create([
             'nama_jenis_bunga' => $validated['nama_jenis_bunga'],
-            'jumlah' => $validated['jumlah'],
+            // 'jumlah' => $validated['jumlah'],
             'gambar_bunga' => $imageName ?? null,
         ]);
 
@@ -54,7 +54,7 @@ class JenisBungaController extends Controller
     {
         $validated = $request->validate([
             'nama_jenis_bunga' => 'required|string|max:255',
-            'jumlah' => 'required|string',
+            // 'jumlah' => 'required|string',
             'gambar_bunga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
@@ -70,7 +70,7 @@ class JenisBungaController extends Controller
         // Update other fields
         $data->update([
             'nama_jenis_bunga' => $validated['nama_jenis_bunga'],
-            'jumlah' => $validated['jumlah'],
+            // 'jumlah' => $validated['jumlah'],
             'gambar_bunga' => $imageName ?? null,
         ]);
     

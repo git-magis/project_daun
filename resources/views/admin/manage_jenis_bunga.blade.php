@@ -293,7 +293,6 @@
                                                 <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
                                                         data-nama="{{ $item->nama_jenis_bunga }}" 
-                                                        data-jumlah="{{ $item->total }}"
                                                         data-gambar="{{ $item->gambar_bunga }}"> 
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-solid fa-pen"></i>
@@ -382,10 +381,10 @@
                             <label for="nama_jenis_bunga">Nama</label> <!-- Changed 'nama_jenis_pohon' to 'nama_jenis_bunga' -->
                             <input type="text" class="form-control" id="nama_jenis_bunga" name="nama_jenis_bunga" placeholder="Tjokro Wimantara.." required>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="jumlah">Jumlah Tanaman</label>
                             <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" max="100" required>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label for="gambar_bunga">Gambar</label> <!-- Changed 'gambar_pohon' to 'gambar_bunga' -->
                             <input type="file" class="form-control-file" id="gambar_bunga" name="gambar_bunga" required>
@@ -419,10 +418,10 @@
                             <label for="editNama">Nama</label>
                             <input type="text" class="form-control" id="editNama" name="nama_jenis_bunga" required> <!-- Changed 'nama_jenis_pohon' to 'nama_jenis_bunga' -->
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="editJumlah">Jumlah</label>
                             <input type="number" class="form-control" id="editJumlah" name="jumlah" min="1" required>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label for="editGambar">Gambar</label>
                             <input type="file" class="form-control-file" id="editGambar" name="gambar_bunga"> <!-- Changed 'gambar_pohon' to 'gambar_bunga' -->
@@ -486,7 +485,7 @@
             var button = $(event.relatedTarget); // Button that triggered the modal
             var id = button.data('id');
             var nama = button.data('nama');
-            var jumlah = button.data('jumlah');
+            // var jumlah = button.data('jumlah');
             var gambar = button.data('gambar');
             
             var formAction = '{{ route('jenis_bunga.update', ':id') }}'; // Changed 'jenis_pohon.update' to 'jenis_bunga.update'
@@ -495,7 +494,7 @@
     
             // Set the input values in the form
             $('#editNama').val(nama);
-            $('#editJumlah').val(jumlah);
+            // $('#editJumlah').val(jumlah);
     
             if (gambar) {
                 $('#currentImagePreview').html('<img src="' + gambar + '" width="100" alt="Current Image">');

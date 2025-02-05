@@ -31,7 +31,7 @@ class JenisPohonController extends Controller
     {
         $validated = $request->validate([
             'nama_jenis_pohon' => 'required|string|max:255',
-            'jumlah' => 'required|string',
+            // 'jumlah' => 'required|string',
             'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -44,7 +44,7 @@ class JenisPohonController extends Controller
         // Save the data to the database
         JenisPohon::create([
             'nama_jenis_pohon' => $validated['nama_jenis_pohon'],
-            'jumlah' => $validated['jumlah'],
+            // 'jumlah' => $validated['jumlah'],
             'gambar_pohon' => $imageName ?? null,
         ]);
 
@@ -55,7 +55,7 @@ class JenisPohonController extends Controller
     {
         $validated = $request->validate([
             'nama_jenis_pohon' => 'required|string|max:255',
-            'jumlah' => 'required|string',
+            // 'jumlah' => 'required|string',
             'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
@@ -71,7 +71,7 @@ class JenisPohonController extends Controller
         // Update other fields
         $data->update([
             'nama_jenis_pohon' => $validated['nama_jenis_pohon'],
-            'jumlah' => $validated['jumlah'],
+            // 'jumlah' => $validated['jumlah'],
             'gambar_pohon' => $imageName ?? null,
         ]);
     

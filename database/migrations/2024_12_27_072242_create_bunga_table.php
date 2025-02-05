@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('bungas', function (Blueprint $table) {
             $table->id();
             $table->string('nama_bunga');
@@ -28,6 +30,8 @@ return new class extends Migration
             
             $table->string('kode_unik')->nullable();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
 
