@@ -32,6 +32,8 @@ class JenisPohonController extends Controller
         $validated = $request->validate([
             'nama_jenis_pohon' => 'required|string|max:255',
             // 'jumlah' => 'required|string',
+            'nama_ilmiah' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
             'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -45,10 +47,14 @@ class JenisPohonController extends Controller
         JenisPohon::create([
             'nama_jenis_pohon' => $validated['nama_jenis_pohon'],
             // 'jumlah' => $validated['jumlah'],
+            'nama_ilmiah' => $validated['nama_ilmiah'],
+            'deskripsi' => $validated['deskripsi'],
             'gambar_pohon' => $imageName ?? null,
         ]);
 
-        return redirect()->route('manage-jenis-pohon')->with('success', 'Data saved successfully.');
+        // return redirect()->route('manage-jenis-pohon')->with('success', 'Data saved successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-pohon' : 'staff.manage-jenis-pohon')
+        ->with('success', 'Data saved sucessfully.');
     }
 
     public function update(Request $request, $id)
@@ -56,6 +62,8 @@ class JenisPohonController extends Controller
         $validated = $request->validate([
             'nama_jenis_pohon' => 'required|string|max:255',
             // 'jumlah' => 'required|string',
+            'nama_ilmiah' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
             'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
@@ -67,15 +75,22 @@ class JenisPohonController extends Controller
             $request->gambar_pohon->move(public_path('images'), $imageName);
             $data->gambar_pohon = $imageName; // Update the image field
         }
+        else {
+            $imageName = $data->getOriginal('gambar_pohon');
+        }
     
         // Update other fields
         $data->update([
             'nama_jenis_pohon' => $validated['nama_jenis_pohon'],
             // 'jumlah' => $validated['jumlah'],
-            'gambar_pohon' => $imageName ?? null,
+            'nama_ilmiah' => $validated['nama_ilmiah'],
+            'deskripsi' => $validated['deskripsi'],
+            'gambar_pohon' => $imageName,
         ]);
     
-        return redirect()->route('manage-jenis-pohon')->with('success', 'Data updated successfully.');
+        // return redirect()->route('manage-jenis-pohon')->with('success', 'Data updated successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-pohon' : 'staff.manage-jenis-pohon')
+        ->with('success', 'Data updated sucessfully.');
     }
 
     public function destroy($id)
@@ -85,7 +100,9 @@ class JenisPohonController extends Controller
         $data->delete();
 
         // Redirect back with a success message
-        return redirect()->route('manage-jenis-pohon')->with('success', 'Jenis Pohon berhasil dihapus.');
+        // return redirect()->route('manage-jenis-pohon')->with('success', 'Jenis Pohon berhasil dihapus.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-pohon' : 'staff.manage-jenis-pohon')
+        ->with('success', 'Data deleted sucessfully.');
     }
 
 

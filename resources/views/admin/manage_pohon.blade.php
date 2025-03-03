@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Admin - Tabel Pohon</title>
 
     <!-- Custom fonts for this template -->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -31,7 +31,11 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
+        @if(auth()->user()->level == 'admin')
+        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+        @elseif(auth()->user()->level == 'staff')
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        @endif
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -46,9 +50,15 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin-index')}}">
+                @if(auth()->user()->level == 'admin')
+                <a class="nav-link" href="{{route('admin.admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+                @elseif(auth()->user()->level == 'staff')
+                <a class="nav-link" href="{{route('staff.admin-index')}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+                @endif
             </li>
 
             <!-- Divider -->
@@ -56,7 +66,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Pohon
+                Tanaman
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -68,9 +78,13 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-pohon')}}">Tabel Pohon</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -85,32 +99,38 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-bunga')}}">Tabel Bunga</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-bunga')}}">Jenis Bunga</a>
-                        <!-- <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a> -->
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @endif
                     </div>
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-kelas')}}">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-atribut')}}">
                         <i class="fas fa-fw fa-shapes"></i>
-                        <span>Kelas</span></a>
+                        <span>Atribut</span></a>
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-atribut')}}">
+                        <i class="fas fa-fw fa-shapes"></i>
+                        <span>Atribut</span></a>
+                    @endif
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-taman')}}">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
                         <span>Tabel Taman</span></a>
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-taman')}}">
+                        <i class="fas fa-fw fa-map-pin"></i>
+                        <span>Tabel Taman</span></a>
+                    @endif
                 </li>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Admin
-            </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- <li class="nav-item">
@@ -135,9 +155,15 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
+                @if(auth()->user()->level == 'admin')
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Admin
+                </div>
                 <a class="nav-link" href="{{route('manage-user')}}">
                     <i class="fas fa-fw fa-solid fa-user"></i>
                     <span>Tabel Admin</span></a>
+                @endif
             </li>
 
             <!-- Nav Item - Tables -->
@@ -202,14 +228,17 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                @if(auth()->user()->level == 'admin')
+                                <i class="fas fa-crown fa-sm fa-fw mr-2 text-primary"></i>
+                                @elseif(auth()->user()->level == 'staff')
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
+                                @endif
+                                <span class="mr-2 d-none d-lg-inline text-primary">{{ auth()->user()->name }}</span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -221,11 +250,14 @@
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                <div class="dropdown-divider"></div> -->
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="this.closest('form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
+                                        Logout
+                                    </a>
+                                </form>
                             </div>
                         </li>
 
@@ -258,13 +290,16 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered text-dark" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>No</th>
                                             <th>Kode</th>
                                             <th>Nama</th>
                                             <th>Jenis</th>
                                             <th>Lokasi</th>
+                                            <th>Ditambahkan Oleh</th>
+                                            <th>Waktu Ditambahkan</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
                                             <th>QR</th>
@@ -272,29 +307,35 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>No</th>
                                             <th>Kode</th>
                                             <th>Nama</th>
                                             <th>Jenis</th>
                                             <th>Lokasi</th>
+                                            <th>Ditambahkan Oleh</th>
+                                            <th>Waktu Ditambahkan</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
                                             <th>QR</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($data as $item)
+                                        @foreach ($data as $index => $item)
                                         <tr>
+                                            <td>{{ $index + 1}}</td>
                                             <td>{{ $item->kode_unik }}</td>
                                             <td>{{ $item->nama_pohon }}</td>
                                             <td>{{ $item->jenisPohon->nama_jenis_pohon ?? 'No Kind Assigned' }}</td>
                                             <td>{{ $item->taman->nama ?? 'No Location Assigned' }}</td>
+                                            <td>{{ $item->user->name ?? 'saha'}}</td>
+                                            <td>{{ $item->formatted_created_at }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
                                                         data-nama="{{ $item->nama_pohon }}"
                                                         data-jenis="{{ $item->jenis_id }}"
                                                         data-lokasi="{{ $item->lokasi_id }}"
-                                                        data-gambar="{{ asset('storage/' . $item->gambar_pohon) }}">
+                                                        data-gambar="{{ $item->gambar_pohon }}">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-pen"></i>
                                                     </span>
@@ -335,7 +376,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>DLH Kota Tasikmalaya 2025 - Admin v.1</span>
                     </div>
                 </div>
             </footer>
@@ -416,7 +457,7 @@
                         </div>
                         <div class="form-group">
                             <label for="gambarPohon">Gambar</label>
-                            <input type="file" name="gambar_pohon" class="form-control-file" id="gambarPohon" required>
+                            <input type="file" name="gambar_pohon" class="form-control-file" id="gambarPohon">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -471,7 +512,7 @@
                             <label for="editGambar">Gambar</label>
                             <input type="file" class="form-control-file" id="editGambar" name="gambar_pohon">
                         </div>
-                        <div id="currentImagePreview"></div> <!-- Placeholder for current image -->
+                        <div id="currentImagePreview"></div>
 
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -555,15 +596,8 @@
             $('#editJenis').val(jenis);
             $('#editLokasi').val(lokasi);
     
-            // If the image URL is provided, display it in the modal
-            // You can add a preview of the existing image or leave it as is.
-            // For example:
-            if (gambar) {
-                // Display current image preview
-                $('#currentImagePreview').html('<img src="' + gambar + '" width="100" alt="Current Image">');
-            } else {
-                $('#currentImagePreview').html('');
-            }
+            let imagePath = '/images/' + gambar; // Adjust based on your storage location
+            $('#currentImagePreview').html('<img src="' + imagePath + '" width="100" alt="euweuhan">');
         });
 
         // Use jQuery to update the form action dynamically

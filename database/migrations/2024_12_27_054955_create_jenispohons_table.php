@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_jenis_pohon');
             $table->string('jumlah')->nullable();
+            $table->string('nama_ilmiah')->nullable();
+            $table->longText('deskripsi')->nullable();
             $table->string('gambar_pohon')->nullable();
             $table->timestamps();
         });

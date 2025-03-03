@@ -17,7 +17,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ route('welcome') }}">
                 <!-- <img src="./assets/images/logo-dark.svg" alt=""> -->
                 <h1>* E-Daun</h1>
             </a>
@@ -52,7 +52,7 @@
                         <a class="nav-link" href="#blog">Blog</a>
                     </li> -->
                 </ul>
-                <a href="#" class="btn btn-brand ms-lg-3">Login</a>
+                <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Admin</a>
             </div>
         </div>
     </nav>
@@ -66,113 +66,59 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Beranda</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('varian-pohon') }}">Varian Pohon</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Flamboyan</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ $jenisPohon->nama_jenis_pohon }}</li>
                             </ol>
                         </nav>
-                        <h1 class="display-4 fw-semibold mb-0">Flamboyan</h1>
-                        <p class="fs-4 fst-italic">Delonix Regia Rafin</p>
+                        <h1 class="display-4 fw-semibold mb-0">{{ $jenisPohon->nama_jenis_pohon }}</h1>
+                        <p class="fs-4 fst-italic">{{ $jenisPohon->nama_ilmiah ?? 'nama ilmiah' }}</p>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-between align-items-start">
+                <!-- Image -->
                 <div class="col-lg-6 pb-5">
-                    <img src="{{asset('images/flamboyan.jpg')}}" alt="">
+                    <img src="{{ asset('images/' . $jenisPohon->gambar_pohon) }}" alt="" class="rounded-4 theme-shadow">
                 </div>
-                <div class="col-lg-2">
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Kingdom</h5>
-                            <p>Plantae</p>
+
+                <!-- Right Section (Cards) -->
+                <div class="col-lg-6">
+                    <div class="row">
+                        <!-- Jumlah Pohon -->
+                        <div class="col-md-6 pb-3">
+                            <div class="mb-2 text-center bg-white theme-shadow rounded-4 py-4">
+                                <h1 class="text-success display-2">{{ $jenisPohon->jumlah}}</h1>
+                                <h6 class="text-uppercase mb-0 text-black mt-3">Jumlah Pohon</h6>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Subkingdom</h5>
-                            <p>Tracheophyta</p>
+
+                        <!-- Lokasi Pohon (Placed below) -->
+                        <div class="col-md-6 pb-3">
+                            <div class="mb-2 text-center bg-white theme-shadow rounded-4 py-4">
+                                <h1 class="text-success display-2">{{ $lokasiPohon->total_taman ?? '0' }}</h1>
+                                <h6 class="text-uppercase mb-0 text-black mt-3">Lokasi Pohon</h6>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Divisi</h5>
-                            <p>Angiospermae</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Subdivisi</h5>
-                            <p>Eudikotil</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Kelas</h5>
-                            <p>Rosid</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Ordo</h5>
-                            <p>Fabales</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Famili</h5>
-                            <p>Fabaceae</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Subfamili</h5>
-                            <p>Caesalpinioideae</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Genus</h5>
-                            <p>Delonix</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Spesies</h5>
-                            <p>D. Regia</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div>
-                            <h5>Nama Binomial</h5>
-                            <p>Delonix Regia</p>
+
+                        <!-- Kode Pohon (Spans full width) -->
+                        <div class="col-12 pb-5">
+                            <div class="mb-2 text-center bg-white theme-shadow rounded-4 py-4">
+                                <h1 class="text-success display-5">--/Tre/MAHO/-</h1>
+                                <h6 class="text-uppercase mb-0 text-black mt-3">Kode Pohon</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row pt-4">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Informasi Pohon</h2>
+
+            <div class="row">
+                @foreach($attributes as $index => $attribute)
+                    <div class="col-lg-4 mb-3">
+                        <div>
+                            <h5>{{ ucfirst($attribute->attribute_name) }}</h5>
+                            <p>{{ $attribute->attribute_value }}</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="row g-4 text-center">
-                <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2">34</h1>
-                    <h6 class="text-uppercase mb-0 text-black mt-3">Jumlah Pohon</h6>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2">4</h1>
-                    <h6 class="text-uppercase mb-0 text-black mt-3">Lokasi Pohon</h6>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2">01A-49D</h1>
-                    <h6 class="text-uppercase mb-0 text-black mt-3">Kode Pohon</h6>
-                </div>
-                <!-- <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2">4</h1>
-                    <h6 class="text-uppercase mb-0 text-black mt-3">Blok Wilayah Hutan Kota</h6>
-                </div> -->
+                @endforeach
             </div>
         </div>
     </section>
@@ -187,12 +133,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <!-- <div class="col-12">
                     <p class="lh-base">
                         Flamboyan atau Delonix regia adalah tanaman yang khas dengan pohon besar, dan bunga-bunga merah cerah. Flamboyan memiliki nama genus Delonix yang berasal dari kata Yunani delos (artinya mencolok), dan onyx, berarti cakar. Nama tersebut mengacu pada penampilan bunga yang memang mencolok dan bentuk mahkota bunga yang mengembang seperti cakar. Tanaman ini memiliki berbagai macam manfaat. Daun dan bijinya yang mengandung senyawa alkaloid yang cukup tinggi dipercaya dapat menghambat pertumbuhan Plasmodium sp. penyebab penyakit malaria. Bunganya dapat digunakan sebagai penghias ruangan dan dekorasi pernikahan. Bijinya dapat bermanfaat sebagai manik-manik untuk kalung. Batang pohonnya yang cukup besar dan tinggi dapat digunakan sebagai bahan bangunan. 
                         <br><br>Pohon Flamboyan disebut juga sebagai Flame Tree karena bunganya yang berwarna merah menyerupai api (Flame). Saat musim kering, pohon ini akan menggugurkan daunnya. Pada saat itu pula bunganya akan bermekaran sehingga pohonnya terlihat indah dengan warna merahnya.
                         <br><br>Sumber : <a href="https://ayoketaman.com/web/pohon/ZzFuNFp3cG5DTHllYTZFZ1I4YW9JQT09">Klik Di sini!</a> 
-                    </p>
+                    </p> -->
+                    <p class="lh-base">{!! nl2br(e($jenisPohon->deskripsi)) !!}</p>
                 </div>
             </div>
         </div>

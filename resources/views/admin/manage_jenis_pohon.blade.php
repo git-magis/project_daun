@@ -12,16 +12,16 @@
     <title>Admin - Tabel Jenis Pohon</title>
 
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+   <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+   <link
+       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+       rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+   <!-- Custom styles for this template -->
+   <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+   <!-- Custom styles for this page -->
+   <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -31,7 +31,11 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
+        @if(auth()->user()->level == 'admin')
+        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+        @elseif(auth()->user()->level == 'staff')
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        @endif
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -46,9 +50,15 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin-index')}}">
+                @if(auth()->user()->level == 'admin')
+                <a class="nav-link" href="{{route('admin.admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+                @elseif(auth()->user()->level == 'staff')
+                <a class="nav-link" href="{{route('staff.admin-index')}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+                @endif
             </li>
 
             <!-- Divider -->
@@ -56,7 +66,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Pohon
+                Tanaman
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -68,9 +78,13 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-pohon')}}">Tabel Pohon</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -85,32 +99,38 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-bunga')}}">Tabel Bunga</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-bunga')}}">Jenis Bunga</a>
-                        <!-- <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a> -->
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @endif
                     </div>
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-kelas')}}">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-atribut')}}">
                         <i class="fas fa-fw fa-shapes"></i>
-                        <span>Kelas</span></a>
+                        <span>Atribut</span></a>
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-atribut')}}">
+                        <i class="fas fa-fw fa-shapes"></i>
+                        <span>Atribut</span></a>
+                    @endif
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-taman')}}">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
                         <span>Tabel Taman</span></a>
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-taman')}}">
+                        <i class="fas fa-fw fa-map-pin"></i>
+                        <span>Tabel Taman</span></a>
+                    @endif
                 </li>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Admin
-            </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- <li class="nav-item">
@@ -135,9 +155,15 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
+                @if(auth()->user()->level == 'admin')
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Admin
+                </div>
                 <a class="nav-link" href="{{route('manage-user')}}">
                     <i class="fas fa-fw fa-solid fa-user"></i>
                     <span>Tabel Admin</span></a>
+                @endif
             </li>
 
             <!-- Nav Item - Tables -->
@@ -202,14 +228,17 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                @if(auth()->user()->level == 'admin')
+                                <i class="fas fa-crown fa-sm fa-fw mr-2 text-primary"></i>
+                                @elseif(auth()->user()->level == 'staff')
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
+                                @endif
+                                <span class="mr-2 d-none d-lg-inline text-primary">{{ auth()->user()->name }}</span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -221,11 +250,14 @@
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                <div class="dropdown-divider"></div> -->
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="this.closest('form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
+                                        Logout
+                                    </a>
+                                </form>
                             </div>
                         </li>
 
@@ -258,12 +290,14 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered text-dark" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Gambar</th>
                                             <th>Nama Jenis</th>
                                             <th>Jumlah</th>
+                                            <th>Nama Ilmiah</th>
+                                            <th>Deskripsi</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
                                         </tr>
@@ -273,6 +307,8 @@
                                             <th>Gambar</th>
                                             <th>Nama Jenis</th>
                                             <th>Jumlah</th>
+                                            <th>Nama Ilmiah</th>
+                                            <th>Deskripsi</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
                                         </tr>
@@ -289,10 +325,14 @@
                                             </td>
                                             <td>{{ $item->nama_jenis_pohon }}</td>
                                             <td>{{ $item->total }}</td>
+                                            <td>{{ $item->nama_ilmiah }}</td>
+                                            <td title="{{ $item->deskripsi }}">{{ Str::limit($item->deskripsi, 30, '...') }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
                                                         data-nama="{{ $item->nama_jenis_pohon }}"
+                                                        data-ilmiah="{{ $item->nama_ilmiah }}"
+                                                        data-deskripsi="{{ $item->deskripsi }}"
                                                         data-gambar="{{ $item->gambar_pohon }}">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-solid fa-pen"></i>
@@ -326,7 +366,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>DLH Kota Tasikmalaya 2025 - Admin v.1</span>
                     </div>
                 </div>
             </footer>
@@ -386,8 +426,17 @@
                             <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" max="100" required>
                         </div> -->
                         <div class="form-group">
+                            <label for="nama_ilmiah">Nama Ilmiah</label>
+                            <input type="text" class="form-control" id="nama_ilmiah" name="nama_ilmiah" placeholder="oryza sativa...">
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi">Deskripsi</label>
+                            <input type="hidden" name="deskripsi" id="deskripsi">
+                            <textarea class="form-control" name="deskripsi" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="gambar_pohon">Gambar</label>
-                            <input type="file" class="form-control-file" id="gambar_pohon" name="gambar_pohon" required>
+                            <input type="file" class="form-control-file" id="gambar_pohon" name="gambar_pohon">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -424,11 +473,21 @@
                             <input type="number" class="form-control" id="editJumlah" name="jumlah" min="1" required>
                         </div> -->
                         <div class="form-group">
+                            <label for="editIlmiah">Nama Ilmiah</label>
+                            <input type="text" class="form-control" id="editIlmiah" name="nama_ilmiah">
+                        </div>
+                        <div class="form-group">
+                            <label for="editDesk">Deskripsi</label>
+                            <input type="hidden" name="deskripsi">
+                            <textarea class="form-control" name="deskripsi" id="editDesk" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="editGambar">Gambar</label>
                             <input type="file" class="form-control-file" id="editGambar" name="gambar_pohon">
                         </div>
                         <!-- Placeholder for current image -->
                         <div id="currentImagePreview"></div> 
+
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                             <button class="btn btn-primary" type="submit">Simpan</button>
@@ -488,6 +547,8 @@
             var id = button.data('id');
             var nama = button.data('nama');
             // var jumlah = button.data('jumlah');
+            var ilmiah = button.data('ilmiah');
+            var deskripsi = button.data('deskripsi');
             var gambar = button.data('gambar');
             
             var formAction = '{{ route('jenis_pohon.update', ':id') }}';
@@ -497,12 +558,11 @@
             // Set the input values in the form
             $('#editNama').val(nama);
             // $('#editJumlah').val(jumlah);
+            $('#editIlmiah').val(ilmiah);
+            $('#editDesk').val(deskripsi);
 
-            if (gambar) {
-                $('#currentImagePreview').html('<img src="' + gambar + '" width="100" alt="Current Image">');
-            } else {
-                $('#currentImagePreview').html('');
-            }
+            let imagePath = '/images/' + gambar; // Adjust based on your storage location
+            $('#currentImagePreview').html('<img src="' + imagePath + '" width="100" alt="Current Image">');
         });
         
         // Use jQuery to update the form action dynamically

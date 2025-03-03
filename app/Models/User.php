@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Carbon\Carbon;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'level',
+        'last_login_at',
     ];
 
     protected $hidden = [
@@ -29,6 +31,17 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function pohons()
+    {
+        return $this->hasMany(Pohon::class);
+    }
+    
+    public function bungas()
+    {
+        return $this->hasMany(Pohon::class);
+    }
 }

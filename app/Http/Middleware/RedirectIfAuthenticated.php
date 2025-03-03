@@ -27,10 +27,10 @@ class RedirectIfAuthenticated
                 $user = Auth::user();
                 switch ($user->level) {
                     case 'admin':
-                        return redirect()->route('admin-index');
+                        return redirect()->route('admin.admin-index');
 
                     case 'staff':
-                        return redirect()->route('staff-index');
+                        return redirect()->route('staff.admin-index');
 
 
                     default:

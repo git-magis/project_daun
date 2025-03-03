@@ -24,11 +24,18 @@ class JenisBunga extends Model
     protected $fillable = [
         'nama_jenis_bunga',
         'jumlah',
+        'nama_ilmiah',
+        'deskripsi',
         'gambar_bunga',
     ];
 
     public function bungas()
     {
         return $this->hasMany(Bunga::class, 'jenisb_id');
+    }
+
+    public function atributs()
+    {
+        return $this->hasMany(Atribut::class, 'entity_id')->where('entity_type', 'bunga');
     }
 }

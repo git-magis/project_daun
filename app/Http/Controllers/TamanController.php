@@ -30,7 +30,9 @@ class TamanController extends Controller
         // Save the data to the database
         Taman::create($validated);
     
-        return redirect()->route('manage-taman')->with('success', 'Data saved successfully.');
+        // return redirect()->route('manage-taman')->with('success', 'Data saved successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')
+        ->with('success', 'Data saved sucessfully.');
     }
     
 
@@ -49,7 +51,9 @@ class TamanController extends Controller
         // Update the data
         $data->update($validated);
     
-        return redirect()->route('manage-taman')->with('success', 'Data updated successfully.');
+        // return redirect()->route('manage-taman')->with('success', 'Data updated successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')
+        ->with('success', 'Data updated sucessfully.');
     }
     
 
@@ -60,7 +64,9 @@ class TamanController extends Controller
         $data->delete();
 
         // Redirect back with a success message
-        return redirect()->route('manage-taman')->with('success', 'taman berhasil dihapus.');
+        // return redirect()->route('manage-taman')->with('success', 'taman berhasil dihapus.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')
+        ->with('success', 'Data deleted sucessfully.');
     }
 
 

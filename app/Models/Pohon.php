@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pohon extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,22 +23,8 @@ class Pohon extends Model
         'lokasi_id',
         'gambar_pohon',
         'kode_unik',
+        'user_id',
     ];
-
-    // protected static function boost()
-    // {
-    //     parent::boot();
-
-    //     static::creating(function ($pohon) {
-    //         $pohon->loadMissing('jenisPohon', 'taman');
-    //         $pohon->kode_unik = self::generateUniqueCode($pohon, $counters);
-    //     });
-
-    //     static::updating(function ($pohon) {
-    //         $pohon->loadMissing('jenisPohon', 'taman');
-    //         $pohon->kode_unik = self::generateUniqueCode($pohon, $counters);
-    //     });
-    // }
 
     public static function generateUniqueCode($pohon, &$counters)
     {
@@ -47,7 +36,9 @@ class Pohon extends Model
         }                                               
 
         $type = 'Tre'; // Tree
-        $speciesCode = strtoupper(substr($pohon->jenisPohon->nama_jenis_pohon, 0, 4)); // First 4 letters of species
+        $wordsToRemove = ['Bambu', 'Pohon']; // Add more words as needed
+        $filteredName = str_replace($wordsToRemove, '', $pohon->jenisPohon->nama_jenis_pohon);
+        $speciesCode = strtoupper(substr(str_replace(' ', '', $filteredName), 0, 4));
         $gardenCode = strtoupper(substr($pohon->taman->nama, -1)); // Last letter of garden name
 
         $uniqueCode = sprintf('%02d/%s/%s/%s', $counters[$key], $type, $speciesCode, $gardenCode);
@@ -63,6 +54,11 @@ class Pohon extends Model
 
     }
 
+    public function getFormattedCreatedAtAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d-m-Y | H:i');
+    }
+
     public function jenisPohon()
     {
         return $this->belongsTo(JenisPohon::class, 'jenis_id', 'id');
@@ -71,5 +67,10 @@ class Pohon extends Model
     public function taman()
     {
         return $this->belongsTo(Taman::class, 'lokasi_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

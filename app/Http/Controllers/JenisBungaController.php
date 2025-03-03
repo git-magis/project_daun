@@ -31,6 +31,8 @@ class JenisBungaController extends Controller
         $validated = $request->validate([
             'nama_jenis_bunga' => 'required|string|max:255',
             // 'jumlah' => 'required|string',
+            'nama_ilmiah' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
             'gambar_bunga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -44,10 +46,14 @@ class JenisBungaController extends Controller
         JenisBunga::create([
             'nama_jenis_bunga' => $validated['nama_jenis_bunga'],
             // 'jumlah' => $validated['jumlah'],
+            'nama_ilmiah' => $validated['nama_ilmiah'],
+            'deskripsi' => $validated['deskripsi'],
             'gambar_bunga' => $imageName ?? null,
         ]);
 
-        return redirect()->route('manage-jenis-bunga')->with('success', 'Data saved successfully.');
+        // return redirect()->route('manage-jenis-bunga')->with('success', 'Data saved successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-bunga' : 'staff.manage-jenis-bunga')
+        ->with('success', 'Data saved sucessfully.');
     }
 
     public function update(Request $request, $id)
@@ -55,6 +61,8 @@ class JenisBungaController extends Controller
         $validated = $request->validate([
             'nama_jenis_bunga' => 'required|string|max:255',
             // 'jumlah' => 'required|string',
+            'nama_ilmiah' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
             'gambar_bunga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
@@ -66,15 +74,24 @@ class JenisBungaController extends Controller
             $request->gambar_bunga->move(public_path('images'), $imageName);
             $data->gambar_bunga = $imageName; // Update the image field
         }
+        else {
+            $imageName = $data->getOriginal('gambar_bunga');
+        }
+
+        // dd($validated);
     
         // Update other fields
         $data->update([
             'nama_jenis_bunga' => $validated['nama_jenis_bunga'],
             // 'jumlah' => $validated['jumlah'],
-            'gambar_bunga' => $imageName ?? null,
+            'nama_ilmiah' => $validated['nama_ilmiah'],
+            'deskripsi' => $validated['deskripsi'],
+            'gambar_bunga' => $imageName,
         ]);
     
-        return redirect()->route('manage-jenis-bunga')->with('success', 'Data updated successfully.');
+        // return redirect()->route('manage-jenis-bunga')->with('success', 'Data updated successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-bunga' : 'staff.manage-jenis-bunga')
+        ->with('success', 'Data updated sucessfully.');
     }
 
     public function destroy($id)
@@ -84,7 +101,9 @@ class JenisBungaController extends Controller
         $data->delete();
 
         // Redirect back with a success message
-        return redirect()->route('manage-jenis-bunga')->with('success', 'Jenis bunga berhasil dihapus.');
+        // return redirect()->route('manage-jenis-bunga')->with('success', 'Jenis bunga berhasil dihapus.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-bunga' : 'staff.manage-jenis-bunga')
+        ->with('success', 'Data deleted sucessfully.');
     }
 
 

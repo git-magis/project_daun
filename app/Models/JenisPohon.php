@@ -24,11 +24,18 @@ class JenisPohon extends Model
     protected $fillable = [
         'nama_jenis_pohon',
         'jumlah',
+        'nama_ilmiah',
+        'deskripsi',
         'gambar_pohon',
     ];
 
     public function pohons()
     {
         return $this->hasMany(Pohon::class, 'jenis_id');
+    }
+
+    public function atributs()
+    {
+        return $this->hasMany(Atribut::class, 'entity_id')->where('entity_type', 'pohon');
     }
 }

@@ -3,27 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Pohon;
 use App\Models\JenisPohon;
 use App\Models\Bunga;
 use App\Models\JenisBunga;
 use App\Models\Taman;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         // Total trees planted
-        $totalPohon = Pohon::count() + Bunga::count();
 
-        // Total kinds of trees
+        $totalPohon = Pohon::count();
+        $totalBunga = Bunga::count();
+        $totalTanaman = $totalPohon + $totalBunga;
+
         $totalJenisPohon = JenisPohon::count();
-
-        //total kinds of flowers
         $totalJenisBunga = JenisBunga::count();
 
-        // Total gardens
         $totalTaman = Taman::count();
+
+        $totalAdmin = User::count();
 
         // Fetch all Tamans
         $tamans = Taman::with(['jenisPohon', 'jenisBunga'])->get();
@@ -119,9 +123,96 @@ class DashboardController extends Controller
             return ['label' => $name, 'count' => $count];
         })->values()->all();
 
+        // Fetch the most recent data from pohons with their jenis names
+        $recentPohons = DB::table('pohons')
+            ->join('jenispohons', 'pohons.jenis_id', '=', 'jenispohons.id')
+            ->join('users', 'pohons.user_id', '=', 'users.id')
+            ->join('tamans', 'pohons.lokasi_id', '=', 'tamans.id')
+            ->select(
+                'pohons.id', 
+                'pohons.nama_pohon AS nama', 
+                'jenispohons.nama_jenis_pohon AS source', 
+                'pohons.created_at', 
+                'pohons.kode_unik AS kode',
+                'users.name AS added_by',
+                'tamans.nama AS lokasi'
+            );
 
+        // Fetch the most recent data from bungas with their jenis names
+        $recentBungas = DB::table('bungas')
+            ->join('jenisbungas', 'bungas.jenisb_id', '=', 'jenisbungas.id')
+            ->join('users', 'bungas.user_id', '=', 'users.id')
+            ->join('tamans', 'bungas.lokasib_id', '=', 'tamans.id')
+            ->select(
+                'bungas.id', 
+                'bungas.nama_bunga AS nama', 
+                'jenisbungas.nama_jenis_bunga AS source', 
+                'bungas.created_at', 
+                'bungas.kode_unik AS kode',
+                'users.name AS added_by',
+                'tamans.nama AS lokasi'
+            );
 
-        return view('admin.admin_index', compact('chartsData','overallData','totalPohon', 'totalJenisPohon', 'totalJenisBunga', 'totalTaman'));
+        // Combine the results, sort by created_at, and limit to 5
+        $recentData = $recentPohons
+            ->union($recentBungas)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        return view('admin.admin_index', compact('recentData', 'chartsData','overallData','totalPohon', 'totalBunga', 'totalTanaman', 'totalJenisPohon', 'totalJenisBunga', 'totalTaman','totalAdmin'));
+    }
+
+    public function getMonthlyTrends(Request $request)
+    {
+        // Get the current year or the requested year
+        $year = $request->input('year', Carbon::now()->year);
+
+        // Fetch planted trees and flowers (not deleted)
+        $plantedPohons = Pohon::whereYear('created_at', $year)
+                            ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                            ->groupBy('month')
+                            ->orderBy('month')
+                            ->get()
+                            ->pluck('total', 'month')
+                            ->toArray();
+
+        $plantedBungas = Bunga::whereYear('created_at', $year)
+                            ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                            ->groupBy('month')
+                            ->orderBy('month')
+                            ->get()
+                            ->pluck('total', 'month')
+                            ->toArray();
+
+        // Fetch deleted (dead) trees and flowers
+        $deletedPohons = Pohon::onlyTrashed()->whereYear('deleted_at', $year)
+                            ->selectRaw('MONTH(deleted_at) as month, COUNT(*) as total')
+                            ->groupBy('month')
+                            ->orderBy('month')
+                            ->get()
+                            ->pluck('total', 'month')
+                            ->toArray();
+
+        $deletedBungas = Bunga::onlyTrashed()->whereYear('deleted_at', $year)
+                            ->selectRaw('MONTH(deleted_at) as month, COUNT(*) as total')
+                            ->groupBy('month')
+                            ->orderBy('month')
+                            ->get()
+                            ->pluck('total', 'month')
+                            ->toArray();
+
+        // Prepare data for chart
+        $data = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $data[] = [
+                'month' => Carbon::create()->month($i)->format('F'),
+                'planted' => ($plantedPohons[$i] ?? 0) + ($plantedBungas[$i] ?? 0),
+                'dead' => ($deletedPohons[$i] ?? 0) + ($deletedBungas[$i] ?? 0),
+            ];
+        }
+
+        return response()->json($data);
     }
 
 }

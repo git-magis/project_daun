@@ -11,8 +11,6 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('bungas', function (Blueprint $table) {
             $table->id();
             $table->string('nama_bunga');
@@ -30,8 +28,6 @@ return new class extends Migration
             
             $table->string('kode_unik')->nullable();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
 
@@ -40,6 +36,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('bungas', function (Blueprint $table) {
+            $table->dropForeign(['jenisb_id']);
+            $table->dropForeign(['lokasib_id']);
+        });
+
         Schema::dropIfExists('bungas');
     }
 };

@@ -18,7 +18,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ route('welcome') }}">
                 <!-- <img src="./assets/images/logo-dark.svg" alt=""> -->
                 <h1>* E-Daun</h1>
             </a>
@@ -53,59 +53,10 @@
                         <a class="nav-link" href="#blog">Blog</a>
                     </li> -->
                 </ul>
-                <a href="#" class="btn btn-brand ms-lg-3">Login</a>
+                <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Admin</a>
             </div>
         </div>
     </nav>
-
-    <!-- TEAM -->
-    <!-- <section id="team" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Varian Jenis Pohon</h1>
-                        <div class="line" style="margin: 16px auto 24px auto;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-4 text-center ">
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/flamboyan.jpg" alt="">
-                        </div>
-                        <div class="team-member-content">
-                            <h4 class="text-white">Flamboyan</h4>
-                            <p class="mb-0 text-white">Delonix Regia Rafin</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/person-2.jpg" alt="">
-                        </div>
-                        <div class="team-member-content">
-                            <h4 class="text-white">Jon Doe</h4>
-                            <p class="mb-0 text-white">Webflow Artist</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="350">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/person-3.jpg" alt="">
-                        </div>
-                        <div class="team-member-content">
-                            <h4 class="text-white">Jon Doe</h4>
-                            <p class="mb-0 text-white">Webflow Artist</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <!-- VARIAN POHON -->
     <section id="team" class="section-padding">
@@ -121,7 +72,7 @@
             <div class="row g-4 text-center">
             @foreach ($varianpohon as $jenis)
             <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                <a href="{{ route('detail-pohon', ['id' => $jenis->id]) }}">
+                <a href="{{ route('detail-pohon.show', ['id' => $jenis->id]) }}">
                     <div class="feature-card" style="background-image: url({{ asset('images/' . $jenis->gambar_pohon) }});">
                         <h3 class="feature-title mb-0 text-white">{{ $jenis->nama_jenis_pohon }}</h3>
                     </div>

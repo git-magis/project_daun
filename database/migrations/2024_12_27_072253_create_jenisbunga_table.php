@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_jenis_bunga');
             $table->string('jumlah')->nullable();
+            $table->string('nama_ilmiah')->nullable();
+            $table->longText('deskripsi')->nullable();
             $table->string('gambar_bunga')->nullable();
             $table->timestamps();
         });

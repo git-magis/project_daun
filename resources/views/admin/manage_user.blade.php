@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Tabel Bunga</title>
+    <title>Admin - Tabel Pengguna</title>
 
     <!-- Custom fonts for this template -->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -31,7 +31,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -46,7 +46,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin-index')}}">
+                <a class="nav-link" href="{{route('admin.admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -56,7 +56,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Pohon
+                Tanaman
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -68,9 +68,13 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-pohon')}}">Tabel Pohon</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -85,32 +89,38 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-bunga')}}">Tabel Bunga</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-bunga')}}">Jenis Bunga</a>
-                        <!-- <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a> -->
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @endif
                     </div>
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-kelas')}}">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-atribut')}}">
                         <i class="fas fa-fw fa-shapes"></i>
-                        <span>Kelas</span></a>
+                        <span>Atribut</span></a>
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-atribut')}}">
+                        <i class="fas fa-fw fa-shapes"></i>
+                        <span>Atribut</span></a>
+                    @endif
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-taman')}}">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
                         <span>Tabel Taman</span></a>
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-taman')}}">
+                        <i class="fas fa-fw fa-map-pin"></i>
+                        <span>Tabel Taman</span></a>
+                    @endif
                 </li>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Admin
-            </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- <li class="nav-item">
@@ -135,9 +145,15 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item active">
+                @if(auth()->user()->level == 'admin')
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Admin
+                </div>
                 <a class="nav-link" href="{{route('manage-user')}}">
                     <i class="fas fa-fw fa-solid fa-user"></i>
                     <span>Tabel Admin</span></a>
+                @endif
             </li>
 
             <!-- Nav Item - Tables -->
@@ -202,14 +218,13 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <i class="fas fa-crown fa-sm fa-fw mr-2 text-primary"></i>
+                                <span class="mr-2 d-none d-lg-inline text-primary">{{ auth()->user()->name }}</span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -221,11 +236,14 @@
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                <div class="dropdown-divider"></div> -->
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="this.closest('form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
+                                        Logout
+                                    </a>
+                                </form>
                             </div>
                         </li>
 
@@ -246,19 +264,19 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <!-- <div class="col p-0" style="text-align: end;">
+                            <div class="col p-0" style="text-align: end;">
                                 <div class="my-2"></div>
-                                    <a href="#" class="btn btn-success btn-icon-split">
+                                    <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#tambahModal">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-solid fa-plus"></i>
                                         </span>
-                                        <span class="text">Tambah Pohon</span>
+                                        <span class="text">Tambah Staff</span>
                                     </a>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered text-dark" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Nama</th>
@@ -266,6 +284,7 @@
                                             <th>Level</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
+                                            <th>Terakhir Aktif</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -275,6 +294,7 @@
                                             <th>Level</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
+                                            <th>Terakhir Aktif</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -287,8 +307,7 @@
                                                 <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $user->id }}"
                                                         data-name="{{ $user->name }}"
-                                                        data-email="{{ $user->email }}"
-                                                        data-level="{{ $user->level }}">
+                                                        data-email="{{ $user->email }}">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-pen"></i>
                                                     </span>
@@ -303,6 +322,7 @@
                                                     <span class="text">Hapus</span>
                                                 </a>
                                             </td>
+                                            <td>{{ $user->last_login_at ? $user->last_login_at->format('d-m-Y | H:i') : 'Never logged in' }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -321,11 +341,11 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>DLH Kota Tasikmalaya 2025 - Admin v.1</span>
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
+        <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -358,6 +378,120 @@
         </div>
     </div>
 
+    <!-- Add Modal-->
+    <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Tambah Staff</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Tjokro Wimantara.." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="contoh@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="level">Level</label>
+                            <select name="level" id="level" class="form-control" required>
+                                <option value="" disabled selected>Choose...</option>
+                                <option value="admin">Admin</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <span toggle="#password" class="fa fa-fw fa-eye toggle-password" style="float: right; 
+                                                                                                    z-index: 4; 
+                                                                                                    margin-right: 10px; 
+                                                                                                    margin-top: -25px; 
+                                                                                                    position: relative;"></span>
+                            <small id="passwordHelp" class="form-text text-muted">Must be at least 8 characters.</small>
+                            <div id="password-strength" class="mt-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <small id="passwordMatchMessage" class="form-text"></small>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Edit Staff</h5> <!-- Changed 'Edit Pohon' to 'Edit Bunga' -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="POST" action="{{ route('user.update', ':id') }}" enctype="multipart/form-data"> <!-- Changed 'pohon.update' to 'bunga.update' -->
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="editNama">Nama</label>
+                            <input type="text" class="form-control" id="editNama" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmail">email</label>
+                            <input type="text" class="form-control" id="editEmail" name="email">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                            <button class="btn btn-primary" type="submit">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Peringatan!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Apakah Anda yakin akan menghapus?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <form id="deleteForm" method="POST" action="{{ route('user.destroy', ':id') }}"> <!-- Changed 'jenis_pohon.destroy' to 'jenis_bunga.destroy' -->
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -375,6 +509,94 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 
+    <script>
+        $('#editModal').on('show.bs.modal', function (event) {
+            // Get the button that triggered the modal
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            
+            // Extract data attributes from the button
+            var id = button.data('id');
+            var name = button.data('name');
+            var email = button.data('email');
+
+            // Update the modal's form action URL dynamically with the correct ID
+            var formAction = '{{ route('user.update', ':id') }}';
+            formAction = formAction.replace(':id', id);
+            $('#editForm').attr('action', formAction);
+
+            // Set the input values in the form
+            $('#editNama').val(name);
+            $('#editEmail').val(email);
+
+        });
+
+        // Use jQuery to update the form action dynamically
+        $('#hapusModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var userId = button.data('id'); // Extract info from data-* attributes
+
+            // Update the action of the form to include the correct ID
+            var actionUrl = $('#deleteForm').attr('action').replace(':id', userId);
+            $('#deleteForm').attr('action', actionUrl);
+        });
+
+        // Used to show/hide password string
+        $(".toggle-password").click(function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $($(this).attr("toggle"));
+            if (input.attr("type") == "password") {
+            input.attr("type", "text");
+            } else {
+            input.attr("type", "password");
+            }
+        });
+
+        // Password strength meter
+        $(document).ready(function () {
+            $("#password").on("input", function () {
+                let password = $(this).val();
+                let strengthBadge = $("#password-strength");
+
+                if (password.length === 0) {
+                    strengthBadge.html("");
+                    return;
+                }
+
+                // Define password strength rules
+                let strength = 0;
+                if (password.length >= 8) strength++;  // Minimum length
+                if (/[A-Z]/.test(password)) strength++; // Uppercase letter
+                if (/[a-z]/.test(password)) strength++; // Lowercase letter
+                if (/[0-9]/.test(password)) strength++; // Number
+                if (/[^A-Za-z0-9]/.test(password)) strength++; // Special character
+
+                // Display strength message
+                let strengthText = ["Weak", "Moderate", "Strong", "Very Strong"];
+                let strengthColors = ["red", "orange", "green", "darkgreen"];
+                let index = Math.min(strength - 1, 3);
+
+                strengthBadge.html(`<strong style="color: ${strengthColors[index]};">${strengthText[index]}</strong>`);
+            });
+
+            // Password confirmation check
+            $("#password, #password_confirmation").on("input", function () {
+                let password = $("#password").val();
+                let confirmPassword = $("#password_confirmation").val();
+                let matchMessage = $("#passwordMatchMessage");
+
+                if (confirmPassword.length === 0) {
+                    matchMessage.text("");
+                    return;
+                }
+
+                if (password === confirmPassword) {
+                    matchMessage.text("Passwords match ✅").css("color", "green");
+                } else {
+                    matchMessage.text("Passwords do not match ❌").css("color", "red");
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

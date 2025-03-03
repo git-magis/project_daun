@@ -44,7 +44,7 @@
                         <a class="nav-link" href="#">Feedback</a>
                     </li>
                 </ul>
-                <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Login</a>
+                <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Admin</a>
             </div>
         </div>
     </nav>
@@ -54,8 +54,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1 data-aos="fade-left" class="text-white fw-semibold display-2">Sistem Informasi Hutan Kota Tasikmalaya</h1>
-                    <h5 class="text-white mt-3 mb-4" data-aos="fade-right">Lihat persebaran pohon di lokasi hutan kota dan Pindai Kode QR informasi pohon.</h5>
+                    <h1 data-aos="fade-left" class="text-white text-decoration-underline fw-semibold display-2">Siska Hayati</h1>
+                    <h3 data-aos="fade-left" class="text-white fw-semibold display-4 my-4">Sistem Informasi Keanekaragaman Hayati Kota Tasikmalaya</h3>
+                    <!-- <h5 class="text-white mt-3 mb-4" data-aos="fade-right">Lihat persebaran pohon di lokasi hutan kota dan Pindai Kode QR informasi pohon.</h5> -->
                     <div data-aos="fade-up" data-aos-delay="50">
                         <a href="#" class="btn btn-brand me-2">Pindai QR Pohon</a>
                         <a href="#services" class="btn btn-light ms-2">Fitur</a>
@@ -70,19 +71,19 @@
         <div class="container text-center">
             <div class="row g-4">
                 <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2"><i class="ri-leaf-line stat-icon">   </i>292</h1>
+                    <h1 class="text-success display-2"><i class="ri-leaf-line stat-icon">   </i>{{ $totalTanaman }}</h1>
                     <h6 class="text-uppercase mb-0 text-black mt-3">Pohon Tertanam</h6>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2"><i class="ri-tree-line stat-icon">   </i>23</h1>
+                    <h1 class="text-success display-2"><i class="ri-tree-line stat-icon">   </i>{{ $totalJenisPohon }}</h1>
                     <h6 class="text-uppercase mb-0 text-black mt-3">Jenis Pohon</h6>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2"><i class="ri-flower-line stat-icon">   </i>12</h1>
+                    <h1 class="text-success display-2"><i class="ri-flower-line stat-icon">   </i>{{ $totalJenisBunga }}</h1>
                     <h6 class="text-uppercase mb-0 text-black mt-3">Jenis Bunga</h6>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <h1 class="text-success display-2"><i class="ri-map-2-line stat-icon">   </i>4</h1>
+                    <h1 class="text-success display-2"><i class="ri-map-2-line stat-icon">   </i>{{ $totalTaman }}</h1>
                     <h6 class="text-uppercase mb-0 text-black mt-3">Blok Wilayah Hutan Kota</h6>
                 </div>
             </div>
@@ -129,7 +130,7 @@
                         <p>Varian Pohon yang terdapat di hutan kota</p>
                     </div>
                 </a>
-                <a href="#hero" class="col-lg-4 col-sm-6">
+                <a href="{{route('varian-bunga')}}" class="col-lg-4 col-sm-6">
                     <div class="service theme-shadow p-lg-5 p-4">
                         <div class="iconbox">
                             <i class="ri-flower-line"></i>
@@ -507,103 +508,72 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100 rounded-3">
-                        <img src="{ { asset('images/beringin.jpg') } }" class="card-img-top object-fit-cover h-50" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Penanaman Pohon Beringin</h5>
-                            <p class="card-text">Penanaman pohon beringin oleh Dinas Lingkungan Hidup Kota Tasikmalaya dalam upaya meningkatkan ruangan hijau.</p><a href="#">Baca Selengkapnya</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary">Diposting 3 hari yang lalu</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="{ { asset('images/counter.jpg') } }" class="card-img-top object-fit-fill h-50" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Digitalisasi Administrasi Hutan</h5>
-                            <p class="card-text">Menciptakan sistem informasi untuk administrasi hutan dalam upaya transformasi digital.</p><a href="#">Baca Selengkapnya</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary">Diposting 2 minggu yang lalu</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="{ { asset('images/galeri-2.jpg') } }" class="card-img-top object-fit-cover h-50" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Memetik Buah di Hutan Kota</h5>
-                            <p class="card-text">Petik buah dari hutan lokal.</p><a href="#">Baca Selengkapnya</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary">Diposting 1 bulan yang lalu</small>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             <div class="row">
                 <div class="col">
-                    <div class="swiper mySwiper">
+                    <div class="swiper mySwiper pb-5">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div class="card h-100 rounded-3">
-                                    <img src="{{asset('images/beringin.jpg')}}" class="card-img-top object-fit-cover h-50" alt="...">
+                                    <img src="{{asset('images/beringin.jpg')}}" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Penanaman Pohon Beringin</h5>
-                                        <p class="card-text">Penanaman pohon beringin oleh Dinas Lingkungan Hidup Kota Tasikmalaya dalam upaya meningkatkan ruangan hijau.</p><a href="#">Baca Selengkapnya</a>
+                                        <p class="card-text fs-6">Penanaman pohon beringin oleh Dinas Lingkungan Hidup Kota Tasikmalaya dalam upaya meningkatkan ruangan hijau.</p><a href="#" class="fs-6">Baca Selengkapnya</a>
                                     </div>
-                                    <div class="card-footer">
+                                    <div class="card-footer fs-6">
                                         <small class="text-body-secondary">Diposting 3 hari yang lalu</small>
                                     </div>
                                 </div>
                             </div>
-                        <div class="swiper-slide">
-                            <div class="card h-100">
-                                <img src="{{asset('images/counter.jpg')}}" class="card-img-top object-fit-fill h-50" alt="...">
+                            <div class="swiper-slide">
+                                <div class="card h-100 rounded-3">
+                                    <img src="{{asset('images/counter.jpg')}}" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">Digitalisasi Administrasi Hutan</h5>
-                                        <p class="card-text">Menciptakan sistem informasi untuk administrasi hutan dalam upaya transformasi digital.</p><a href="#">Baca Selengkapnya</a>
+                                        <h5 class="card-title">Penanaman Pohon Beringin</h5>
+                                        <p class="card-text fs-6">Penanaman pohon beringin oleh Dinas Lingkungan Hidup Kota Tasikmalaya dalam upaya meningkatkan ruangan hijau.</p><a href="#" class="fs-6">Baca Selengkapnya</a>
                                     </div>
-                                    <div class="card-footer">
-                                        <small class="text-body-secondary">Diposting 2 minggu yang lalu</small>
+                                    <div class="card-footer fs-6">
+                                        <small class="text-body-secondary">Diposting 3 hari yang lalu</small>
                                     </div>
                                 </div>
-                        </div>
-                          <div class="swiper-slide">
-                            <div class="card h-100">
-                                <img src="{{asset('images/galery-2.png')}}" class="card-img-top object-fit-fill h-50" alt="gaada blog">
-                                <div class="card-body">
-                                    <h5 class="card-title">Memetik Buah di Hutan Kota</h5>
-                                    <p class="card-text">Petik buah dari hutan lokal.</p><a href="#">Baca Selengkapnya</a>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card h-100 rounded-3">
+                                    <img src="{{asset('images/galeri-1.png')}}" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Penanaman Pohon Beringin</h5>
+                                        <p class="card-text fs-6">Penanaman pohon beringin oleh Dinas Lingkungan Hidup Kota Tasikmalaya dalam upaya meningkatkan ruangan hijau.</p><a href="#" class="fs-6">Baca Selengkapnya</a>
+                                    </div>
+                                    <div class="card-footer fs-6">
+                                        <small class="text-body-secondary">Diposting 3 hari yang lalu</small>
+                                    </div>
                                 </div>
-                                <div class="card-footer">
-                                    <small class="text-body-secondary">Diposting 1 bulan yang lalu</small>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card h-100 rounded-3">
+                                    <img src="{{asset('images/galeri-2.png')}}" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Penanaman Pohon Beringin</h5>
+                                        <p class="card-text fs-6">Penanaman pohon beringin oleh Dinas Lingkungan Hidup Kota Tasikmalaya dalam upaya meningkatkan ruangan hijau.</p><a href="#" class="fs-6">Baca Selengkapnya</a>
+                                    </div>
+                                    <div class="card-footer fs-6">
+                                        <small class="text-body-secondary">Diposting 3 hari yang lalu</small>
+                                    </div>
                                 </div>
                             </div>
-                    </div>
-                          <div class="swiper-slide">
-                            <div class="card h-100">
-                            <img src="{{asset('images/counter.jpg')}}" class="card-img-top object-fit-fill h-50" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Digitalisasi Administrasi Hutan</h5>
-                                <p class="card-text">Menciptakan sistem informasi untuk administrasi hutan dalam upaya transformasi digital.</p><a href="#">Baca Selengkapnya</a>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-body-secondary">Diposting 2 minggu yang lalu</small>
+                            <div class="swiper-slide">
+                                <div class="card h-100 rounded-3">
+                                    <img src="{{asset('images/galeri-3.png')}}" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Penanaman Pohon Beringin</h5>
+                                        <p class="card-text fs-6">Penanaman pohon beringin oleh Dinas Lingkungan Hidup Kota Tasikmalaya dalam upaya meningkatkan ruangan hijau.</p><a href="#" class="fs-6">Baca Selengkapnya</a>
+                                    </div>
+                                    <div class="card-footer fs-6">
+                                        <small class="text-body-secondary">Diposting 3 hari yang lalu</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                          <div class="swiper-slide">Slide 5</div>
-                          <div class="swiper-slide">Slide 6</div>
-                          <div class="swiper-slide">Slide 7</div>
-                          <div class="swiper-slide">Slide 8</div>
-                          <div class="swiper-slide">Slide 9</div>
-                        </div>
-                        <!-- <div class="swiper-pagination"></div> -->
+                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
             </div>

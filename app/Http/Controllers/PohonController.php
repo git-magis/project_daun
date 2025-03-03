@@ -44,8 +44,10 @@ class PohonController extends Controller
             'nama_pohon' => 'required|string|max:255',
             'jenis_id' => 'required|exists:jenispohons,id',
             'lokasi_id' => 'required|exists:tamans,id',
-            'gambar_pohon' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $imageName = null;
 
         // Handle the file upload
         if ($request->hasFile('gambar_pohon')) {
@@ -59,9 +61,12 @@ class PohonController extends Controller
             'jenis_id' => $validated['jenis_id'],
             'lokasi_id' => $validated['lokasi_id'],
             'gambar_pohon' => $imageName ?? null,
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('manage-pohon')->with('success', 'Data saved successfully.');
+        // return redirect()->route('manage-pohon')->with('success', 'Data saved successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-pohon' : 'staff.manage-pohon')
+        ->with('success', 'Data saved sucessfully.');
     }
 
     public function edit($id)
@@ -79,30 +84,6 @@ class PohonController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $validated = $request->validate([
-        //     'nama_pohon' => 'required|string|max:255',
-        //     'jenis_id' => 'required|exists:jenispohons,id',
-        //     'lokasi_id' => 'required|exists:tamans,id',
-        //     'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        // ]);
-    
-        // $data = Pohon::findOrFail($id);
-    
-        // if ($request->hasFile('gambar_pohon')) {
-        //     $imageName = time() . '.' . $request->gambar_pohon->extension();
-        //     $request->gambar_pohon->move(public_path('images'), $imageName);
-        //     $data->gambar_pohon = $imageName; // Update the image field
-        // }
-    
-        // // Update other fields
-        // $data->update([
-        //     'nama_pohon' => $validated['nama_pohon'],
-        //     'jenis_id' => $validated['jenis_id'],
-        //     'lokasi_id' => $validated['lokasi_id'],
-        //     'gambar_pohon' => $data->gambar_pohon ?? null,
-        // ]);
-    
-        // return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');
 
         try {
             // Log incoming request data
@@ -131,16 +112,21 @@ class PohonController extends Controller
                 $request->gambar_pohon->move(public_path('images'), $imageName);
                 $data->gambar_pohon = $imageName; // Update the image field
             }
+            else {
+                $imageName = $data->getOriginal('gambar_pohon');
+            }
         
             // Update other fields
             $data->update([
                 'nama_pohon' => $validated['nama_pohon'],
                 'jenis_id' => $validated['jenis_id'],
                 'lokasi_id' => $validated['lokasi_id'],
-                'gambar_pohon' => $data->gambar_pohon ?? null, // Keep the existing image if not updated
+                'gambar_pohon' => $imageName, // Keep the existing image if not updated
             ]);
         
-            return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');
+            // return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');
+            return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-pohon' : 'staff.manage-pohon')
+            ->with('success', 'Data updated sucessfully.');
 
         } catch (\Exception $e) {
             // Log any exceptions
@@ -156,7 +142,9 @@ class PohonController extends Controller
         $data->delete();
 
         // Redirect back with a success message
-        return redirect()->route('manage-pohon')->with('success', 'Pohon berhasil dihapus.');
+        // return redirect()->route('manage-pohon')->with('success', 'Pohon berhasil dihapus.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-pohon' : 'staff.manage-pohon')
+        ->with('success', 'Data deleted successfully.');
     }
 
 

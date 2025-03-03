@@ -55,9 +55,12 @@ class BungaController extends Controller
             'jenisb_id' => $validated['jenisb_id'],
             'lokasib_id' => $validated['lokasib_id'],
             'gambar_bunga' => $imageName ?? null,
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('manage-bunga')->with('success', 'Data saved successfully.');
+        // return redirect()->route('manage-bunga')->with('success', 'Data saved successfully.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
+        ->with('success', 'Data saved sucessfully.');
     }
 
     public function edit($id)
@@ -102,16 +105,21 @@ class BungaController extends Controller
                 $request->gambar_bunga->move(public_path('images'), $imageName);
                 $data->gambar_bunga = $imageName; // Update the image field
             }
+            else {
+                $imageName = $data->getOriginal('gambar_bunga');
+            }
         
             // Update other fields
             $data->update([
                 'nama_bunga' => $validated['nama_bunga'],
                 'jenisb_id' => $validated['jenisb_id'],
                 'lokasib_id' => $validated['lokasib_id'],
-                'gambar_bunga' => $data->gambar_bunga ?? null, // Keep the existing image if not updated
+                'gambar_bunga' => $imageName, // Keep the existing image if not updated
             ]);
         
-            return redirect()->route('manage-bunga')->with('success', 'Data updated successfully.');
+            // return redirect()->route('manage-bunga')->with('success', 'Data updated successfully.');
+            return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
+            ->with('success', 'Data updated sucessfully.');
 
         } catch (\Exception $e) {
             // Log any exceptions
@@ -128,7 +136,9 @@ class BungaController extends Controller
         $data->delete();
 
         // Redirect back with a success message
-        return redirect()->route('manage-bunga')->with('success', 'bunga berhasil dihapus.');
+        // return redirect()->route('manage-bunga')->with('success', 'bunga berhasil dihapus.');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
+        ->with('success', 'Data deleted sucessfully.');
     }
 
 

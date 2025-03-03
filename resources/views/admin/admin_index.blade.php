@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Admin - Admin Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -28,8 +28,11 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+         @if(auth()->user()->level == 'admin')
+         <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+         @elseif(auth()->user()->level == 'staff')
+         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+         @endif
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <!-- <div class="sidebar-brand-icon rotate-n-15">
@@ -43,9 +46,15 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('admin-index')}}">
+                @if(auth()->user()->level == 'admin')
+                <a class="nav-link" href="{{route('admin.admin-index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+                @elseif(auth()->user()->level == 'staff')
+                <a class="nav-link" href="{{route('staff.admin-index')}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+                @endif
             </li>
 
             <!-- Divider -->
@@ -53,7 +62,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Pohon
+                Tanaman
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -65,9 +74,13 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-pohon')}}">Tabel Pohon</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-pohon')}}">Tabel Pohon</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-pohon')}}">Jenis Pohon</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -82,32 +95,38 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-                        <a class="collapse-item" href="{{route('manage-bunga')}}">Tabel Bunga</a>
-                        <a class="collapse-item" href="{{route('manage-jenis-bunga')}}">Jenis Bunga</a>
-                        <!-- <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a> -->
+                        @if(auth()->user()->level == 'admin')
+                        <a class="collapse-item" href="{{route('admin.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('admin.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @elseif(auth()->user()->level == 'staff')
+                        <a class="collapse-item" href="{{route('staff.manage-bunga')}}">Tabel Bunga</a>
+                        <a class="collapse-item" href="{{route('staff.manage-jenis-bunga')}}">Jenis Bunga</a>
+                        @endif
                     </div>
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-kelas')}}">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-atribut')}}">
                         <i class="fas fa-fw fa-shapes"></i>
-                        <span>Kelas</span></a>
+                        <span>Atribut</span></a>
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-atribut')}}">
+                        <i class="fas fa-fw fa-shapes"></i>
+                        <span>Atribut</span></a>
+                    @endif
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{route('manage-taman')}}">
+                <li class="nav-item">
+                    @if(auth()->user()->level == 'admin')
+                    <a class="nav-link" href="{{route('admin.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
                         <span>Tabel Taman</span></a>
-                </li> -->
+                    @elseif(auth()->user()->level == 'staff')
+                    <a class="nav-link" href="{{route('staff.manage-taman')}}">
+                        <i class="fas fa-fw fa-map-pin"></i>
+                        <span>Tabel Taman</span></a>
+                    @endif
+                </li>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Admin
-            </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- <li class="nav-item">
@@ -132,9 +151,15 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
+                @if(auth()->user()->level == 'admin')
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                    Admin
+                </div>
                 <a class="nav-link" href="{{route('manage-user')}}">
                     <i class="fas fa-fw fa-solid fa-user"></i>
                     <span>Tabel Admin</span></a>
+                @endif
             </li>
 
             <!-- Nav Item - Tables -->
@@ -199,14 +224,17 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin Ganteng</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                @if(auth()->user()->level == 'admin')
+                                <i class="fas fa-crown fa-sm fa-fw mr-2 text-primary"></i>
+                                @elseif(auth()->user()->level == 'staff')
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
+                                @endif
+                                <span class="mr-2 d-none d-lg-inline text-primary">{{ auth()->user()->name }}</span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -218,11 +246,11 @@
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div> -->
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <a class="dropdown-item" href="javascript:void(0);" onclick="this.closest('form').submit();">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
                                         Logout
                                     </a>
                                 </form>
@@ -255,7 +283,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Jumlah Tanaman</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPohon ?? 'haha'}}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalTanaman ?? 'haha'}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-leaf fa-2x text-gray-300"></i>
@@ -320,7 +348,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Jumlah Admin</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalAdmin ?? 'beak'}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-solid fa-user fa-2x text-gray-300"></i>
@@ -349,6 +377,72 @@
                         </div>
                     </div>
 
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Content Column -->
+                        <div class="col-lg-8 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Tren Data Tanaman</h6>
+                                </div>
+                                <div class="col-lg-auto">
+                                    <div class="card-body mb-4">
+                                        <div class="chart-line">
+                                            <div id="trend-chart"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Data Terbaru Ditambahkan</h6>
+                                </div>
+                                <div class="col-lg-auto">
+                                    <div class="card-body">
+                                        @if ($recentData->isEmpty())
+                                            <p>Tidak ada data</p>
+                                        @else
+                                        <div class="table-responsive">
+                                            <table class="table table-striped text-dark">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Kode</th>
+                                                        <!-- <th>Nama</th> -->
+                                                        <!-- <th>Jenis</th> -->
+                                                        <!-- <th>Lokasi</th> -->
+                                                        <th>Pada</th>
+                                                        <th>Oleh</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($recentData as $index => $item)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $item->kode }}</td>
+                                                            <!-- <td>{{ $item->nama }}</td> -->
+                                                            <!-- <td>{{ ucfirst($item->source) }}</td> -->
+                                                            <!-- <td>{{ $item->lokasi }}</td> -->
+                                                            <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y | H:i:s') }}</td>
+                                                            <td>{{ $item->added_by }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Content Row -->
 
                     <div class="row">
@@ -398,7 +492,10 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body mb-5">
-                                    <div class="chart-bar">
+                                    <div class="mt-2 text-center">
+                                        <p>Total Pohon: {{ $totalPohon }} & Total Bunga: {{ $totalBunga }}</p>
+                                    </div>
+                                    <div class="chart-bar mb-5">
                                         <div id="column-chart"></div>
                                     </div>
                                 </div>
@@ -410,7 +507,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>DLH Kota Tasikmalaya 2025 - Admin v.1</span>
                     </div>
                 </div>
             </footer>
@@ -451,60 +548,56 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', { packages: ['corechart'] });
         google.charts.setOnLoadCallback(drawCharts);
 
         function drawCharts() {
-        const chartsData = @json($chartsData);
+            const chartsData = @json($chartsData);
 
-        chartsData.forEach((taman) => {
-            if (!taman.labels || !taman.data || taman.labels.length !== taman.data.length) {
-            console.error(`Data mismatch or missing for taman: ${taman.taman}`, taman);
-            return; // Skip this taman if data is invalid
+            chartsData.forEach((taman) => {
+                if (!taman.labels || !taman.data || taman.labels.length !== taman.data.length) {
+                    console.error(`Data mismatch or missing for taman: ${taman.taman}`, taman);
+                    return; // Skip this taman if data is invalid
+                }
+
+                console.log("Original Data:", taman.labels, taman.data);
+
+                // Group the labels and sum the data
+                const groupedData = {};
+                taman.labels.forEach((label, index) => {
+                    groupedData[label] = (groupedData[label] || 0) + taman.data[index];
+                });
+
+                console.log("Grouped Data:", groupedData);
+
+                const chartData = Object.entries(groupedData).map(([label, value]) => [label, value]);
+
+                const data = google.visualization.arrayToDataTable([
+                    ['Jenis', 'Jumlah'],
+                    ...chartData,
+                ]);
+
+                const chartContainer = document.getElementById(`chart-${taman.taman}`);
+
+                function resizeChart() {
+                    const containerWidth = chartContainer.offsetWidth;
+
+                    const options = {
+                        width: '100%',
+                        height: 280,
+                        pieHole: 0.3,
+                        legend: containerWidth <= 400 ? { position: 'bottom' } : { position: 'right' },
+                        chartArea: { width: containerWidth < 500 ? '90%' : '80%', height: '70%' },
+                    };
+
+                    const chart = new google.visualization.PieChart(chartContainer);
+                    chart.draw(data, options);
+                }
+
+                resizeChart(); // Initial draw
+                window.addEventListener('resize', resizeChart); // Redraw on resize
+            });
         }
-
-
-        console.log("Original Data:", taman.labels, taman.data);
-
-        // Group the labels and sum the data
-        const groupedData = {};
-        taman.labels.forEach((label, index) => {
-            if (!groupedData[label]) {
-                groupedData[label] = taman.data[index];
-            } else {
-                groupedData[label] += taman.data[index];
-            }
-        });
-
-        console.log("Grouped Data:", groupedData);
-
-        const chartData = Object.entries(groupedData).map(([label, value]) => [label, value]);
-
-        const total = taman.data.reduce((sum, value) => sum + value, 0); // Calculate total dynamically if not provided
-
-        const data = google.visualization.arrayToDataTable([
-            ['Jenis', 'Jumlah'],
-            ...chartData,
-        ]);
-
-        const options = {
-            // title:' (Total Tanaman: ' + taman.total + ')',
-            width: 500,
-            height: 280,
-            pieHole: 0.3,
-            legend: { position: 'right' },
-            chartArea: { width: '80%', height: '70%' },
-        };
-
-        const chart = new google.visualization.PieChart(document.getElementById(`chart-${taman.taman}`));
-        chart.draw(data, options);
-        });
-
-        window.addEventListener('resize', () => {
-            chart.draw(data, options); // Redraw the chart
-        });
-    }
-
     </script>
     
     <script type="text/javascript">
@@ -519,25 +612,87 @@
                 ...overallData.map(item => [item.label, item.count]),
             ]);
 
-            const options = {
-                // title: 'Overall Composition of Tanaman',
-                width: '100%',
-                height: 350,
-                legend: { position: 'none' },
-                chartArea: { width: '80%', height: '70%' },
-                hAxis: { title: 'Jenis', slantedText: true },
-                vAxis: { title: 'Jumlah', minValue: 0 },
-            };
-
             const chart = new google.visualization.ColumnChart(document.getElementById('column-chart'));
-            chart.draw(data, options);
 
-            window.addEventListener('resize', () => {
-                chart.draw(data, options); // Redraw the chart
-            });
+            function resizeChart() {
+                const containerWidth = document.getElementById('column-chart').offsetWidth;
+
+                // Adjust options dynamically based on container width
+                const options = {
+                    width: '100%',
+                    height: containerWidth < 400 ? 210 : 400,
+                    legend: containerWidth < 600 ? { position: 'none' } : { position: 'top' },
+                    chartArea: { width: containerWidth < 500 ? '90%' : '80%', height: '70%' },
+                    hAxis: { title: 'Jenis', slantedText: containerWidth < 800 }, // Slanted text for small screens
+                    vAxis: { title: 'Jumlah', minValue: 0 },
+                    animation: {
+                                duration: 1000,
+                                easing: 'out',
+                                startup: true
+                    },
+                };
+
+                chart.draw(data, options); // Redraw chart with updated options
+            }
+
+            // Draw the chart initially
+            resizeChart();
+
+            // Redraw chart on window resize
+            window.addEventListener('resize', resizeChart);
         }
     </script>
 
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart', 'line'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            fetch('/getMonthlyTrends')
+                .then(response => response.json())
+                .then(data => {
+                    const chartData = [['Month', 'Planted', 'Dead']];
+
+                    data.forEach(row => {
+                        chartData.push([row.month, row.planted, row.dead]);
+                    });
+
+                    const googleData = google.visualization.arrayToDataTable(chartData);
+
+                    const chart = new google.visualization.LineChart(document.getElementById('trend-chart'));
+
+                    function resizeChart() {
+                        const containerWidth = document.getElementById('trend-chart').offsetWidth;
+
+                        // Adjust options dynamically based on container width
+                        const options = {
+                            width: containerWidth < 900 ? '100%' : 1000,
+                            height: containerWidth < 400 ? 210 : 400,
+                            chartArea: { width: containerWidth < 900 ? '100%' : '95%', height: '70%' },
+                            curveType: 'function',
+                            legend: { position: 'bottom' },
+                            hAxis: { title: 'Bulan', slantedText: containerWidth < 500 },
+                            vAxis: { title: 'Jumlah' },
+                            animation: {
+                                duration: 1000,
+                                easing: 'out',
+                                startup: true
+                            },
+                        };
+
+                        chart.draw(googleData, options); // Redraw chart with updated options
+                    }
+
+                    // Draw the chart initially
+                    resizeChart();
+
+                    // Redraw chart on window resize
+                    window.addEventListener('resize', resizeChart);
+                    
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    </script>
 
 
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
@@ -548,14 +703,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>
-    <script src="{{asset('js/demo/chart-bar-demo.js')}}"></script>
 
 </body>
 

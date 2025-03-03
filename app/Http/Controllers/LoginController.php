@@ -34,9 +34,9 @@ class LoginController extends Controller
             
             // Handle only 'admin' and 'staff' levels
             if ($user->level === 'admin') {
-                return redirect()->intended(route('admin-index'));
+                return redirect()->intended(route('admin.admin-index'));
             } elseif ($user->level === 'staff') {
-                return redirect()->intended(route('staff-index'));
+                return redirect()->intended(route('staff.admin-index'));
             } else {
                 // Logout if the user's level is not valid
                 Auth::logout();
@@ -49,6 +49,14 @@ class LoginController extends Controller
         return redirect()->back()->with('fail', 'Login failed. Invalid email or password.');
     }
 
+    protected function authenticated(Request $request, $user)
+    {
+        
+        $user->update([
+            'last_login_at' => now(),
+        ]);
+    }
+    
     public function logout(Request $request)
     {
         Auth::logout();

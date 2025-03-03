@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bunga extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,20 +23,8 @@ class Bunga extends Model
         'lokasib_id',
         'gambar_bunga',
         'kode_unik',
+        'user_id',
     ];
-
-    // protected static function boost()
-    // {
-    //     parent::boot();
-
-    //     static::creating(function ($bunga) {
-    //         $bunga->kode_unik = self::generateUniqueCode($bunga, $counters);
-    //     });
-
-    //     static::updating(function ($bunga) {
-    //         $bunga->kode_unik = self::generateUniqueCode($bunga, $counters);
-    //     });
-    // }
 
     public static function generateUniqueCode($bunga, &$counters)
     {
@@ -44,7 +35,9 @@ class Bunga extends Model
         }
 
         $type = 'Flo'; // Flower
-        $speciesCode = strtoupper(substr($bunga->jenisBunga->nama_jenis_bunga, 0, 4)); // First 4 letters of species
+        $wordsToRemove = ['Bunga']; // Add more words as needed
+        $filteredName = str_replace($wordsToRemove, '', $bunga->jenisBunga->nama_jenis_bunga);
+        $speciesCode = strtoupper(substr(str_replace(' ', '', $filteredName), 0, 4));
         $gardenCode = strtoupper(substr($bunga->taman->nama, -1)); // Last letter of garden name
 
         $uniqueCode = sprintf('%02d/%s/%s/%s', $counters[$key], $type, $speciesCode, $gardenCode);
@@ -60,6 +53,11 @@ class Bunga extends Model
 
     }
 
+    public function getFormattedCreatedAtAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d-m-Y | H:i');
+    }
+
     public function jenisBunga()
     {
         return $this->belongsTo(JenisBunga::class, 'jenisb_id', 'id');
@@ -69,5 +67,10 @@ class Bunga extends Model
     {
         return $this->belongsTo(Taman::class, 'lokasib_id', 'id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }   
 
 }
