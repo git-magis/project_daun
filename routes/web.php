@@ -20,7 +20,8 @@ use App\Http\Controllers\DetailBungaController;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\QRpohonController;
+use App\Http\Controllers\QRbungaController;
 
 Route::group(['middleware' => 'revalidate'], function () {
     // Login Routes
@@ -85,7 +86,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::delete('/jenis_bunga/{id}', [JenisBungaController::class, 'destroy'])->name('jenis_bunga.destroy');
     
         Route::post('/taman/store', [TamanController::class, 'store'])->name('taman.store');
-        Route::put('/taman/{id}', [TamanController::class, 'update'])->name('taman.update');
+        Route::put('/taman/update/{id}', [TamanController::class, 'update'])->name('taman.update');
         Route::delete('/taman/{id}', [TamanController::class, 'destroy'])->name('taman.destroy'); 
         
         Route::get('/atribut/create/{id}', [AtributController::class, 'create'])->name('atribut.create');
@@ -93,6 +94,12 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/atribut/edit/{id}', [AtributController::class, 'edit'])->name('atribut.edit');
         Route::put('/atribut/update/{id}', [AtributController::class, 'update'])->name('atribut.update');
         Route::delete('/atribut/delete/{id}', [AtributController::class, 'destroy'])->name('atribut.destroy');
+
+        Route::get('/add-peta', [TamanController::class, 'showMap'])->name('add-peta');
+        Route::get('/edit-peta/{id}', [TamanController::class, 'editMap'])->name('edit-peta');
+        Route::post('/save-location', [TamanController::class, 'saveLocation'])->name('save-location');
+        Route::get('/get-taman-data/{id}', [TamanController::class, 'getTamanData']);
+        Route::post('/edit-location', [TamanController::class, 'updateLocation'])->name('edit-location');
     });
 });
 
@@ -105,6 +112,16 @@ Route::get('/varian-bunga', [VarianBungaController::class, 'index'])->name('vari
 
 Route::get('/detail-pohon/{id}', [DetailPohonController::class, 'show'])->name('detail-pohon.show');
 Route::get('/detail-bunga/{id}', [DetailBungaController::class, 'show'])->name('detail-bunga.show');
+
+Route::get('/download-qr-pohon/{id}', [PohonController::class, 'downloadQRPohon'])->name('downloadQRPohon');
+Route::get('/download-qr-bunga/{id}', [BungaController::class, 'downloadQRBunga'])->name('downloadQRBunga');
+
+Route::get('/pohon/{id}', [QRpohonController::class, 'show'])->name('qr-pohon.show');
+Route::get('/bunga/{id}', [QRbungaController::class, 'show'])->name('qr-bunga.show');
+
+Route::get('api/maps', [TamanController::class, 'getTamans']);
+Route::get('/peta', function () {return view('peta');})->name('peta');
+
 
 // Route::get('/detail-pohon/{id}', [VarianPohonController::class, 'show'])->name('detail-pohon');
 

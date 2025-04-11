@@ -30,12 +30,12 @@ class Taman extends Model
 
     public function pohons()
     {
-        return $this->hasMany(Pohon::class);
+        return $this->hasMany(Pohon::class, 'lokasi_id');
     }
 
     public function bungas()
     {
-        return $this->hasMany(Bunga::class);
+        return $this->hasMany(Bunga::class, 'lokasib_id');
     }
 
     public function jenisPohon()

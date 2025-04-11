@@ -8,7 +8,7 @@ class VarianPohonController extends Controller
 {
     public function index()
     {
-        $varianpohon = JenisPohon::all();
+        $varianpohon = JenisPohon::all()->sortBy('nama_jenis_pohon');
         return view('varian_pohon', compact('varianpohon'));
     }
 

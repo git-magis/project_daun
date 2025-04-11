@@ -415,3 +415,107 @@ footer .line {
     object-fit: cover;
   } */
 
+/* MAP STYLING */
+
+#map {
+    width: 100vw; 
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#sidebar {
+    position: absolute;
+    top: 80px;
+    /* left: 10px; */
+    width: 250px;
+    /* max-height: 90vh; */
+    /* overflow-y: auto; */
+    background: white;
+    padding: 15px;
+    border-radius: 7px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: left 0.3s ease-in-out; /* Smooth sliding */
+    z-index: 1000;
+}
+
+#toggle-sidebar {
+    position: absolute;
+    right: -40px;
+    top: 10px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    padding-right: 10px;
+    border-end-end-radius: 50%;
+    border-start-end-radius: 50%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#toggle-bottom {
+    position: absolute;
+    right: 10px;
+    top: -40px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    padding-right: 5px;
+    border-start-start-radius: 50%;
+    border-start-end-radius: 50%;
+    box-shadow: 2px 2px 5px rgba(0.2, 0.2, 0.2, 0);
+}
+
+#arrow-icon {
+    font-size: 18px;
+}
+
+.sidebar-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    font-size: 20px;
+    text-align: center;
+    background: white;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.sidebar-edit-back {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    width: 50px;
+    font-size: 24px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.sidebar h5 {
+    margin: 0 0 10px;
+}
+
+.filter-item {
+    margin-bottom: 10px;
+}
+
+.form-map {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; 
+    max-width: 400px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 10px;
+    transition: bottom 0.3s ease-in-out; /* Smooth sliding */
+    z-index: 1000;
+}

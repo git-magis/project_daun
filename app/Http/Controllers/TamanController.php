@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\Taman;
 
 class TamanController extends Controller
@@ -10,11 +11,10 @@ class TamanController extends Controller
 
     public function index()
     {
-        // Fetch all data from the taman table
         $data = Taman::all();
 
-        // Pass data to the view
-        return view('admin.manage_taman', ['data' => $data]);  // Ensure 'data' is passed correctly
+        // return view('admin.manage_taman', ['data' => $data]);
+        return view('admin.manage_taman', compact('data')); 
     }
 
 
@@ -69,5 +69,63 @@ class TamanController extends Controller
         ->with('success', 'Data deleted sucessfully.');
     }
 
+    public function getTamans()
+    {
+        $tamans = Taman::withCount(['pohons', 'bungas'])->get();
+        // $tamans = Taman::all();
+
+        return response()->json($tamans);
+    }
+
+    public function showMap()
+    {
+        $taman = Taman::first();
+        return view('admin.add_peta', compact('taman'));
+    }
+
+    public function editMap($id)
+    {
+        $taman = Taman::findOrFail($id);
+        return view('admin.edit_peta', compact('taman'));
+    }
+
+    public function saveLocation(Request $request)
+    {
+        session([
+            'selected_latitude' => $request->latitude,
+            'selected_longitude' => $request->longitude
+        ]);
+
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')->with('open_modal', true);
+    }
+
+    public function getTamanData($id)
+    {
+        $taman = Taman::find($id);
+
+        if (!$taman) {
+            return response()->json(['error' => 'Data not found'], 404);
+        }
+
+        return response()->json([
+            'id' => $taman->id,
+            'nama' => $taman->nama,
+            'latitude' => $taman->latitude,
+            'longitude' => $taman->longitude,
+            'kode' => $taman->kode
+        ]);
+    }
+
+    public function updateLocation(Request $request)
+    {
+        $taman = Taman::findOrFail($request->id);
+        $taman->nama = $request->nama;
+        $taman->kode = $request->kode;
+        $taman->latitude = $request->latitude;
+        $taman->longitude = $request->longitude;
+        $taman->save();
+
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')->with('success', 'Taman updated successfully!');
+    }
 
 }

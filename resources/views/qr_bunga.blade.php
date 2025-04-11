@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /> -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
@@ -65,18 +66,18 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Beranda</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('varian-bunga') }}">Varian Bunga</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ $detailbunga->nama_jenis_bunga }}</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ $bunga->nama_bunga }}</li>
                             </ol>
                         </nav>
-                        <h1 class="display-4 fw-semibold mb-0">{{ $detailbunga->nama_jenis_bunga }}</h1>
-                        <p class="fs-4 fst-italic">{{ $detailbunga->nama_ilmiah ?? 'nama ilmiah'}}</p>
+                        <h1 class="display-4 fw-semibold mb-0">{{ $bunga->nama_bunga }}</h1>
+                        <p class="fs-4 fst-italic">{{ $bunga->jenisBunga->nama_jenis_bunga }} ({{ $bunga->jenisBunga->nama_ilmiah ?? 'nama ilmiah' }})</p>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-between align-items-start">
                 <!-- Image -->
                 <div class="col-lg-6 pb-5">
-                    <img src="{{ asset('images/' . $detailbunga->gambar_bunga) }}" alt="" class="rounded-4 theme-shadow">
+                    <img src="{{ asset('images/' . $bunga->gambar_bunga) }}" alt="Tidak ada" class="rounded-4 theme-shadow">
                 </div>
 
                 <!-- Right Section (Cards) -->
@@ -84,25 +85,31 @@
                     <div class="row">
                         <!-- Jumlah Pohon -->
                         <div class="col-md-6 pb-3">
-                            <div class="mb-2 text-center bg-white theme-shadow rounded-4 py-4">
-                                <h1 class="text-success display-4">{{ $detailbunga->jumlah}}</h1>
+                            <div class="mb-2 text-center theme-shadow rounded-4 py-4">
+                                <h1 class="text-primary display-2">{{ $bunga->jenisBunga->jumlah}}</h1>
                                 <h6 class="text-uppercase mb-0 text-black mt-3">Jumlah Bunga</h6>
                             </div>
                         </div>
 
                         <!-- Lokasi Pohon (Placed below) -->
                         <div class="col-md-6 pb-3">
-                            <div class="mb-2 text-center bg-white theme-shadow rounded-4 py-4">
-                                <h1 class="text-success display-4">{{ $lokasiBunga->total_taman ?? '0'}}</h1>
-                                <h6 class="text-uppercase mb-0 text-black mt-3">Lokasi Bunga</h6>
+                            <div class="mb-2 text-center theme-shadow rounded-4 py-4">
+                                <h1 class="text-primary display-2">12 thn.</h1>
+                                <h6 class="text-uppercase mb-0 text-black mt-3">Umur Bunga</h6>
                             </div>
                         </div>
 
                         <!-- Kode Pohon (Spans full width) -->
-                        <div class="col-12 pb-5">
-                            <div class="mb-2 text-center bg-white theme-shadow rounded-4 py-4">
-                                <h1 class="text-success display-5">--/Flo/MATA/-</h1>
+                        <div class="col-12 pb-3">
+                            <div class="mb-2 text-center theme-shadow rounded-4 py-4">
+                                <h1 class="text-primary display-5">{{ $bunga->kode_unik }}</h1>
                                 <h6 class="text-uppercase mb-0 text-black mt-3">Kode Bunga</h6>
+                            </div>
+                        </div>
+                        <div class="col-12 pb-5">
+                            <div class="mb-2 text-center theme-shadow rounded-4 py-4">
+                                <h1 class="text-primary display-5">{{ $bunga->taman->nama}}</h1>
+                                <h6 class="text-uppercase mb-0 text-black mt-3">Lokasi Bunga</h6>
                             </div>
                         </div>
                     </div>
@@ -127,7 +134,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Deskripsi Pohon</h2>
+                        <h2>Deskripsi Bunga</h2>
                     </div>
                 </div>
             </div>
@@ -138,63 +145,7 @@
                         <br><br>Pohon Flamboyan disebut juga sebagai Flame Tree karena bunganya yang berwarna merah menyerupai api (Flame). Saat musim kering, pohon ini akan menggugurkan daunnya. Pada saat itu pula bunganya akan bermekaran sehingga pohonnya terlihat indah dengan warna merahnya.
                         <br><br>Sumber : <a href="https://ayoketaman.com/web/pohon/ZzFuNFp3cG5DTHllYTZFZ1I4YW9JQT09">Klik Di sini!</a> 
                     </p> -->
-                    <p class="lh-base">{!! nl2br(e($detailbunga->deskripsi)) !!}</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="galeri" class="section-padding pt-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Galeri Dokumentasi</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-1.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-1.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-2.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-2.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-3.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-3.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-4.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-4.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="350">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-5.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-5.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-6.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-6.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
+                    <p class="lh-base">{!! nl2br(e($bunga->jenisBunga->deskripsi)) !!}</p>
                 </div>
             </div>
         </div>

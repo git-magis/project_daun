@@ -322,7 +322,7 @@
                                             <td>{{ $item->longitude }}</td>
                                             <td>{{ $item->kode }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-secondary btn-icon-split" data-toggle="modal" data-target="#editModal"
+                                                <!-- <button type="button" class="btn btn-secondary btn-icon-split edit-btn" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
                                                         data-nama="{{ $item->nama }}" 
                                                         data-latitude="{{ $item->latitude }}" 
@@ -332,7 +332,13 @@
                                                         <i class="fas fa-pen"></i>
                                                     </span>
                                                     <span class="text">Edit</span>
-                                                </button>
+                                                </button> -->
+                                                <a href="{{ route('edit-peta', ['id' => $item->id]) }}" class="btn btn-secondary btn-icon-split">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-pen"></i>
+                                                    </span>
+                                                    <span class="text">Edit</span>
+                                                </a>
                                             </td>
                                             <td>
                                                 <a href="#" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target="#hapusModal" data-id="{{ $item->id }}">
@@ -415,11 +421,14 @@
                         </div>
                         <div class="form-group">
                             <label>Latitude</label>
-                            <input type="text" class="form-control" name="latitude" required>
+                            <input type="text" class="form-control" name="latitude" id="latitude" value="{{ session('selected_latitude') ?? '' }}" required>
                         </div>
                         <div class="form-group">
                             <label>Longitude</label>
-                            <input type="text" class="form-control" name="longitude" required>
+                            <input type="text" class="form-control" name="longitude" id="longitude" value="{{ session('selected_longitude') ?? '' }}" required>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ route('add-peta') }}" class="btn btn-success">📌 Pilih lokasi</a>
                         </div>
                         <div class="form-group">
                             <label>Kode</label>
@@ -452,19 +461,22 @@
 
                         <div class="form-group">
                             <label for="editNama">Nama</label>
-                            <input type="text" class="form-control" id="editNama" name="nama" required>
+                            <input type="text" class="form-control" id="editNama" name="nama" value="{{ session('edit_nama') ?? '' }}" required>
                         </div>
                         <div class="form-group">
                             <label for="editLatitude">Latitude</label>
-                            <input type="text" class="form-control" id="editLatitude" name="latitude" required>
+                            <input type="text" class="form-control" id="editLatitude" name="latitude" value="{{ session('edited_latitude') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="editLongitude">Longitude</label>
-                            <input type="text" class="form-control" id="editLongitude" name="longitude" required>
+                            <input type="text" class="form-control" id="editLongitude" name="longitude" value="{{ session('edited_longitude') }}" required>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="#" id="editMap" class="btn btn-success">📌 Edit lokasi</a>
                         </div>
                         <div class="form-group">
                             <label for="editKode">Kode</label>
-                            <input type="text" class="form-control" id="editKode" name="kode" required>
+                            <input type="text" class="form-control" id="editKode" name="kode" value="{{ session('edit_kode') ?? '' }}" required>
                         </div>
 
                         <div class="modal-footer">
@@ -522,28 +534,45 @@
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 
     <script>
-        $('#editModal').on('show.bs.modal', function (event) {
-            // Get the button that triggered the modal
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            
-            // Extract data attributes from the button
-            var id = button.data('id');
-            var nama = button.data('nama');
-            var latitude = button.data('latitude');
-            var longitude = button.data('longitude');
-            var kode = button.data('kode');
+        // $(document).ready(function () {
+        //     $('.edit-btn').on('click', function () {
+        //         var id = $(this).data('id');
 
-            // Update the modal's form action URL dynamically with the correct ID
-            var formAction = '{{ route('taman.update', ':id') }}';
-            formAction = formAction.replace(':id', id);
-            $('#editForm').attr('action', formAction);
+        //         $.ajax({
+        //             url: '/get-taman-data/' + id,
+        //             type: 'GET',
+        //             dataType: 'json',
+        //             success: function (data) {
+                        
+        //                 $('#editForm').attr('action', '/taman/update/' + data.id);
+        //                 $('#editNama').val(data.nama);
+        //                 $('#editLatitude').val(data.latitude);
+        //                 $('#editLongitude').val(data.longitude);
+        //                 $('#editKode').val(data.kode);
 
-            // Set the input values in the form
-            $('#editNama').val(nama);
-            $('#editLatitude').val(latitude);
-            $('#editLongitude').val(longitude);
-            $('#editKode').val(kode);
-        });
+        //                 var editMapUrl = '/edit-peta/' + data.id;
+        //                 $('#editMap').attr('href', editMapUrl);
+        //             },
+        //             error: function () {
+        //                 alert('Failed to fetch data');
+        //             }
+        //         });
+        //     });
+        // });
+
+        // $(document).ready(function () {
+        //     var editId = sessionStorage.getItem("openEditModal");
+
+        //     if (editId) {
+        //         console.log("Opening modal for ID:", editId);
+                
+        //         $('#editModal').modal('show');
+
+        //         $('#editIdHidden').val(editId);
+
+        //         sessionStorage.removeItem("openEditModal");
+        //     }
+        // });
 
         // Use jQuery to update the form action dynamically
         $('#hapusModal').on('show.bs.modal', function (event) {
@@ -554,6 +583,14 @@
             var actionUrl = $('#deleteForm').attr('action').replace(':id', tamanId);
             $('#deleteForm').attr('action', actionUrl);
         });
+
+        // Check if session has 'open_modal', then show modal
+        $(document).ready(function () {
+            @if(session('open_modal'))
+                $('#tambahModal').modal('show');
+            @endif
+        });
+
     </script>
 
 </body>

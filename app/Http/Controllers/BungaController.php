@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Bunga;
 use App\Models\JenisBunga;
 use App\Models\Taman;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BungaController extends Controller
 {
@@ -139,6 +140,16 @@ class BungaController extends Controller
         // return redirect()->route('manage-bunga')->with('success', 'bunga berhasil dihapus.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
         ->with('success', 'Data deleted sucessfully.');
+    }
+
+    public function downloadQRBunga($id) {
+        $data = Bunga::with(['jenisBunga', 'taman'])->findOrFail($id);
+
+        // $safeKodeUnik = preg_replace('/[\/\\\\]/', '_', $data->kode_unik);
+
+        $pdf = Pdf::loadView('admin.pdf_bunga', compact('data'))->setPaper('a5', 'landscape');
+
+        return $pdf->stream('bunga_' . $data->id . '.pdf');
     }
 
 

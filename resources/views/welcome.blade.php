@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="row g-4 text-center">
-                <a href="#hero" class="col-lg-4 col-sm-6">
+                <a href="{{route('peta')}}" class="col-lg-4 col-sm-6">
                     <div class="service theme-shadow p-lg-5 p-4">
                         <div class="iconbox">
                             <i class="ri-map-pin-line"></i>

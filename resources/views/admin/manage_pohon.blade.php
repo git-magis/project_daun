@@ -351,7 +351,7 @@
                                                 </a>
                                             </td>                                            
                                             <td>
-                                                <a href="#" class="btn btn-primary btn-icon-split">
+                                                <a href="{{ route('downloadQRPohon', $item->id) }}" class="btn btn-primary btn-icon-split" target="_blank">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-camera-retro"></i>
                                                     </span>

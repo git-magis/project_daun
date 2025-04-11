@@ -8,7 +8,7 @@ class VarianBungaController extends Controller
 {
     public function index()
     {
-        $varianbunga = JenisBunga::all();
+        $varianbunga = JenisBunga::all()->sortBy('nama_jenis_bunga');
         return view('varian_bunga', compact('varianbunga'));
     }
 

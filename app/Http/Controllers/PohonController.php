@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Pohon;
 use App\Models\JenisPohon;
 use App\Models\Taman;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PohonController extends Controller
 {
@@ -145,6 +146,16 @@ class PohonController extends Controller
         // return redirect()->route('manage-pohon')->with('success', 'Pohon berhasil dihapus.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-pohon' : 'staff.manage-pohon')
         ->with('success', 'Data deleted successfully.');
+    }
+
+    public function downloadQRPohon($id) {
+        $data = Pohon::with(['jenisPohon', 'taman'])->findOrFail($id);
+
+        // $safeKodeUnik = preg_replace('/[\/\\\\]/', '_', $data->kode_unik);
+
+        $pdf = Pdf::loadView('admin.pdf_pohon', compact('data'))->setPaper('a5', 'landscape');
+
+        return $pdf->stream('pohon_' . $data->id . '.pdf');
     }
 
 
