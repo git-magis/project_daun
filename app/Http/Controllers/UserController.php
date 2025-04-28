@@ -47,7 +47,7 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->route('manage-user')->with('success', 'berhasil');
+        return redirect()->route('manage-user')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -56,6 +56,6 @@ class UserController extends Controller
         $data = User::findOrFail($id);
         $data->delete();
 
-        return redirect()->route('manage-user')->with('success', 'Data deleted sucessfully.');
+        return redirect()->route('manage-user')->with('success', 'Data berhasil dihapus.');
     }
 }

@@ -32,7 +32,7 @@ class TamanController extends Controller
     
         // return redirect()->route('manage-taman')->with('success', 'Data saved successfully.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')
-        ->with('success', 'Data saved sucessfully.');
+        ->with('success', 'Data berhasil ditambahkan.');
     }
     
 
@@ -53,7 +53,7 @@ class TamanController extends Controller
     
         // return redirect()->route('manage-taman')->with('success', 'Data updated successfully.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')
-        ->with('success', 'Data updated sucessfully.');
+        ->with('success', 'Data berhasil diperbarui.');
     }
     
 
@@ -66,7 +66,7 @@ class TamanController extends Controller
         // Redirect back with a success message
         // return redirect()->route('manage-taman')->with('success', 'taman berhasil dihapus.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')
-        ->with('success', 'Data deleted sucessfully.');
+        ->with('success', 'Data berhasil dihapus.');
     }
 
     public function getTamans()
@@ -125,7 +125,8 @@ class TamanController extends Controller
         $taman->longitude = $request->longitude;
         $taman->save();
 
-        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')->with('success', 'Taman updated successfully!');
+        return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-taman' : 'staff.manage-taman')
+        ->with('success', 'Data berhasil diperbarui.');
     }
 
 }

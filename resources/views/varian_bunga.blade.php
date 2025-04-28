@@ -19,8 +19,8 @@
     <nav class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('welcome') }}">
-                <!-- <img src="./assets/images/logo-dark.svg" alt=""> -->
-                <h1>* E-Daun</h1>
+                <img src="{{asset('images/siskalogo-2.png')}}" alt="teu aya" style="width: 55px;">
+                <!-- <h1>* E-Daun</h1> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

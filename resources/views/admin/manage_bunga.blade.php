@@ -38,11 +38,12 @@
         @endif
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('welcome')}}">
                 <!-- <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div> -->
-                <div class="sidebar-brand-text mx-3">* E-Daun Admin</div>
+                <img src="{{asset('images/siskalogo-2-white.png')}}" alt="teu aya" style="width: 50px;">
+                <!-- <div class="sidebar-brand-text mx-3">* E-Daun Admin</div> -->
             </a>
 
             <!-- Divider -->
@@ -270,10 +271,27 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800"><i class="fas fa-fw fa-fan"></i>  Tabel Bunga</h1>
-                    <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p> -->
+                    <h1 class="h3 mb-4 text-gray-800">🌻Tabel Bunga</h1>
+                    
+                    <!-- Collapsable Card Example -->
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Accordion -->
+                        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                            role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <h6 class="m-0 font-weight-bold text-primary">Informasi</h6>
+                        </a>
+                        
+                        <!-- Card Content - Collapse -->
+                        <div class="collapse show" id="collapseCardExample">
+                            <div class="card-body">
+                                Klik <strong>Tambah Bunga</strong> untuk menambahkan data, beberapa hal yang perlu diperhatikan:
+                                <br><br>1. Penamaan bunga menyesuaikan dengan jenis bunga.
+                                <br>2. Kolom <strong>Jumlah Input</strong> berfungsi untuk menambahkan beberapa data dalam sekali input, penamaan akan mengikuti urutan angka.
+                                <br>3. Isi kolom <strong>Jenis</strong> dan <strong>Lokasi</strong> dengan data yang sudah ada (pastikan datanya telah ter-input pada tab Tabel Jenis dan Tabel Lokasi).
+                                <br>4. Isi kolom <strong>Gambar</strong> dengan foto bunga masing-masing. 
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -431,7 +449,12 @@
                         <div class="form-group">
                             <label for="namaBunga">Nama</label>
                             <input type="text" name="nama_bunga" class="form-control" id="namaBunga" 
-                                placeholder="Tjokro Wimantara.." required>
+                                placeholder="Sunflower.." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlahInput">Jumlah Input</label>
+                            <input type="number" name="jumlahInput" class="form-control" id="jumlahInput" 
+                                placeholder="1-100.." required>
                         </div>
                         <div class="form-group">
                             <label for="jenisBunga">Jenis</label>
@@ -524,12 +547,6 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 my-2" role="alert">
-            <p>{{ session('success') }}</p>
-        </div>
-    @endif
-
     <!-- Delete Modal -->
     <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -571,6 +588,22 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 
+    <!-- Toaster -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: '{{ session("success") }}',
+            showConfirmButton: false,
+            timer: 5000
+        });
+    </script>
+    @endif
+
     <script>
         $('#editModal').on('show.bs.modal', function (event) {
             // Get the button that triggered the modal
@@ -606,6 +639,7 @@
             var actionUrl = $('#deleteForm').attr('action').replace(':id', bungaId);
             $('#deleteForm').attr('action', actionUrl);
         });
+
     </script>
 
 </body>

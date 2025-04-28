@@ -17,8 +17,8 @@
 <nav class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('welcome') }}">
-                <!-- <img src="./assets/images/logo-dark.svg" alt=""> -->
-                <h1>* E-Daun</h1>
+                <img src="{{asset('images/siskalogo-2.png')}}" alt="teu aya" style="width: 55px;">
+                <!-- <h1>* E-Daun</h1> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@
                         <!-- Kode Pohon (Spans full width) -->
                         <div class="col-12 pb-5">
                             <div class="mb-2 text-center bg-white theme-shadow rounded-4 py-4">
-                                <h1 class="text-success display-5">--/Flo/MATA/-</h1>
+                                <h1 class="text-success display-5">Flo/{{$speciesCode}}</h1>
                                 <h6 class="text-uppercase mb-0 text-black mt-3">Kode Bunga</h6>
                             </div>
                         </div>
@@ -154,48 +154,18 @@
                 </div>
             </div>
             <div class="row g-4">
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-1.png')}}" alt="">
+                @foreach ($bungas as $bunga)
+                    <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
+                        <div class="portfolio-item image-zoom">
+                            <div class="image-zoom-wrapper">
+                                <img src="{{ asset('images/' . $bunga->gambar_bunga) }}" alt="Gambar Bunga">
+                            </div>
+                            <a href="{{ asset('images/' . $bunga->gambar_bunga) }}" data-fancybox="gallery" class="iconbox">
+                                <i class="ri-search-2-line"></i>
+                            </a>
                         </div>
-                        <a href="{{asset('images/galeri-1.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
                     </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-2.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-2.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-3.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-3.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-4.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-4.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="350">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-5.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-5.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="{{asset('images/galeri-6.png')}}" alt="">
-                        </div>
-                        <a href="{{asset('images/galeri-6.png')}}" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

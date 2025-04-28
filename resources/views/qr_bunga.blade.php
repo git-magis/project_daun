@@ -18,8 +18,8 @@
 <nav class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('welcome') }}">
-                <!-- <img src="./assets/images/logo-dark.svg" alt=""> -->
-                <h1>* E-Daun</h1>
+                <img src="{{asset('images/siskalogo-2.png')}}" alt="teu aya" style="width: 55px;">
+                <!-- <h1>* E-Daun</h1> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,14 +28,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#detailpohon">Detail Pohon</a>
+                        <a class="nav-link" href="#detailpohon">Detail Bunga</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#deskripsi">Deskripsi Pohon</a>
+                        <a class="nav-link" href="#deskripsi">Deskripsi Bunga</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#galeri">Galeri Dokumentasi</a>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#portfolio">Login</a>
                     </li> -->
@@ -52,7 +52,7 @@
                         <a class="nav-link" href="#blog">Blog</a>
                     </li> -->
                 </ul>
-                <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Admin</a>
+                <a href="{{ route('welcome') }}" class="btn btn-brand ms-lg-3">Beranda</a>
             </div>
         </div>
     </nav>

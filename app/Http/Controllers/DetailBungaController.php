@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\JenisBunga;
+use App\Models\Bunga;
 use App\Models\Atribut;
 
 class DetailBungaController extends Controller
@@ -19,6 +20,14 @@ class DetailBungaController extends Controller
     {
         $detailbunga = JenisBunga::findOrFail($id);
 
+        $bungas = Bunga::where('jenisb_id', $id)
+            ->whereNotNull('gambar_bunga')
+            ->get();
+
+        $wordsToRemove = ['Bunga'];
+        $filteredName = str_replace($wordsToRemove, '', $detailbunga->nama_jenis_bunga);
+        $speciesCode = strtoupper(substr(str_replace(' ', '', $filteredName), 0, 4));
+
         $lokasiBunga = JenisBunga::select('jenisbungas.id', 'jenisbungas.nama_jenis_bunga')
         ->join('bungas', 'bungas.jenisb_id', '=', 'jenisbungas.id')
         ->join('tamans', 'bungas.lokasib_id', '=', 'tamans.id')
@@ -31,6 +40,6 @@ class DetailBungaController extends Controller
                             ->where('entity_type','bunga')
                             ->get();
 
-        return view('detail_bunga', compact('attributes','detailbunga','lokasiBunga'));
+        return view('detail_bunga', compact('attributes','detailbunga','lokasiBunga', 'speciesCode', 'bungas'));
     }
 }

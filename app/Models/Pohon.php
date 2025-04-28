@@ -43,11 +43,6 @@ class Pohon extends Model
 
         $uniqueCode = sprintf('%02d/%s/%s/%s', $counters[$key], $type, $speciesCode, $gardenCode);
 
-        // dump([
-        //     'unique_code' => $uniqueCode,
-        //     'updated_counters' => $counters
-        // ]);
-
         $counters[$key]++;
 
         return $uniqueCode;

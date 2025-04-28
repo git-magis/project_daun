@@ -19,8 +19,8 @@
     <nav class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <!-- <img src="{ { asset('images/LogoDark.svg') } }" alt=""> -->
-                <h1>* E-Daun</h1>
+                <img src="{{asset('images/siskalogo-2.png')}}" alt="teu aya" style="width: 55px;">
+                <!-- <h1>* E-Daun</h1> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,13 +32,13 @@
                         <a class="nav-link" href="#hero">Beranda</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#about">Tentang</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#services">Fitur</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#blog">Berita</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tentang Kami</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Feedback</a>
@@ -90,15 +90,67 @@
         </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="section-padding border-top">
+    <!-- ABOUT -->
+    <section id="about" class="section-padding border-top">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Pohon di Kota Tasikmalaya</h1>
+                        <h1 class="display-4 fw-semibold">Tentang</h1>
                         <div class="line"></div>
                         <!-- <p>We love to craft digital experiances for brands rather than crap and more lorem ipsums and do crazy skills</p> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-6 pb-5">
+                    <img src="{{ asset('images/about.jpg') }}" alt="" class="rounded-4 theme-shadow">
+                </div>
+                <div class="col-lg-5">
+                    <h1>Siska Hayati</h1>
+                    <p class="mt-3 mb-4">Website untuk menyimpan data aneka ragam hayati di Kota Tasikmalaya yang tersebar di berbagai wilayah.</p>
+                    <div class="d-flex pt-4 mb-4">
+                        <div class="iconbox me-4">
+                            <i class="ri-book-open-line"></i>
+                        </div>
+                        <div>
+                            <h5>Wahana Edukasi</h5>
+                            <p>Setiap pohon terdapat kode QR yang dapat dipindai untuk melihat informasi spesies hayati.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="iconbox me-4">
+                            <i class="ri-earth-line"></i>
+                        </div>
+                        <div>
+                            <h5>Penelusuran Wilayah</h5>
+                            <p>Telusuri wilayah infestasi hayati melalui fitur peta hutan untuk mendapatkan koordinat lokasi.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="iconbox me-4">
+                            <i class="ri-archive-drawer-line"></i>
+                        </div>
+                        <div>
+                            <h5>Pencatatan Data</h5>
+                            <p>Dalam upaya mendukung transformasi digital dalam pencatatan basis data aneka ragam hayati berdasarkan lokasi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h1 class="display-4 fw-semibold">Aneka ragam hayati</h1>
+                        <div class="line"></div>
+                        <!-- <h5>Persebaran aneka ragam hayati di Kota Tasikmalaya</h5> -->
+                        <!-- <p>Persebaran aneka ragam hayati di Kota Tasikmalaya, meliputi pohon, bunga, dan rumpun.</p> -->
                     </div>
                 </div>
             </div>
@@ -586,7 +638,7 @@
             <div class="container">
                 <div class="row gy-5">
                     <div class="col-auto col-sm-6">
-                        <h4 class="text-white">* E-Daun</h4>
+                        <h4 class="text-white">* Siska Hayati</h4>
                         <div class="line"></div>
                         <p>Sistem Informasi Hutan Kota Tasikmalaya</p>
                         <div class="social-icons">

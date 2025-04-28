@@ -46,6 +46,7 @@ class PohonController extends Controller
             'jenis_id' => 'required|exists:jenispohons,id',
             'lokasi_id' => 'required|exists:tamans,id',
             'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'jumlahInput' => 'required|integer|min:1|max:100',
         ]);
 
         $imageName = null;
@@ -56,18 +57,37 @@ class PohonController extends Controller
             $request->gambar_pohon->move(public_path('images'), $imageName);
         }
 
-        // Save the data to the database
-        Pohon::create([
-            'nama_pohon' => $validated['nama_pohon'],
-            'jenis_id' => $validated['jenis_id'],
-            'lokasi_id' => $validated['lokasi_id'],
-            'gambar_pohon' => $imageName ?? null,
-            'user_id' => auth()->id(),
-        ]);
+        $jumlah = $validated['jumlahInput'];
+        $baseName = $validated['nama_pohon'];
+        $data = [];
 
-        // return redirect()->route('manage-pohon')->with('success', 'Data saved successfully.');
+        for ($i = 1; $i <= $jumlah; $i++) {
+            $data[] = [
+                'nama_pohon' => $jumlah > 1 ? $baseName . '-' . $i : $baseName,
+                'jenis_id' => $validated['jenis_id'],
+                'lokasi_id' => $validated['lokasi_id'],
+                'gambar_pohon' => $imageName,
+                'user_id' => auth()->id(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Pohon::insert($data);
+        foreach ($data as $tangkal) {
+            Pohon::create($tangkal);
+        }
+        
+        // Pohon::create([
+        //     'nama_pohon' => $validated['nama_pohon'],
+        //     'jenis_id' => $validated['jenis_id'],
+        //     'lokasi_id' => $validated['lokasi_id'],
+        //     'gambar_pohon' => $imageName ?? null,
+        //     'user_id' => auth()->id(),
+        // ]);
+
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-pohon' : 'staff.manage-pohon')
-        ->with('success', 'Data saved sucessfully.');
+        ->with('success', "$jumlah pohon berhasil ditambahkan.");
     }
 
     public function edit($id)
@@ -127,7 +147,7 @@ class PohonController extends Controller
         
             // return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');
             return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-pohon' : 'staff.manage-pohon')
-            ->with('success', 'Data updated sucessfully.');
+            ->with('success', 'Data berhasil diperbarui.');
 
         } catch (\Exception $e) {
             // Log any exceptions
@@ -145,7 +165,7 @@ class PohonController extends Controller
         // Redirect back with a success message
         // return redirect()->route('manage-pohon')->with('success', 'Pohon berhasil dihapus.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-pohon' : 'staff.manage-pohon')
-        ->with('success', 'Data deleted successfully.');
+        ->with('success', 'Data berhasil dihapus.');
     }
 
     public function downloadQRPohon($id) {

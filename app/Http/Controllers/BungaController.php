@@ -21,7 +21,7 @@ class BungaController extends Controller
         $taman_lokasi = Taman::all();
 
         // Pass data to the view
-        return view('admin.manage_bunga', compact('data', 'jenis_bunga', 'taman_lokasi'));  // Ensure 'data' is passed correctly
+        return view('admin.manage_bunga', compact('data', 'jenis_bunga', 'taman_lokasi')); 
     }
 
     public function create()
@@ -42,7 +42,10 @@ class BungaController extends Controller
             'jenisb_id' => 'required|exists:jenisbungas,id',
             'lokasib_id' => 'required|exists:tamans,id',
             'gambar_bunga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'jumlahInput' => 'required|integer|min:1|max:100',
         ]);
+
+        $imageName = null;
 
         // Handle the file upload
         if ($request->hasFile('gambar_bunga')) {
@@ -50,18 +53,37 @@ class BungaController extends Controller
             $request->gambar_bunga->move(public_path('images'), $imageName);
         }
 
-        // Save the data to the database
-        Bunga::create([
-            'nama_bunga' => $validated['nama_bunga'],
-            'jenisb_id' => $validated['jenisb_id'],
-            'lokasib_id' => $validated['lokasib_id'],
-            'gambar_bunga' => $imageName ?? null,
-            'user_id' => auth()->id(),
-        ]);
+        $jumlah = $validated['jumlahInput'];
+        $baseName = $validated['nama_bunga'];
+        $data = [];
 
-        // return redirect()->route('manage-bunga')->with('success', 'Data saved successfully.');
+        for ($i = 1; $i <= $jumlah; $i++) {
+            $data[] = [
+                'nama_bunga' => $jumlah > 1 ? $baseName . '-' . $i : $baseName,
+                'jenisb_id' => $validated['jenisb_id'],
+                'lokasib_id' => $validated['lokasib_id'],
+                'gambar_bunga' => $imageName,
+                'user_id' => auth()->id(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Bunga::insert($data);
+        foreach ($data as $bunga) {
+            Bunga::create($bunga);
+        }
+
+        // Bunga::create([
+        //     'nama_bunga' => $validated['nama_bunga'],
+        //     'jenisb_id' => $validated['jenisb_id'],
+        //     'lokasib_id' => $validated['lokasib_id'],
+        //     'gambar_bunga' => $imageName ?? null,
+        //     'user_id' => auth()->id(),
+        // ]);
+
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
-        ->with('success', 'Data saved sucessfully.');
+        ->with('success', "$jumlah bunga berhasil ditambahkan.");
     }
 
     public function edit($id)
@@ -120,7 +142,7 @@ class BungaController extends Controller
         
             // return redirect()->route('manage-bunga')->with('success', 'Data updated successfully.');
             return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
-            ->with('success', 'Data updated sucessfully.');
+            ->with('success', 'Data berhasil diperbarui.');
 
         } catch (\Exception $e) {
             // Log any exceptions
@@ -139,7 +161,7 @@ class BungaController extends Controller
         // Redirect back with a success message
         // return redirect()->route('manage-bunga')->with('success', 'bunga berhasil dihapus.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
-        ->with('success', 'Data deleted sucessfully.');
+        ->with('success', 'Data berhasil dihapus.');
     }
 
     public function downloadQRBunga($id) {

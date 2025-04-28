@@ -54,7 +54,7 @@ class JenisPohonController extends Controller
 
         // return redirect()->route('manage-jenis-pohon')->with('success', 'Data saved successfully.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-pohon' : 'staff.manage-jenis-pohon')
-        ->with('success', 'Data saved sucessfully.');
+        ->with('success', 'Data berhasil ditambahkan.');
     }
 
     public function update(Request $request, $id)
@@ -90,7 +90,7 @@ class JenisPohonController extends Controller
     
         // return redirect()->route('manage-jenis-pohon')->with('success', 'Data updated successfully.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-pohon' : 'staff.manage-jenis-pohon')
-        ->with('success', 'Data updated sucessfully.');
+        ->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -102,7 +102,7 @@ class JenisPohonController extends Controller
         // Redirect back with a success message
         // return redirect()->route('manage-jenis-pohon')->with('success', 'Jenis Pohon berhasil dihapus.');
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-jenis-pohon' : 'staff.manage-jenis-pohon')
-        ->with('success', 'Data deleted sucessfully.');
+        ->with('success', 'Data berhasil dihapus.');
     }
 
 
