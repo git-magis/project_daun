@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Admin - Tabel Taman</title>
+    <title>Admin - Tabel Atribut</title>
 
     <!-- Custom fonts for this template -->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -43,7 +43,7 @@
                 <!-- <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div> -->
-                <img src="{{asset('images/siskalogo-2-white.png')}}" alt="teu aya" style="width: 50px;">
+                <img src="{{asset('images/siskalogo-3.png')}}" alt="teu aya" style="width: 40px;">
                 <!-- <div class="sidebar-brand-text mx-3">* E-Daun Admin</div> -->
             </a>
 
@@ -125,11 +125,11 @@
                     @if(auth()->user()->level == 'admin')
                     <a class="nav-link" href="{{route('admin.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
-                        <span>Tabel Taman</span></a>
+                        <span>Tabel Kahati</span></a>
                     @elseif(auth()->user()->level == 'staff')
                     <a class="nav-link" href="{{route('staff.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
-                        <span>Tabel Taman</span></a>
+                        <span>Tabel Kahati</span></a>
                     @endif
                 </li>
             </li>

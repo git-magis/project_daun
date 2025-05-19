@@ -99,7 +99,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/edit-peta/{id}', [TamanController::class, 'editMap'])->name('edit-peta');
         Route::post('/save-location', [TamanController::class, 'saveLocation'])->name('save-location');
         Route::get('/get-taman-data/{id}', [TamanController::class, 'getTamanData']);
-        Route::post('/edit-location', [TamanController::class, 'updateLocation'])->name('edit-location');
+        Route::post('/edit-location', [TamanController::class, 'update'])->name('edit-location');
     });
 });
 
@@ -120,7 +120,14 @@ Route::get('/pohon/{id}', [QRpohonController::class, 'show'])->name('qr-pohon.sh
 Route::get('/bunga/{id}', [QRbungaController::class, 'show'])->name('qr-bunga.show');
 
 Route::get('api/maps', [TamanController::class, 'getTamans']);
+Route::get('api/taman/{id}', [TamanController::class, 'getTamansById']);
+Route::get('/taman-detail/{id}', function ($id) {return view('taman_detail', compact('id'));})->name('taman-detail');
 Route::get('/peta', function () {return view('peta');})->name('peta');
+Route::get('/api/charts/{id}', [TamanController::class, 'chartTaman']);
+
+Route::get('/scan', function () {
+    return view('scan');
+})->name('scan');
 
 
 // Route::get('/detail-pohon/{id}', [VarianPohonController::class, 'show'])->name('detail-pohon');

@@ -31,7 +31,7 @@
             @endif
         </div>
 
-        <form action="{{ route('edit-location') }}" method="POST">
+        <form action="{{ route('edit-location') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- Ensure these hidden inputs are included -->
@@ -52,9 +52,13 @@
                     <input type="text" id="longitude" name="longitude" class="form-control">
                 </div>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="kode" class="form-label">Kode</label>
                 <input type="text" id="kode" name="kode" class="form-control" value="{{ $taman->kode }}">
+            </div> -->
+            <div class="form-group">
+                <label for="editGambar">Gambar</label>
+                <input type="file" class="form-control-file" id="editGambar" name="gambar">
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan Lokasi</button>

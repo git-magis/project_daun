@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>E-Daun: Sistem Informasi Hutan</title>
+    <title>Siska Hayati - Beranda</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
@@ -19,7 +19,7 @@
     <nav class="navbar navbar-expand-lg bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="{{asset('images/siskalogo-2.png')}}" alt="teu aya" style="width: 55px;">
+                <img src="{{asset('images/siskalogo-3-black.png')}}" alt="teu aya" style="width: 45px;">
                 <!-- <h1>* E-Daun</h1> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -37,11 +37,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#services">Fitur</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#blog">Berita</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Feedback</a>
+                        <a class="nav-link" href="#barchart">Data Tanaman</a>
                     </li>
                 </ul>
                 <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Admin</a>
@@ -50,15 +50,16 @@
     </nav>
 
     <!-- HERO -->
-    <section id="hero" class="min-vh-100 d-flex align-items-center">
+    <section id="hero" class="min-vh-100 d-flex align-items-center text-center">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1 data-aos="fade-left" class="text-white text-decoration-underline fw-semibold display-2">Siska Hayati</h1>
-                    <h3 data-aos="fade-left" class="text-white fw-semibold display-4 my-4">Sistem Informasi Keanekaragaman Hayati Kota Tasikmalaya</h3>
+                    <img src="{{asset('images/siskalogo-3.png')}}" alt="teu aya" style="width: 100px;" data-aos="fade-left">
+                    <h2 data-aos="fade-left" class="text-white text-decoration-underline fw-semibold display-2 pt-4">Siska Hayati</h2>
+                    <h4 class="text-white mt-3 mb-4" data-aos="fade-right">Sistem Informasi Keanekaragaman Hayati Kota Tasikmalaya.</h4>
                     <!-- <h5 class="text-white mt-3 mb-4" data-aos="fade-right">Lihat persebaran pohon di lokasi hutan kota dan Pindai Kode QR informasi pohon.</h5> -->
                     <div data-aos="fade-up" data-aos-delay="50">
-                        <a href="#" class="btn btn-brand me-2">Pindai QR Pohon</a>
+                        <a href="{{route('scan')}}" class="btn btn-brand me-2">Pindai QR Pohon</a>
                         <a href="#services" class="btn btn-light ms-2">Fitur</a>
                     </div>
                 </div>
@@ -104,7 +105,7 @@
             </div>
             <div class="row justify-content-between align-items-center">
                 <div class="col-lg-6 pb-5">
-                    <img src="{{ asset('images/about.jpg') }}" alt="" class="rounded-4 theme-shadow">
+                    <img src="{{ asset('images/percenahan.png') }}" alt="" class="rounded-4 theme-shadow">
                 </div>
                 <div class="col-lg-5">
                     <h1>Siska Hayati</h1>
@@ -133,7 +134,7 @@
                         </div>
                         <div>
                             <h5>Pencatatan Data</h5>
-                            <p>Dalam upaya mendukung transformasi digital dalam pencatatan basis data aneka ragam hayati berdasarkan lokasi.</p>
+                            <p>Upaya mendukung transformasi digital dalam pencatatan basis data aneka ragam hayati berdasarkan lokasi.</p>
                         </div>
                     </div>
                 </div>
@@ -147,7 +148,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Aneka ragam hayati</h1>
+                        <h1 class="display-4 fw-semibold">Keanekaragaman hayati</h1>
                         <div class="line"></div>
                         <!-- <h5>Persebaran aneka ragam hayati di Kota Tasikmalaya</h5> -->
                         <!-- <p>Persebaran aneka ragam hayati di Kota Tasikmalaya, meliputi pohon, bunga, dan rumpun.</p> -->
@@ -160,11 +161,11 @@
                         <div class="iconbox">
                             <i class="ri-map-pin-line"></i>
                         </div>
-                        <h4 class="mt-4 mb-3">Peta Hutan</h4>
+                        <h4 class="mt-4 mb-3">Peta Lokasi Hayati</h4>
                         <p>Lokasi Persebaran Hutan Kota</p>
                     </div>
                 </a>
-                <a href="#hero" class="col-lg-4 col-sm-6">
+                <a href="{{route('scan')}}" class="col-lg-4 col-sm-6">
                     <div class="service theme-shadow p-lg-5 p-4">
                         <div class="iconbox">
                             <i class="ri-qr-scan-line"></i>
@@ -549,7 +550,7 @@
     </section> -->
 
     <!-- BLOG -->
-    <section id="blog" class="section-padding">
+    <!-- <section id="blog" class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -630,7 +631,26 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
+
+    <!-- BAR CHART -->
+     <section id="barchart" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h1 class="display-4 fw-semibold">Data Keseluruhan</h1>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="bar-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+     </section>
 
     <!-- FOOTER -->
     <footer class="bg-dark">
@@ -702,6 +722,66 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawBarChart);
+
+        function drawBarChart() {
+            const overallData = @json($overallData);
+
+            const data = google.visualization.arrayToDataTable([
+                ['Jenis', 'Jumlah', { role: 'annotation' }],
+                ...overallData.map(item => [item.label, item.count, item.label.toString()]),
+            ]);
+
+            const chart = new google.visualization.BarChart(document.getElementById('bar-chart'));
+
+            function resizeChart() {
+                const containerWidth = document.getElementById('bar-chart').offsetWidth;
+
+                const baseHeight = overallData.length * (containerWidth < 400 ? 35 : 50);
+
+                const options = {
+                    width: '100%',
+                    height: baseHeight,
+                    legend: { position: 'none' },
+                    chartArea: {
+                        width: containerWidth < 500 ? '90%' : '80%',
+                        height: '80%',
+                    },
+                    bar: {groupWidth: '90%'},
+                    hAxis: { title: 'Jumlah', minValue: 0 },
+                    vAxis: {
+                        title: 'Jenis',
+                        textStyle: { fontSize: containerWidth < 450 ? 10 : 12 }
+                    },
+                    annotations: {
+                        alwaysOutside: false,
+                        textStyle: {
+                            fontSize: 12,
+                            color: 'white',
+                            auraColor: 'none'
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'out',
+                        startup: true
+                    },
+                };
+
+                chart.draw(data, options);
+            }
+
+            // Draw the chart initially
+            resizeChart();
+
+            // Redraw chart on window resize
+            window.addEventListener('resize', resizeChart);
+        }
+    </script>
 </body>
 
 </html>

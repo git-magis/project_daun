@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SH - Detail Kahati</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('welcome') }}">
+                <img src="{{asset('images/siskalogo-3-black.png')}}" alt="teu aya" style="width: 45px;">
+                <!-- <h1>* E-Daun</h1> -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#detail">Detail Kahati</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#komposisiTaman">Komposisi Kahati</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#galeri">Galeri Dokumentasi</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Login</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#reviews">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blog">Blog</a>
+                    </li> -->
+                </ul>
+                <a href="{{ route('welcome') }}" class="btn btn-brand ms-lg-3">Beranda</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section-padding" id="detail">
+        <div id="taman-detail"></div>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3>Komposisi Kahati</h3>
+                </div>
+            </div>
+            <div class="row" id="komposisiTaman">
+                <div id="komposisi" class="pt-3"></div>
+                <div id="chart-pie"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row gy-5">
+                    <div class="col-auto col-sm-6">
+                        <h4 class="text-white">* E-Daun</h4>
+                        <div class="line"></div>
+                        <p>Sistem Informasi Hutan Kota Tasikmalaya</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="ri-twitter-fill"></i></a>
+                            <a href="#"><i class="ri-instagram-fill"></i></a>
+                            <a href="#"><i class="ri-github-fill"></i></a>
+                            <a href="#"><i class="ri-dribbble-fill"></i></a>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-3 col-sm-6">
+                        <h5 class="mb-0 text-white">SERVICES</h5>
+                        <div class="line"></div>
+                        <ul>
+                            <li><a href="#">UI Design</a></li>
+                            <li><a href="#">UX Design</a></li>
+                            <li><a href="#">Branding</a></li>
+                            <li><a href="#">Logo Designing</a></li>
+                        </ul>
+                    </div> -->
+                    <!-- <div class="col-lg-3 col-sm-6">
+                        <h5 class="mb-0 text-white">ABOUT</h5>
+                        <div class="line"></div>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Career</a></li>
+                        </ul>
+                    </div> -->
+                    <div class="col-auto col-sm-6">
+                        <h5 class="mb-0 text-white">Kontak</h5>
+                        <div class="line"></div>
+                        <ul>
+                            <li>Dinas Lingkungan Hidup Kota Tasikmalaya</li>
+                            <li>+62823 2121 0367</li>
+                            <li>www.example.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row g-4 justify-content-between">
+                    <div class="col-auto">
+                        <p class="mb-0">© Dinas Lingkungan Hidup Kota Tasikmalaya</p>
+                    </div>
+                    <div class="col-auto">
+                        <!-- <p class="mb-0">Designed with 💜 By Mirayukki</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <!-- <script src="https://unpkg.com/aos@next/dist/aos.js"></script> -->
+    <script src="{{ asset('js/main.js') }}"></script>
+
+    <script>
+        const id = "{{ $id }}";
+
+            fetch(`/api/taman/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('taman-detail').innerHTML = `
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="section-title">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Beranda</a></li>
+                                            <li class="breadcrumb-item"><a href="{{ route('peta') }}">Peta</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">${data.nama}</li>
+                                        </ol>
+                                    </nav>
+                                    <h1 class="display-4 fw-semibold mb-0">${data.nama}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-lg-6 pb-5">
+                                <img src="/images/${data.gambar}" alt="euweuhan" class="rounded-4 theme-shadow">
+                            </div>
+                            <div class="col-lg-5">
+                                <h2>Detail</h2>
+                                <div class="d-flex pt-4 mb-4">
+                                    <div class="iconbox me-4">
+                                        <i class="ri-tree-fill"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Jumlah Tanaman</h5>
+                                        <p class="fs-4">${data.pohons_count + data.bungas_count}</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="iconbox me-4">
+                                        <i class="ri-map-pin-fill"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Koordinat Lokasi</h5>
+                                        <p class="fs-4">(${data.latitude}, ${data.longitude})</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+
+                    document.getElementById('komposisi').innerHTML = `
+                    <p class="fs-5">🌲Pohon: ${data.pohons_count}<br>🌻Bunga: ${data.bungas_count}</p>
+                    `;
+                })
+                .catch(err => console.error('Failed to fetch taman data:', err));
+    </script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+
+            const id = "{{ $id }}";
+
+            fetch(`/api/charts/${id}`)
+                .then(response => response.json())
+                .then(data=> {
+                    const taman = data;
+
+                    if (!taman.labels || !taman.data || taman.labels.length !== taman.data.length) {
+                        console.error(`Data mismatch or missing for taman: ${taman.taman}`, taman);
+                        return;
+                    }
+
+                    const groupedData = {};
+                    taman.labels.forEach((label, index) => {
+                        groupedData[label] = (groupedData[label] || 0) + taman.data[index];
+                    });
+
+                    const chartData = Object.entries(groupedData).map(([label, value]) => [label, value]);
+
+                    const dataTable = google.visualization.arrayToDataTable([
+                        ['Jenis', 'Jumlah'],
+                        ...chartData,
+                    ]);
+
+                    const chartContainer = document.getElementById(`chart-pie`);
+
+                    function resizeChart() {
+                        const containerWidth = chartContainer.offsetWidth;
+
+                        const options = {
+                            width: '100%',
+                            is3D: true,
+                            height: 500,
+                            pieHole: 0.3,
+                            legend: containerWidth <= 450 ? { position: 'bottom' } : { position: 'right' },
+                            chartArea: { width: containerWidth < 500 ? '90%' : '80%', height: '70%' },
+                        };
+
+                        const chart = new google.visualization.PieChart(chartContainer);
+                        chart.draw(dataTable, options);
+                    }
+
+                    resizeChart();
+                    window.addEventListener('resize', resizeChart);
+                });
+        }
+    </script>
+</body>
+
+</html>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Admin Dashboard</title>
+    <title>Admin - Dashboard Siska Hayati</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -38,7 +38,7 @@
                 <!-- <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div> -->
-                <img src="{{asset('images/siskalogo-2-white.png')}}" alt="teu aya" style="width: 50px;">
+                <img src="{{asset('images/siskalogo-3.png')}}" alt="teu aya" style="width: 40px;">
                 <!-- <div class="sidebar-brand-text mx-3">* E-Daun Admin</div> -->
             </a>
 
@@ -120,11 +120,11 @@
                     @if(auth()->user()->level == 'admin')
                     <a class="nav-link" href="{{route('admin.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
-                        <span>Tabel Taman</span></a>
+                        <span>Tabel Kahati</span></a>
                     @elseif(auth()->user()->level == 'staff')
                     <a class="nav-link" href="{{route('staff.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
-                        <span>Tabel Taman</span></a>
+                        <span>Tabel Kahati</span></a>
                     @endif
                 </li>
             </li>
@@ -366,7 +366,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Jumlah Taman</div>
+                                                Jumlah Kahati</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalTaman ?? 'beak' }}</div>
                                         </div>
                                         <div class="col-auto">

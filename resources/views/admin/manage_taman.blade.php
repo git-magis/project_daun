@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Tabel Taman</title>
+    <title>Admin - Tabel Kahati</title>
 
     <!-- Custom fonts for this template -->
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -42,7 +42,7 @@
                 <!-- <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div> -->
-                <img src="{{asset('images/siskalogo-2-white.png')}}" alt="teu aya" style="width: 50px;">
+                <img src="{{asset('images/siskalogo-3.png')}}" alt="teu aya" style="width: 40px;">
                 <!-- <div class="sidebar-brand-text mx-3">* E-Daun Admin</div> -->
             </a>
 
@@ -124,11 +124,11 @@
                     @if(auth()->user()->level == 'admin')
                     <a class="nav-link" href="{{route('admin.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
-                        <span>Tabel Taman</span></a>
+                        <span>Tabel Kahati</span></a>
                     @elseif(auth()->user()->level == 'staff')
                     <a class="nav-link" href="{{route('staff.manage-taman')}}">
                         <i class="fas fa-fw fa-map-pin"></i>
-                        <span>Tabel Taman</span></a>
+                        <span>Tabel Kahati</span></a>
                     @endif
                 </li>
             </li>
@@ -271,7 +271,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">📍Tabel Taman</h1>
+                    <h1 class="h3 mb-4 text-gray-800">📍Tabel Kahati</h1>
 
                     <!-- Collapsable Card Example -->
                     <div class="card shadow mb-4">
@@ -284,8 +284,8 @@
                         <!-- Card Content - Collapse -->
                         <div class="collapse show" id="collapseCardExample">
                             <div class="card-body">
-                                Tata cara pengisian data taman:
-                                <br><br>1. Klik <strong>Tambah Taman</strong> untuk menambah data.
+                                Tata cara pengisian data kahati:
+                                <br><br>1. Klik <strong>Tambah Kahati</strong> untuk menambah data.
                                 <br>2. Tentukan koordinat terlebih dahulu melalui peta sebelum mengisi nama dengan menekan tombol <strong>Pilih Lokasi.</strong> Atau dapat diisi secara manual pada form <strong>Latitude</strong> dan <strong>Longitude.</strong>
                                 <br>3. Setelah koordinat didapat, lanjutkan pengisian form.  
                             </div>
@@ -301,7 +301,7 @@
                                     <span class="icon text-white-50">
                                         <i class="fas fa-solid fa-plus"></i>
                                     </span>
-                                    <span class="text">Tambah Taman</span>
+                                    <span class="text">Tambah Kahati</span>
                                 </a>
                             </div>
                         </div>
@@ -314,7 +314,7 @@
                                             <th>Nama</th>
                                             <th>Latitude</th>
                                             <th>Longitude</th>
-                                            <th>Kode</th>
+                                            <th>Gambar</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
                                         </tr>
@@ -325,7 +325,7 @@
                                             <th>Nama</th>
                                             <th>Latitude</th>
                                             <th>Longitude</th>
-                                            <th>Kode</th>
+                                            <th>Gambar</th>
                                             <th>Edit</th>
                                             <th>Hapus</th>
                                         </tr>
@@ -337,7 +337,14 @@
                                             <td>{{ $item->nama }}</td> 
                                             <td>{{ $item->latitude }}</td> 
                                             <td>{{ $item->longitude }}</td>
-                                            <td>{{ $item->kode }}</td>
+                                            <!-- <td>{{ $item->gambar }}</td> -->
+                                            <td>
+                                                @if ($item->gambar)
+                                                <img src="{{ asset('images/' . $item->gambar) }}" alt="{{ $item->nama }}" style="width: 100px; height: auto;">
+                                                @else
+                                                <i class="fas fa-camera"></i>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <!-- <button type="button" class="btn btn-secondary btn-icon-split edit-btn" data-toggle="modal" data-target="#editModal"
                                                         data-id="{{ $item->id }}"
@@ -447,9 +454,13 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="{{ route('add-peta') }}" class="btn btn-success">📌 Pilih lokasi</a>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Kode</label>
                             <input type="text" class="form-control" name="kode" required>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="gambar">Gambar</label>
+                            <input type="file" class="form-control-file" id="gambar" name="gambar">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -491,9 +502,13 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="#" id="editMap" class="btn btn-success">📌 Edit lokasi</a>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="editKode">Kode</label>
                             <input type="text" class="form-control" id="editKode" name="kode" value="{{ session('edit_kode') ?? '' }}" required>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="editGambar">Gambar</label>
+                            <input type="file" class="form-control-file" id="editGambar" name="gambar">
                         </div>
 
                         <div class="modal-footer">

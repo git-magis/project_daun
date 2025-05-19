@@ -35,12 +35,13 @@ class Bunga extends Model
         }
 
         $type = 'Flo'; // Flower
-        $wordsToRemove = ['Bunga']; // Add more words as needed
+        $wordsToRemove = ['Bunga', 'Bukit', 'Taman']; // Add more words as needed
         $filteredName = str_replace($wordsToRemove, '', $bunga->jenisBunga->nama_jenis_bunga);
         $speciesCode = strtoupper(substr(str_replace(' ', '', $filteredName), 0, 4));
-        $gardenCode = strtoupper(substr($bunga->taman->nama, -1)); // Last letter of garden name
+        $tamanFiltered = str_replace($wordsToRemove, '', $bunga->taman->nama);
+        $gardenCode = strtoupper(substr(str_replace(' ', '', $tamanFiltered), 0, 4)); // First 4 letters of garden name
 
-        $uniqueCode = sprintf('%02d/%s/%s/%s', $counters[$key], $type, $speciesCode, $gardenCode);
+        $uniqueCode = sprintf('%02d/%s/%s-%s', $counters[$key], $type, $speciesCode, $gardenCode);
 
         $counters[$key]++;
 

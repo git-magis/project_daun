@@ -40,8 +40,6 @@ class DashboardController extends Controller
                 $count = Pohon::where('jenis_id', $jenisPohon->id)
                     ->where('lokasi_id', $taman->id)
                     ->count();
-                    
-                    // logger("Tree: {$jenisPohon->nama_jenis_pohon}, Count: {$count}");
                         
                     return [
                         'name' => $jenisPohon->nama_jenis_pohon,
@@ -54,8 +52,6 @@ class DashboardController extends Controller
                 $count = Bunga::where('jenisb_id', $jenisBunga->id)
                     ->where('lokasib_id', $taman->id)
                     ->count();
-
-                    // logger("Flower: {$jenisBunga->nama_jenis_bunga}, Count: {$count}");
 
                     return [
                         'name' => $jenisBunga->nama_jenis_bunga,
@@ -70,7 +66,6 @@ class DashboardController extends Controller
             $groupedData = $combinedData->groupBy('name')->map(function ($items, $name) {
                 $totalCount = $items->sum('count');
 
-                // logger("Grouped Name: {$name}, Total Count: {$totalCount}");
                     
                 return [
                         'name' => $name,
@@ -82,8 +77,6 @@ class DashboardController extends Controller
             $data = $groupedData->pluck('count')->toArray();
 
             $total = array_sum($data);
-
-            // logger("Taman: {$taman->nama}, Total: {$total}, Labels: " . json_encode($labels) . ", Data: " . json_encode($data));
 
             return [
                 'taman' => $taman->nama,

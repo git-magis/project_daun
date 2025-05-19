@@ -44,6 +44,6 @@ return new class extends Migration
             $table->dropForeign(['lokasi_id']);
         });
         
-        Schema::dropIfExists('pohons');
+        Schema::drop('pohons');
     }
 };
