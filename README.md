@@ -1,13 +1,7 @@
-**SISKA HAYATI**
-
-Sistem Informasi Keanekaragaman Hayati Kota Tasikmalaya
+**SISKA HAYATI** (Sistem Informasi Keanekaragaman Hayati Kota Tasikmalaya)
 
 
-![landing-page1](https://github.com/user-attachments/assets/62e56950-c2b8-4458-ace5-870b9de8aaa9)
 
-![landing-page2](https://github.com/user-attachments/assets/9f977cff-4451-479b-addd-25383f542db9)
-
-![landing-page3](https://github.com/user-attachments/assets/4dcb237b-14c7-441c-8c53-90dc722908e7)
 
 
 Website untuk menyimpan data aneka ragam hayati di Kota Tasikmalaya yang tersebar di berbagai wilayah.
@@ -22,21 +16,31 @@ Telusuri wilayah infestasi hayati melalui fitur peta hutan untuk mendapatkan koo
 Upaya mendukung transformasi digital dalam pencatatan basis data aneka ragam hayati berdasarkan lokasi.
 
 
+
+![landing-page1](https://github.com/user-attachments/assets/62e56950-c2b8-4458-ace5-870b9de8aaa9)
+
+![landing-page2](https://github.com/user-attachments/assets/9f977cff-4451-479b-addd-25383f542db9)
+
+![landing-page3](https://github.com/user-attachments/assets/4dcb237b-14c7-441c-8c53-90dc722908e7)
+
+
+
+
+
 **Fitur**
 
 
 1. 📍Peta Lokasi Hayati
 
-    ![petapersebaran1](https://github.com/user-attachments/assets/ed562f48-edd6-408e-986d-9681675514a3)
-
-
    Lokasi persebaran hutan kota
-  
+
+   ![petapersebaran1](https://github.com/user-attachments/assets/ed562f48-edd6-408e-986d-9681675514a3)
+   
 2. 📷Pindai QR
 
-    ![qr1](https://github.com/user-attachments/assets/ffdb4ba2-1416-45b5-9245-c6ff69590627)
- 
    Pindai QR pohon untuk melihat detail informasi
+
+   ![qr1](https://github.com/user-attachments/assets/ffdb4ba2-1416-45b5-9245-c6ff69590627)
 
 3. 🌳Varian Pohon
  
