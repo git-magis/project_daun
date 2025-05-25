@@ -23,6 +23,7 @@ class Bunga extends Model
         'lokasib_id',
         'gambar_bunga',
         'kode_unik',
+        'tanggal_tanam',
         'user_id',
     ];
 
@@ -47,6 +48,14 @@ class Bunga extends Model
 
         return $uniqueCode;
 
+    }
+
+    public function getUmurAttribute()
+    {
+        if (!$this->tanggal_tanam) return null;
+
+        $diff = Carbon::parse($this->tanggal_tanam)->diff(Carbon::now());
+        return $diff->y > 0 ? "{$diff->y} thn." : "{$diff->m} bln.";
     }
 
     public function getFormattedCreatedAtAttribute()

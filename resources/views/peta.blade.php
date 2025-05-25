@@ -20,11 +20,14 @@
     <div id="sidebar" style="left: 10px;">
         <h5>Daftar Lokasi Kehati</h5>
         <hr>
-        <div id="filter-options"></div>
-        <button id="toggle-sidebar" onclick="toggleSidebar()">
-            <span id="arrow-icon">👈</span>
-        </button>
+        <div id="group-filters"></div>
+        <hr>
+        <div id="filter-options" class="scrollable-list"></div>
     </div>
+
+    <button id="toggle-sidebar" onclick="toggleSidebar()">
+        <span id="arrow-icon">👈</span>
+    </button>
 
     <div id="map"></div>
 
@@ -45,17 +48,21 @@
         }).addTo(map);
 
         function toggleSidebar() {
-            let sidebar = document.getElementById("sidebar");
-            let arrow = document.getElementById("arrow-icon");
+            const sidebar = document.getElementById("sidebar");
+            const toggleBtn = document.getElementById("toggle-sidebar");
+            const arrow = document.getElementById("arrow-icon");
 
-            if (sidebar.style.left === "10px") {
+            if (sidebar.style.left === "10px" || sidebar.style.left === "") {
                 sidebar.style.left = "-250px"; // Hide sidebar
-                arrow.innerHTML = "👉"; // Change arrow direction
+                toggleBtn.style.left = "10px"; // Move button to left edge
+                arrow.innerHTML = "👉"; // Flip icon
             } else {
                 sidebar.style.left = "10px"; // Show sidebar
-                arrow.innerHTML = "👈"; // Change arrow direction
+                toggleBtn.style.left = "260px"; // Return button next to sidebar
+                arrow.innerHTML = "👈";
             }
         }
+
 
         var markers = [];
 
@@ -63,38 +70,13 @@
         fetch('/api/maps')
             .then(response => response.json())
             .then(data => {
+                let groupFilterContainer = document.getElementById('group-filters');
                 let filterContainer = document.getElementById('filter-options');
-
                 const markerGroups = {};
+                const markers = {};
 
-                // Create filter checkboxes for the marker groups
-                Object.keys({bukit: [], taman: []}).forEach(group => {
-                    let checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = `filter-${group}`;
-                    checkbox.checked = true;
-
-                    checkbox.addEventListener('change', function() {
-                        const isChecked = this.checked;
-                        markerGroups[group].forEach(marker => {
-                            if (isChecked) {
-                                marker.addTo(map);
-                            } else {
-                                map.removeLayer(marker);
-                            }
-                        });
-                    });
-
-                    let label = document.createElement('label');
-                    label.htmlFor = `filter-${group}`;
-                    label.textContent = `Show ${group.charAt(0).toUpperCase() + group.slice(1)}`;
-
-                    let div = document.createElement('div');
-                    div.style.marginBottom = '5px';
-                    div.appendChild(checkbox);
-                    div.appendChild(label);
-                    filterContainer.appendChild(div);
-                });
+                // Define recognized prefixes
+                const recognizedGroups = ['bukit', 'taman'];
 
                 data.forEach(taman => {
                     let popupContent = `
@@ -102,7 +84,6 @@
                             <h5>${taman.nama}</h5>
                             <img src="/images/${taman.gambar}" alt="${taman.nama}" 
                                 style="width:100%;max-height:150px;border-radius:10px;">
-                            <p>(${taman.latitude},${taman.longitude})</p>
                             <p><strong>Total Tanaman:</strong> ${taman.pohons_count + taman.bungas_count}</p>
                             <a href="/taman-detail/${taman.id}" style="text-decoration:none;">
                                 <p style="color:white;background-color:#236ab0;padding:10px;border-radius:5px;margin-bottom:4px">
@@ -118,44 +99,68 @@
                         </div>
                     `;
 
-                    // Create Marker
+                    // Create marker
                     let marker = L.marker([taman.latitude, taman.longitude])
                         .bindPopup(popupContent)
-                        .bindTooltip(taman.nama, { permanent: true, direction: "top"});
+                        .bindTooltip(taman.nama, { permanent: true, direction: "top" });
 
-                    // Add marker to map
                     marker.addTo(map);
                     markers[taman.id] = marker;
 
-                     // Group markers by name prefix
-                    const prefix = taman.nama.toLowerCase().includes('bukit') ? 'bukit' : 'taman';
-                    if (!markerGroups[prefix]) {
-                        markerGroups[prefix] = [];
-                    }
+                    // Determine group
+                    let prefix = recognizedGroups.find(group => taman.nama.toLowerCase().includes(group)) || 'other';
+                    if (!markerGroups[prefix]) markerGroups[prefix] = [];
                     markerGroups[prefix].push(marker);
 
-                    // Create divider if the group changes
-                    if (filterContainer.lastChild && !filterContainer.lastChild.classList.contains(prefix)) {
-                        let hr = document.createElement('hr');
-                        hr.style.margin = '8px 0';
-                        filterContainer.appendChild(hr);
-                    }
-
-                    // Create clickable link to focus on the marker and open the popup
+                    // Create clickable link
                     let div = document.createElement('div');
                     div.className = `filter-item ${prefix}`;
-                    div.innerHTML = `
-                        <a href="#" id="taman-${taman.id}" style="text-decoration:none;color:#236ab0;">${taman.nama}</a>
-                    `;
+                    div.innerHTML = `<a href="#" id="taman-${taman.id}" style="text-decoration:none;color:#236ab0;">${taman.nama}</a>`;
 
-                    // Add click event listener to pan to the marker and open the popup
                     div.querySelector(`#taman-${taman.id}`).addEventListener('click', function(e) {
                         e.preventDefault();
-                        map.setView([taman.latitude, taman.longitude], 16); // Pan to marker with zoom level 16
-                        markers[taman.id].openPopup(); // Open the popup content
+                        map.setView([taman.latitude, taman.longitude], 16);
+                        markers[taman.id].openPopup();
                     });
+
                     filterContainer.appendChild(div);
                 });
+
+                // Create filter checkboxes per group
+                Object.keys(markerGroups).forEach((group, idx, arr) => {
+                    let checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `filter-${group}`;
+                    checkbox.checked = true;
+
+                    checkbox.addEventListener('change', function () {
+                        const isChecked = this.checked;
+                        markerGroups[group].forEach(marker => {
+                            isChecked ? marker.addTo(map) : map.removeLayer(marker);
+                        });
+                        // Also hide/show related filter items
+                        document.querySelectorAll(`.filter-item.${group}`).forEach(el => {
+                            el.style.display = isChecked ? 'block' : 'none';
+                        });
+                    });
+
+                    let label = document.createElement('label');
+                    label.htmlFor = `filter-${group}`;
+                    label.textContent = `Show ${group.charAt(0).toUpperCase() + group.slice(1)}`;
+
+                    let div = document.createElement('div');
+                    div.style.marginBottom = '5px';
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    groupFilterContainer.appendChild(div);
+
+                    if (idx < arr.length - 1) {
+                        let hr = document.createElement('hr');
+                        hr.style.margin = '8px 0';
+                        // groupFilterContainer.appendChild(hr);
+                    }
+                });
+
             })
             .catch(error => console.error('Error loading gardens:', error));
     </script>

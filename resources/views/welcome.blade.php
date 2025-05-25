@@ -37,11 +37,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#services">Fitur</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#blog">Berita</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="#barchart">Data Tanaman</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Ulasan</a>
                     </li>
                 </ul>
                 <a href="{{ route('loginform') }}" class="btn btn-brand ms-lg-3">Admin</a>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <h1 class="text-success display-2"><i class="ri-map-2-line stat-icon">   </i>{{ $totalTaman }}</h1>
-                    <h6 class="text-uppercase mb-0 text-black mt-3">Blok Wilayah Hutan Kota</h6>
+                    <h6 class="text-uppercase mb-0 text-black mt-3">Blok Lokasi Kehati</h6>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title">
+                    <div class="section-title text-center">
                         <h1 class="display-4 fw-semibold">Tentang</h1>
                         <div class="line"></div>
                         <!-- <p>We love to craft digital experiances for brands rather than crap and more lorem ipsums and do crazy skills</p> -->
@@ -147,7 +147,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title">
+                    <div class="section-title text-center">
                         <h1 class="display-4 fw-semibold">Keanekaragaman hayati</h1>
                         <div class="line"></div>
                         <!-- <h5>Persebaran aneka ragam hayati di Kota Tasikmalaya</h5> -->
@@ -256,7 +256,6 @@
             </div>
         </div>
     </section> -->
-
 
     <!-- PORTFOLIO -->
     <!-- <section id="portfolio" class="section-padding">
@@ -510,45 +509,6 @@
         </div>
     </section> -->
 
-    <!-- CONTACT -->
-    <!-- <section class="section-padding bg-light" id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 class="display-4 text-white fw-semibold">Gete in touch</h1>
-                        <div class="line bg-white"></div>
-                        <p class="text-white">We love to craft digital experiances for brands rather than crap and more lorem ipsums and do crazy skills</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center" data-aos="fade-down" data-aos-delay="250">
-                <div class="col-lg-8">
-                    <form action="#" class="row g-3 p-lg-5 p-4 bg-white theme-shadow">
-                        <div class="form-group col-lg-6">
-                            <input type="text" class="form-control" placeholder="Enter first name">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <input type="text" class="form-control" placeholder="Enter last name">
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <input type="email" class="form-control" placeholder="Enter Email address">
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <input type="text" class="form-control" placeholder="Enter subject">
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <textarea name="message" rows="5" class="form-control" placeholder="Enter Message"></textarea>
-                        </div>
-                        <div class="form-group col-lg-12 d-grid">
-                            <button class="btn btn-brand">Send Message</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
     <!-- BLOG -->
     <!-- <section id="blog" class="section-padding">
         <div class="container">
@@ -638,7 +598,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title">
+                    <div class="section-title text-center">
                         <h1 class="display-4 fw-semibold">Data Keseluruhan</h1>
                         <div class="line"></div>
                     </div>
@@ -651,6 +611,45 @@
             </div>
         </div>
      </section>
+
+     <!-- CONTACT -->
+    <section class="section-padding bg-light align-items-center text-center" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h1 class="display-4 text-white fw-semibold">Pendapat dan Saran</h1>
+                        <div class="line bg-white"></div>
+                        <h5 class="text-white">Memiliki saran atau pendapat? Sampaikan pada kami, ya!</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form action="#" class="row g-3 p-lg-5 p-4 bg-white theme-shadow rounded-4">
+                        <div class="form-group col-lg-6">
+                            <input type="text" class="form-control" placeholder="Nama depan">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <input type="text" class="form-control" placeholder="Nama belakang">
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <input type="email" class="form-control" placeholder="Alamat email">
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <input type="text" class="form-control" placeholder="Perihal">
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <textarea name="message" rows="5" class="form-control" placeholder="Isi saran Anda..."></textarea>
+                        </div>
+                        <div class="form-group col-lg-12 d-grid">
+                            <button class="btn btn-brand">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- FOOTER -->
     <footer class="bg-dark">

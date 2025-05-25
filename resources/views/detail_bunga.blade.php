@@ -60,7 +60,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title">
+                    <div class="section-title-detail">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Beranda</a></li>
@@ -176,7 +176,7 @@
             <div class="container">
                 <div class="row gy-5">
                     <div class="col-auto col-sm-6">
-                        <h4 class="text-white">* E-Daun</h4>
+                        <h4 class="text-white">* Siska Hayati</h4>
                         <div class="line"></div>
                         <p>Sistem Informasi Hutan Kota Tasikmalaya</p>
                         <div class="social-icons">

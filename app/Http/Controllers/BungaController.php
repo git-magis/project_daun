@@ -43,6 +43,7 @@ class BungaController extends Controller
             'lokasib_id' => 'required|exists:tamans,id',
             'gambar_bunga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'jumlahInput' => 'required|integer|min:1|max:100',
+            'tanggal_tanam' => 'nullable|date',
         ]);
 
         $imageName = null;
@@ -63,6 +64,7 @@ class BungaController extends Controller
                 'jenisb_id' => $validated['jenisb_id'],
                 'lokasib_id' => $validated['lokasib_id'],
                 'gambar_bunga' => $imageName,
+                'tanggal_tanam' => $validated['tanggal_tanam'],
                 'user_id' => auth()->id(),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -110,6 +112,7 @@ class BungaController extends Controller
                 'jenisb_id' => 'required|exists:jenisbungas,id',
                 'lokasib_id' => 'required|exists:tamans,id',
                 'gambar_bunga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'tanggal_tanam' => 'nullable|date',
             ]);
 
             // Fetch the Bunga instance
@@ -138,6 +141,7 @@ class BungaController extends Controller
                 'jenisb_id' => $validated['jenisb_id'],
                 'lokasib_id' => $validated['lokasib_id'],
                 'gambar_bunga' => $imageName, // Keep the existing image if not updated
+                'tanggal_tanam' => $validated['tanggal_tanam'],
             ]);
         
             // return redirect()->route('manage-bunga')->with('success', 'Data updated successfully.');

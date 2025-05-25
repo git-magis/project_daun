@@ -37,8 +37,6 @@ class PohonController extends Controller
         return view('pohon.create', compact('jenis_pohon', 'taman_lokasi'));
     }
 
-
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -47,6 +45,7 @@ class PohonController extends Controller
             'lokasi_id' => 'required|exists:tamans,id',
             'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'jumlahInput' => 'required|integer|min:1|max:100',
+            'tanggal_tanam' => 'nullable|date',
         ]);
 
         $imageName = null;
@@ -67,9 +66,10 @@ class PohonController extends Controller
                 'jenis_id' => $validated['jenis_id'],
                 'lokasi_id' => $validated['lokasi_id'],
                 'gambar_pohon' => $imageName,
+                'tanggal_tanam' => $validated['tanggal_tanam'],
                 'user_id' => auth()->id(),
                 'created_at' => now(),
-                'updated_at' => now(),
+                'updated_at' => now(), 
             ];
         }
 
@@ -115,6 +115,7 @@ class PohonController extends Controller
                 'jenis_id' => 'required|exists:jenispohons,id',
                 'lokasi_id' => 'required|exists:tamans,id',
                 'gambar_pohon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'tanggal_tanam' => 'nullable|date',
             ]);
 
             // Fetch the Bunga instance
@@ -142,7 +143,8 @@ class PohonController extends Controller
                 'nama_pohon' => $validated['nama_pohon'],
                 'jenis_id' => $validated['jenis_id'],
                 'lokasi_id' => $validated['lokasi_id'],
-                'gambar_pohon' => $imageName, // Keep the existing image if not updated
+                'gambar_pohon' => $imageName,
+                'tanggal_tanam' => $validated['tanggal_tanam'],
             ]);
         
             // return redirect()->route('manage-pohon')->with('success', 'Data updated successfully.');

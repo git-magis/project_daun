@@ -77,7 +77,7 @@
             <div class="container">
                 <div class="row gy-5">
                     <div class="col-auto col-sm-6">
-                        <h4 class="text-white">* E-Daun</h4>
+                        <h4 class="text-white">* Siska Hayati</h4>
                         <div class="line"></div>
                         <p>Sistem Informasi Hutan Kota Tasikmalaya</p>
                         <div class="social-icons">
@@ -222,6 +222,12 @@
 
                     const chartData = Object.entries(groupedData).map(([label, value]) => [label, value]);
 
+                    // const chartData = Object.entries(groupedData).map(([label, value]) => {
+                    //         const total = Object.values(groupedData).reduce((a, b) => a + b, 0);
+                    //         const percent = ((value / total) * 100).toFixed(1);
+                    //         return [`${label} - ${value} (${percent}%)`, value];
+                    //     });
+
                     const dataTable = google.visualization.arrayToDataTable([
                         ['Jenis', 'Jumlah'],
                         ...chartData,
@@ -236,9 +242,12 @@
                             width: '100%',
                             is3D: true,
                             height: 500,
+                            sliceVisibilityThreshold: .1,
                             pieHole: 0.3,
+                            pieSliceText: 'value',
                             legend: containerWidth <= 450 ? { position: 'bottom' } : { position: 'right' },
                             chartArea: { width: containerWidth < 500 ? '90%' : '80%', height: '70%' },
+                            tooltip: { trigger: 'focus', text: 'both' },
                         };
 
                         const chart = new google.visualization.PieChart(chartContainer);

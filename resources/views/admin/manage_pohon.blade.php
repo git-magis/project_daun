@@ -353,7 +353,8 @@
                                                         data-nama="{{ $item->nama_pohon }}"
                                                         data-jenis="{{ $item->jenis_id }}"
                                                         data-lokasi="{{ $item->lokasi_id }}"
-                                                        data-gambar="{{ $item->gambar_pohon }}">
+                                                        data-gambar="{{ $item->gambar_pohon }}"
+                                                        data-tanam="{{ $item->tanggal_tanam }}">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-pen"></i>
                                                     </span>
@@ -479,6 +480,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="tanggalTanam">Tanggal Tanam</label>
+                            <input type="date" class="form-control" id="tanggalTanam" name="tanggal_tanam">
+                        </div>
+                        <div class="form-group">
                             <label for="gambarPohon">Gambar</label>
                             <input type="file" name="gambar_pohon" class="form-control-file" id="gambarPohon">
                         </div>
@@ -530,6 +535,10 @@
                                     @endforeach
                                 @endisset
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editTanam">Tanggal Tanam</label>
+                            <input type="date" class="form-control" id="editTanam" name="tanggal_tanam" value="{{ old('tanggal_tanam', $pohon->tanggal_tanam ?? '') }}">
                         </div>
                         <div class="form-group">
                             <label for="editGambar">Gambar</label>
@@ -617,6 +626,7 @@
             var jenis = button.data('jenis');
             var lokasi = button.data('lokasi');
             var gambar = button.data('gambar');
+            var tanam = button.data('tanam');
     
             // Update the modal's form action with the correct URL
             var formAction = '{{ route('pohon.update', ':id') }}';
@@ -627,6 +637,7 @@
             $('#editNama').val(nama);
             $('#editJenis').val(jenis);
             $('#editLokasi').val(lokasi);
+            $('#editTanam').val(tanam);
     
             let imagePath = '/images/' + gambar; // Adjust based on your storage location
             $('#currentImagePreview').html('<img src="' + imagePath + '" width="100" alt="euweuhan">');
@@ -641,6 +652,14 @@
             var actionUrl = $('#deleteForm').attr('action').replace(':id', pohonId);
             $('#deleteForm').attr('action', actionUrl);
         });
+
+        const jumlahInputField = document.getElementById("jumlahInput");
+        jumlahInputField.addEventListener("input", function () {
+            const isBulk = parseInt(this.value) > 1;
+            document.getElementById("tanggalTanam").disabled = isBulk;
+            document.getElementById("gambarPohon").disabled = isBulk;
+        });
+
     </script>
     
 
