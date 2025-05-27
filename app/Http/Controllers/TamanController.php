@@ -99,14 +99,21 @@ class TamanController extends Controller
 
     public function getTamans()
     {
-        $tamans = Taman::withCount(['pohons', 'bungas'])->get();
+        // $tamans = Taman::withCount(['pohons', 'bungas'])->get();
+        $tamans = Taman::with([
+            'pohons.jenisPohon',
+            'bungas.jenisBunga',
+        ])->withCount(['pohons', 'bungas'])->get();
 
         return response()->json($tamans);
     }
 
     public function getTamansById($id)
     {
-        $tamansid = Taman::withCount(['pohons', 'bungas'])->findOrFail($id);
+        $tamansid = Taman::with([
+            'pohons.jenisPohon',
+            'bungas.jenisBunga',
+        ])->withCount(['pohons', 'bungas'])->findOrFail($id);
 
         return response()->json($tamansid);
     }

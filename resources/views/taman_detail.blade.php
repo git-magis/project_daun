@@ -68,6 +68,10 @@
                 <div id="komposisi" class="pt-3"></div>
                 <div id="chart-pie"></div>
             </div>
+            <div id="pohonTotalLabel" class="row mt-5"></div>
+            <div id="listPohon" class="row"></div>
+            <div id="bungaTotalLabel" class="row mt-5"></div>
+            <div id="listBunga" class="row"></div>
         </div>
     </section>
 
@@ -189,9 +193,76 @@
                     </div>
                     `;
 
-                    document.getElementById('komposisi').innerHTML = `
-                    <p class="fs-5">🌲Pohon: ${data.pohons_count}<br>🌻Bunga: ${data.bungas_count}</p>
+                    document.getElementById('pohonTotalLabel').innerHTML = `
+                    <div class="col-10">
+                        <p class="display-6 text-success mb-5">🌲Jenis Pohon</p>
+                    </div>
+                    <div class="col-2 text-end">
+                        <p class="display-6 text-success"><b>${data.pohons_count}</b></p>
+                    </div>
                     `;
+
+                    document.getElementById('bungaTotalLabel').innerHTML = `
+                    <div class="col-10">
+                        <p class="display-6 text-success mb-5">🌻Jenis Bunga</p>
+                    </div>
+                    <div class="col-2 text-end">
+                        <p class="display-6 text-success"><b>${data.bungas_count}</b></p>
+                    </div>
+                    `;
+
+                    const listPohon = document.getElementById('listPohon');
+                    const listBunga = document.getElementById('listBunga');
+                    listPohon.innerHTML = '';
+                    listBunga.innerHTML = '';
+
+                    const pohonCounts = {}; // { Trembesi: 3, Mangga: 2 }
+                    const bungaCounts = {}; // { Mawar: 4, Melati: 1 }
+
+
+                    data.pohons.forEach(p => {
+                        const jenis = p.jenis_pohon?.nama_jenis_pohon;
+                        if (jenis) {
+                            pohonCounts[jenis] = (pohonCounts[jenis] || 0) + 1;
+                        }
+                    });
+
+                    data.bungas.forEach(p => {
+                        const jenis = p.jenis_bunga?.nama_jenis_bunga;
+                        if (jenis) {
+                            bungaCounts[jenis] = (bungaCounts[jenis] || 0) + 1;
+                        }
+                    });
+
+                    // Convert to array and sort descending
+                    const sortedPohon = Object.entries(pohonCounts).sort((a, b) => b[1] - a[1]);
+                    const sortedBunga = Object.entries(bungaCounts).sort((a, b) => b[1] - a[1]);
+
+                    // Render pohons
+                    sortedPohon.forEach(([jenis, count]) => {
+                    listPohon.innerHTML += `
+                        <div class="col-10">
+                            <p class="fs-5 fw-semibold text-black">${jenis}</p>
+                        </div>
+                        <div class="col-2 text-end">
+                            <p class="text-success fs-5 fw-semibold">${count}</p>
+                        </div>
+                        <hr>
+                    `;
+                    });
+
+                    // Render bungas
+                    sortedBunga.forEach(([jenis, count]) => {
+                    listBunga.innerHTML += `
+                        <div class="col-10">
+                            <p class="fs-5 fw-semibold text-black">${jenis}</p>
+                        </div>
+                        <div class="col-2 text-end">
+                            <p class="text-success fs-5 fw-semibold">${count}</p>
+                        </div>
+                        <hr>
+                    `;
+                    });
                 })
                 .catch(err => console.error('Failed to fetch taman data:', err));
     </script>
@@ -242,7 +313,7 @@
                             width: '100%',
                             is3D: true,
                             height: 500,
-                            sliceVisibilityThreshold: .1,
+                            sliceVisibilityThreshold: 1/20,
                             pieHole: 0.3,
                             pieSliceText: 'value',
                             legend: containerWidth <= 450 ? { position: 'bottom' } : { position: 'right' },

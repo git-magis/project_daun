@@ -64,25 +64,16 @@ class BungaController extends Controller
                 'jenisb_id' => $validated['jenisb_id'],
                 'lokasib_id' => $validated['lokasib_id'],
                 'gambar_bunga' => $imageName,
-                'tanggal_tanam' => $validated['tanggal_tanam'],
+                'tanggal_tanam' => $validated['tanggal_tanam'] ?? now(),
                 'user_id' => auth()->id(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
         }
 
-        // Bunga::insert($data);
         foreach ($data as $bunga) {
             Bunga::create($bunga);
         }
-
-        // Bunga::create([
-        //     'nama_bunga' => $validated['nama_bunga'],
-        //     'jenisb_id' => $validated['jenisb_id'],
-        //     'lokasib_id' => $validated['lokasib_id'],
-        //     'gambar_bunga' => $imageName ?? null,
-        //     'user_id' => auth()->id(),
-        // ]);
 
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
         ->with('success', "$jumlah bunga berhasil ditambahkan.");

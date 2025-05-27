@@ -17,13 +17,10 @@ class PohonController extends Controller
     public function index()
     {
         // Fetch all data from the pohon table
-        $data = Pohon::with(['jenisPohon','taman'])->get();
+        $data = Pohon::with(['jenisPohon','taman'])->paginate(100);
         $jenis_pohon = JenisPohon::all();
         $taman_lokasi = Taman::all();
         
-
-        // Pass data to the view
-        // return view('admin.manage_pohon', ['data' => $data]);  // Ensure 'data' is passed correctly
         return view('admin.manage_pohon', compact('data', 'jenis_pohon', 'taman_lokasi'));
     }
 
@@ -66,7 +63,7 @@ class PohonController extends Controller
                 'jenis_id' => $validated['jenis_id'],
                 'lokasi_id' => $validated['lokasi_id'],
                 'gambar_pohon' => $imageName,
-                'tanggal_tanam' => $validated['tanggal_tanam'],
+                'tanggal_tanam' => $validated['tanggal_tanam'] ?? now(),
                 'user_id' => auth()->id(),
                 'created_at' => now(),
                 'updated_at' => now(), 
@@ -74,9 +71,11 @@ class PohonController extends Controller
         }
 
         // Pohon::insert($data);
-        foreach ($data as $tangkal) {
-            Pohon::create($tangkal);
-        }
+        collect($data)->chunk(20)->each(function ($chunk) {
+            foreach ($chunk as $tangkal) {
+                Pohon::create($tangkal);
+            }
+        });
         
         // Pohon::create([
         //     'nama_pohon' => $validated['nama_pohon'],

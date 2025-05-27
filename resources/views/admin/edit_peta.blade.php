@@ -77,7 +77,7 @@
             let arrow = document.getElementById("arrow-icon");
 
             if (sidebar.style.bottom === "25px") {
-                sidebar.style.bottom = "-380px"; // Hide sidebar
+                sidebar.style.bottom = "-350px"; // Hide sidebar
                 arrow.innerHTML = "👆"; // Change arrow direction
             } else {
                 sidebar.style.bottom = "25px"; // Show sidebar

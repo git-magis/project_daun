@@ -162,7 +162,7 @@
                             <i class="ri-map-pin-line"></i>
                         </div>
                         <h4 class="mt-4 mb-3">Peta Lokasi Hayati</h4>
-                        <p>Lokasi Persebaran Hutan Kota</p>
+                        <p>Lokasi Persebaran Lokasi Kahati</p>
                     </div>
                 </a>
                 <a href="{{route('scan')}}" class="col-lg-4 col-sm-6">

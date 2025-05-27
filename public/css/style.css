@@ -433,12 +433,14 @@ footer .line {
     left: 0;
 }
 
-#sidebar {
+.hidden-sidebar {
+    left: -250px !important;
+}
+
+#sidebar, #sidebar-jenis {
     position: absolute;
-    top: 80px;
     left: 10px;
     width: 250px;
-    height: 80vh; /* fixed height */
     background: white;
     padding: 15px;
     border-radius: 7px;
@@ -446,6 +448,16 @@ footer .line {
     transition: left 0.3s ease-in-out;
     z-index: 1000;
     overflow-y: auto;
+}
+
+#sidebar {
+    top: 80px;
+    height: 50vh;
+}
+
+#sidebar-jenis {
+    top: 60vh;
+    height: 30vh;
 }
 
 #group-filters {
