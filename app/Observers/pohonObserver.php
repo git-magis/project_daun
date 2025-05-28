@@ -11,18 +11,21 @@ class pohonObserver
      */
     public function created(Pohon $pohon)
     {
-        $pohons = Pohon::orderBy('lokasi_id')->orderBy('jenis_id')->get();
-        $pohonCounters = [];
+        $pohon->load(['jenisPohon', 'taman']);
 
-        foreach ($pohons as $pohon) {
-            $uniqueCode = Pohon::generateUniqueCode($pohon, $pohonCounters);
+        $count = Pohon::where('jenis_id', $pohon->jenis_id)
+                        ->where('lokasi_id', $pohon->lokasi_id)
+                        ->count();
 
-            if ($uniqueCode) {
-                $pohon->kode_unik = $uniqueCode;
-                $pohon->save();
+        $counters = [
+            $pohon->jenis_id . '-' . $pohon->lokasi_id => $count
+        ];
 
-            }
-        }
+        $kodeUnik = Pohon::generateUniqueCode($pohon, $counters);
+
+        $pohon->updateQuietly([
+            'kode_unik' => $kodeUnik
+        ]);
     }
 
     /**
@@ -30,17 +33,22 @@ class pohonObserver
      */
     public function updated(Pohon $pohon)
     {
-        $pohons = Pohon::orderBy('lokasi_id')->orderBy('jenis_id')->get();
-        $pohonCounters = [];
+        if($pohon->wasChanged(['jenis_id', 'lokasi_id'])) {
+            $pohon->load(['jenisPohon', 'taman']);
 
-        foreach ($pohons as $pohon) {
-            $uniqueCode = Pohon::generateUniqueCode($pohon, $pohonCounters);
+            $count = Pohon::where('jenis_id', $pohon->jenis_id)
+                            ->where('lokasi_id', $pohon->lokasi_id)
+                            ->count();
 
-            if ($uniqueCode) {
-                $pohon->kode_unik = $uniqueCode;
-                $pohon->save();
+            $counters = [
+                $pohon->jenis_id . '-' . $pohon->lokasi_id => $count
+            ];
 
-            }
+            $kodeUnik = Pohon::generateUniqueCode($pohon, $counters);
+
+            $pohon->updateQuietly([
+                'kode_unik' => $kodeUnik
+            ]);
         }
     }
 

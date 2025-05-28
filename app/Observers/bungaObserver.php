@@ -11,18 +11,21 @@ class bungaObserver
      */
     public function created(Bunga $bunga)
     {
-        $bungas = Bunga::orderBy('lokasib_id')->orderBy('jenisb_id')->get();
-        $bungaCounters = [];
+        $bunga->load(['jenisBunga', 'taman']);
 
-        foreach ($bungas as $bunga) {
-            $uniqueCode = Bunga::generateUniqueCode($bunga, $bungaCounters);
+        $count = Bunga::where('jenisb_id', $bunga->jenisb_id)
+                        ->where('lokasib_id', $bunga->lokasib_id)
+                        ->count();
 
-            if ($uniqueCode) {
-                $bunga->kode_unik = $uniqueCode;
-                $bunga->save();
+        $counters = [
+            $bunga->jenisb_id. '-' . $bunga->lokasib_id => $count
+        ];
 
-            }
-        }
+        $kodeUnik = Bunga::generateUniqueCode($bunga, $counters);
+
+        $bunga->updateQuietly([
+            'kode_unik' => $kodeUnik
+        ]);
     }
 
     /**
@@ -30,17 +33,22 @@ class bungaObserver
      */
     public function updated(Bunga $bunga)
     {
-        $bungas = Bunga::orderBy('lokasib_id')->orderBy('jenisb_id')->get();
-        $bungaCounters = [];
+        if ($bunga->wasChanged(['jenisb_id', 'lokasib_id'])) {
+            $bunga->load(['jenisBunga', 'taman']);
 
-        foreach ($bungas as $bunga) {
-            $uniqueCode = Bunga::generateUniqueCode($bunga, $bungaCounters);
+            $count = Bunga::where('jenisb_id', $bunga->jenisb_id)
+                            ->where('lokasib_id', $bunga->lokasib_id)
+                            ->count();
 
-            if ($uniqueCode) {
-                $bunga->kode_unik = $uniqueCode;
-                $bunga->save();
+            $counters = [
+                $bunga->jenisb_id. '-' . $bunga->lokasib_id => $count
+            ];
 
-            }
+            $kodeUnik = Bunga::generateUniqueCode($bunga, $counters);
+
+            $bunga->updateQuietly([
+                'kode_unik' => $kodeUnik
+            ]);
         }
     }
 

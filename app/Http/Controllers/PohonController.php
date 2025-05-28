@@ -17,7 +17,7 @@ class PohonController extends Controller
     public function index()
     {
         // Fetch all data from the pohon table
-        $data = Pohon::with(['jenisPohon','taman'])->paginate(100);
+        $data = Pohon::with(['jenisPohon','taman'])->get();
         $jenis_pohon = JenisPohon::all();
         $taman_lokasi = Taman::all();
         

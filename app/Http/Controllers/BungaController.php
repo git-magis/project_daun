@@ -71,9 +71,11 @@ class BungaController extends Controller
             ];
         }
 
-        foreach ($data as $bunga) {
-            Bunga::create($bunga);
-        }
+        collect($data)->chunk(20)->each(function ($chunk) {
+            foreach ($chunk as $bunga) {
+                Bunga::create($bunga);
+            }
+        });
 
         return redirect()->route(auth()->user()->level === 'admin' ? 'admin.manage-bunga' : 'staff.manage-bunga')
         ->with('success', "$jumlah bunga berhasil ditambahkan.");
