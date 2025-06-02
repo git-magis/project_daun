@@ -221,47 +221,63 @@
 
 
                     data.pohons.forEach(p => {
-                        const jenis = p.jenis_pohon?.nama_jenis_pohon;
+                        const jenis = p.jenis_pohon;
                         if (jenis) {
-                            pohonCounts[jenis] = (pohonCounts[jenis] || 0) + 1;
+                            const key = jenis.id;
+                            if (!pohonCounts[key]) {
+                                pohonCounts[key] = {
+                                    id: jenis.id,
+                                    name: jenis.nama_jenis_pohon,
+                                    count: 0
+                                };
+                            }
+                            pohonCounts[key].count++;
                         }
                     });
 
                     data.bungas.forEach(p => {
-                        const jenis = p.jenis_bunga?.nama_jenis_bunga;
+                        const jenis = p.jenis_bunga;
                         if (jenis) {
-                            bungaCounts[jenis] = (bungaCounts[jenis] || 0) + 1;
+                            const key = jenis.id;
+                            if (!bungaCounts[key]) {
+                                bungaCounts[key] = {
+                                    id: jenis.id,
+                                    name: jenis.nama_jenis_bunga,
+                                    count: 0
+                                };
+                            }
+                            bungaCounts[key].count++;
                         }
                     });
 
                     // Convert to array and sort descending
-                    const sortedPohon = Object.entries(pohonCounts).sort((a, b) => b[1] - a[1]);
-                    const sortedBunga = Object.entries(bungaCounts).sort((a, b) => b[1] - a[1]);
+                    const sortedPohon = Object.values(pohonCounts).sort((a, b) => b.count - a.count);
+                    const sortedBunga = Object.values(bungaCounts).sort((a, b) => b.count - a.count);
 
                     // Render pohons
-                    sortedPohon.forEach(([jenis, count]) => {
-                    listPohon.innerHTML += `
-                        <div class="col-10">
-                            <p class="fs-5 fw-semibold text-black">${jenis}</p>
-                        </div>
-                        <div class="col-2 text-end">
-                            <p class="text-success fs-5 fw-semibold">${count}</p>
-                        </div>
-                        <hr>
-                    `;
+                    sortedPohon.forEach(jenis => {
+                        listPohon.innerHTML += `
+                            <div class="col-10">
+                                <a href="/detail-pohon/${jenis.id}" class="fs-5 fw-semibold text-black text-decoration-none">${jenis.name}</a>
+                            </div>
+                            <div class="col-2 text-end">
+                                <p class="text-success fs-5 fw-semibold">${jenis.count}</p>
+                            </div>
+                            <hr>
+                        `;
                     });
 
                     // Render bungas
-                    sortedBunga.forEach(([jenis, count]) => {
-                    listBunga.innerHTML += `
-                        <div class="col-10">
-                            <p class="fs-5 fw-semibold text-black">${jenis}</p>
-                        </div>
-                        <div class="col-2 text-end">
-                            <p class="text-success fs-5 fw-semibold">${count}</p>
-                        </div>
-                        <hr>
-                    `;
+                    sortedBunga.forEach(jenis => {
+                        listBunga.innerHTML += `
+                            <div class="col-10">
+                                <a href="/detail-bunga/${jenis.id}" class="fs-5 fw-semibold text-black">${jenis.name}</a>
+                            </div>
+                            <div class="col-2 text-end">
+                                <p class="text-success fs-5 fw-semibold">${jenis.count}</p>
+                            </div>
+                            <hr>
+                        `;
                     });
                 })
                 .catch(err => console.error('Failed to fetch taman data:', err));

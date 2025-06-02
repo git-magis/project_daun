@@ -14,14 +14,32 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class PohonController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch all data from the pohon table
-        $data = Pohon::with(['jenisPohon','taman'])->get();
-        $jenis_pohon = JenisPohon::all();
-        $taman_lokasi = Taman::all();
-        
-        return view('admin.manage_pohon', compact('data', 'jenis_pohon', 'taman_lokasi'));
+        $search = $request->input('search');
+
+        $query = Pohon::with(['jenisPohon','taman','user']);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_pohon', 'like', "%{$search}%")
+                ->orWhere('kode_unik', 'like', "%{$search}%")
+                ->orWhereHas('jenisPohon', function ($q2) use ($search) {
+                    $q2->where('nama_jenis_pohon', 'like', "%{$search}%");
+                })
+                ->orWhereHas('taman', function ($q3) use ($search) {
+                    $q3->where('nama', 'like', "%{$search}%");
+                });
+            });
+        }
+
+
+        $data = $query->paginate(50);
+        $data->appends(request()->query()); // keeps search in pagination
+        $jenis_pohon = JenisPohon::orderBy('nama_jenis_pohon')->get();
+        $taman_lokasi = Taman::orderBy('nama')->get();
+
+        return view('admin.manage_pohon', compact('data', 'jenis_pohon', 'taman_lokasi', 'search'));
     }
 
     public function create()

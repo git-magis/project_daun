@@ -13,15 +13,32 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class BungaController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch all data from the bunga table
-        $data = Bunga::with(['jenisBunga','taman'])->get();
-        $jenis_bunga = JenisBunga::all();
-        $taman_lokasi = Taman::all();
+        $search = $request->input('search');
 
-        // Pass data to the view
-        return view('admin.manage_bunga', compact('data', 'jenis_bunga', 'taman_lokasi')); 
+        $query = Bunga::with(['jenisBunga','taman','user']);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_bunga', 'like', "%{$search}%")
+                ->orWhere('kode_unik', 'like', "%{$search}%")
+                ->orWhereHas('jenisBunga', function ($q2) use ($search) {
+                    $q2->where('nama_jenis_bunga', 'like', "%{$search}%");
+                })
+                ->orWhereHas('taman', function ($q3) use ($search) {
+                    $q3->where('nama', 'like', "%{$search}%");
+                });
+            });
+        }
+
+
+        $data = $query->paginate(50);
+        $data->appends(request()->query()); // keeps search in pagination
+        $jenis_bunga = JenisBunga::orderBy('nama_jenis_bunga')->get();
+        $taman_lokasi = Taman::orderBy('nama')->get();
+
+        return view('admin.manage_bunga', compact('data', 'jenis_bunga', 'taman_lokasi', 'search'));
     }
 
     public function create()

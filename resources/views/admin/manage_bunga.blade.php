@@ -306,9 +306,21 @@
                                     </a>
                             </div>
                         </div>
+                        @if(auth()->user()->level == 'admin')
+                        <form method="GET" action="{{ route('admin.manage-bunga') }}">
+                        @elseif(auth()->user()->level == 'staff')
+                        <form method="GET" action="{{ route('staff.manage-bunga') }}">
+                        @endif
+                            <div class="input-group card-header">
+                                <input type="text" name="search" class="form-control col-sm-2" placeholder="Cari... (c: bugenvil dadaha)" value="{{ request('search') }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered text-dark" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered text-dark" id="dataTableLargeEntry" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -380,7 +392,10 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                </table>                                
+                                </table>
+                                <div class="d-flex justify-content-end mt-2">
+                                    {{ $data->links('pagination::bootstrap-4') }}
+                                </div>                                
                             </div>
                         </div>
                     </div>
