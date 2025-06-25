@@ -179,13 +179,22 @@
                                         <p class="fs-4">${data.pohons_count + data.bungas_count}</p>
                                     </div>
                                 </div>
-                                <div class="d-flex">
+                                <div class="d-flex mb-4">
                                     <div class="iconbox me-4">
                                         <i class="ri-map-pin-fill"></i>
                                     </div>
                                     <div>
                                         <h5>Koordinat Lokasi</h5>
                                         <p class="fs-4">(${data.latitude}, ${data.longitude})</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="iconbox-red me-4">
+                                        <i class="ri-file-pdf-2-fill"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Download PDF Informasi Taman</h5>
+                                        <a href="/taman/${id}/report-pdf" class="fs-5" target="_blank">Unduh di sini</a>
                                     </div>
                                 </div>
                             </div>

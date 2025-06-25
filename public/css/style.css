@@ -148,17 +148,27 @@ img {
 
 
 /* ICONBOX */
-.iconbox {
+.iconbox, .iconbox-red {
     width: 70px;
     height: 70px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(var(--c-brand-rgb), 0.1);
-    color: var(--c-brand);
+    /* background: rgba(var(--c-brand-rgb), 0.1);
+    color: var(--c-brand); */
     font-size: 34px;
     flex: none;
     border-radius: 20px;
+}
+
+.iconbox {
+    background: rgba(var(--c-brand-rgb), 0.1);
+    color: var(--c-brand);
+}
+
+.iconbox-red {
+    background: #ffe8e8;
+    color: #cc2f2f;
 }
 
 /* SERVICE */

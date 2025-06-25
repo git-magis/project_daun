@@ -114,7 +114,7 @@ class DashboardController extends Controller
 
         $overallData = $totalData->map(function ($count, $name) {
             return ['label' => $name, 'count' => $count];
-        })->values()->all();
+        })->sortByDesc('count')->values()->all();
 
         // Fetch the most recent data from pohons with their jenis names
         $recentPohons = DB::table('pohons')

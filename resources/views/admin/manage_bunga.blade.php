@@ -312,7 +312,7 @@
                         <form method="GET" action="{{ route('staff.manage-bunga') }}">
                         @endif
                             <div class="input-group card-header">
-                                <input type="text" name="search" class="form-control col-sm-2" placeholder="Cari... (c: bugenvil dadaha)" value="{{ request('search') }}">
+                                <input type="text" name="search" class="form-control col-sm-4" placeholder="Cari... (c: bugenvil dadaha)" value="{{ request('search') }}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit">Search</button>
                                 </div>

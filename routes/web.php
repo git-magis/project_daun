@@ -124,6 +124,8 @@ Route::get('api/taman/{id}', [TamanController::class, 'getTamansById']);
 Route::get('/taman-detail/{id}', function ($id) {return view('taman_detail', compact('id'));})->name('taman-detail');
 Route::get('/peta', function () {return view('peta');})->name('peta');
 Route::get('/api/charts/{id}', [TamanController::class, 'chartTaman']);
+Route::get('/taman/{id}/report-pdf', [TamanController::class, 'downloadPDF'])->name('taman.pdf');
+
 
 Route::get('/scan', function () {
     return view('scan');

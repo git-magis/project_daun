@@ -297,22 +297,22 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <div class="col p-0" style="text-align: end;">
-                                <div class="my-2"></div>
-                                    <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#tambahModal">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-plus"></i>
-                                        </span>
-                                        <span class="text">Tambah Pohon</span>
-                                    </a>
+                                <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#tambahModal">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Tambah Pohon</span>
+                                </a>
                             </div>
                         </div>
+
                         @if(auth()->user()->level == 'admin')
                         <form method="GET" action="{{ route('admin.manage-pohon') }}">
                         @elseif(auth()->user()->level == 'staff')
                         <form method="GET" action="{{ route('staff.manage-pohon') }}">
                         @endif
-                            <div class="input-group card-header">
-                                <input type="text" name="search" class="form-control col-sm-2" placeholder="Cari... (c: mahoni dadaha)" value="{{ request('search') }}">
+                            <div class="input-group card-header d-flex">
+                                <input type="text" name="search" class="form-control col-sm-4" placeholder="Cari... (c: mahoni dadaha)" value="{{ request('search') }}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit">Search</button>
                                 </div>

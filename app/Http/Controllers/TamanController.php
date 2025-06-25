@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Pohon;
 use App\Models\Bunga;
 use App\Models\Taman;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TamanController extends Controller
 {
@@ -202,6 +203,33 @@ class TamanController extends Controller
             'data' => $data,
             'total' => $total,
         ]);
+    }
+
+    public function downloadPDF($id)
+    {
+        $taman = Taman::with(['pohons.jenisPohon', 'bungas.jenisBunga'])
+                    ->withCount(['pohons', 'bungas'])
+                    ->findOrFail($id);
+
+        // Count by jenis
+        $pohonCounts = [];
+        foreach ($taman->pohons as $p) {
+            $name = $p->jenisPohon->nama_jenis_pohon ?? 'Tidak diketahui';
+            $pohonCounts[$name] = ($pohonCounts[$name] ?? 0) + 1;
+        }
+
+        $bungaCounts = [];
+        foreach ($taman->bungas as $b) {
+            $name = $b->jenisBunga->nama_jenis_bunga ?? 'Tidak diketahui';
+            $bungaCounts[$name] = ($bungaCounts[$name] ?? 0) + 1;
+        }
+
+        arsort($pohonCounts);
+        arsort($bungaCounts);
+
+        $pdf = Pdf::loadView('taman_report', compact('taman', 'pohonCounts', 'bungaCounts'));
+
+        return $pdf->stream("Laporan_Taman_{$taman->nama}.pdf");
     }
 
 }

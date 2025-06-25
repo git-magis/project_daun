@@ -51,7 +51,7 @@ class WelcomeController extends Controller
 
         $overallData = $totalData->map(function ($count, $name) {
             return ['label' => $name, 'count' => $count];
-        })->values()->all();
+        })->sortByDesc('count')->values()->all();
 
         return view('welcome', compact('totalTanaman', 'totalJenisPohon', 'totalJenisBunga', 'totalTaman', 'overallData'));
     }

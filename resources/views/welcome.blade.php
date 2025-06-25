@@ -594,7 +594,7 @@
     </section> -->
 
     <!-- BAR CHART -->
-     <section id="barchart" class="section-padding">
+    <section id="barchart" class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -604,13 +604,26 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div id="bar-chart" class="chart-container"></div>
+            <div class="text-center mb-2">
+                <a class="btn btn-outline-success btn-sm" data-bs-toggle="collapse" href="#collapseTanamanList" role="button" aria-expanded="false" aria-controls="collapseTanamanList">
+                    Tampilkan daftar tanaman
+                </a>
+            </div>
+            <div class="collapse" id="collapseTanamanList">
+                <div class="row mt-5">
+                    @foreach ( $overallData as $item)
+                    <div class="col-10">
+                        <p class="fs-5 fw-semibold text-black">{{ $item['label'] }}</p>
+                    </div>
+                    <div class="col-2 text-end">
+                        <p class="text-success fs-5 fw-semibold">{{ $item['count'] }}</p>
+                    </div>
+                    <hr>
+                    @endforeach
                 </div>
             </div>
         </div>
-     </section>
+    </section>
 
      <!-- CONTACT -->
     <section class="section-padding bg-light align-items-center text-center" id="contact">
@@ -722,65 +735,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', { packages: ['corechart'] });
-        google.charts.setOnLoadCallback(drawBarChart);
-
-        function drawBarChart() {
-            const overallData = @json($overallData);
-
-            const data = google.visualization.arrayToDataTable([
-                ['Jenis', 'Jumlah', { role: 'annotation' }],
-                ...overallData.map(item => [item.label, item.count, item.label.toString()]),
-            ]);
-
-            const chart = new google.visualization.BarChart(document.getElementById('bar-chart'));
-
-            function resizeChart() {
-                const containerWidth = document.getElementById('bar-chart').offsetWidth;
-
-                const baseHeight = overallData.length * (containerWidth < 400 ? 35 : 50);
-
-                const options = {
-                    width: '100%',
-                    height: baseHeight,
-                    legend: { position: 'none' },
-                    chartArea: {
-                        width: containerWidth < 500 ? '90%' : '80%',
-                        height: '80%',
-                    },
-                    bar: {groupWidth: '90%'},
-                    hAxis: { title: 'Jumlah', minValue: 0 },
-                    vAxis: {
-                        title: 'Jenis',
-                        textStyle: { fontSize: containerWidth < 450 ? 10 : 12 }
-                    },
-                    annotations: {
-                        alwaysOutside: false,
-                        textStyle: {
-                            fontSize: 12,
-                            color: 'white',
-                            auraColor: 'none'
-                        }
-                    },
-                    animation: {
-                        duration: 1000,
-                        easing: 'out',
-                        startup: true
-                    },
-                };
-
-                chart.draw(data, options);
-            }
-
-            // Draw the chart initially
-            resizeChart();
-
-            // Redraw chart on window resize
-            window.addEventListener('resize', resizeChart);
-        }
-    </script>
+    
 </body>
 
 </html>
